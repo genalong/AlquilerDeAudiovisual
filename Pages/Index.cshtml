@@ -1,10 +1,95 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="inicio-container">
+
+    <section class="inicio-banner">
+        <div class="inicio-contenido">
+            <span class="inicio-etiqueta">
+                SISTEMA DE GESTIÓN
+            </span>
+
+            <h1>Alquiler Audiovisual</h1>
+
+            <p>
+                Gestioná clientes, equipamiento y alquileres
+                para todo tipo de eventos desde un solo lugar.
+            </p>
+
+            <a class="btn btn-inicio" asp-page="/PageCliente/Listar">
+                <i class="fas fa-users"></i> Gestionar clientes
+            </a>
+        </div>
+
+        <div class="inicio-icono">
+            <i class="fas fa-photo-video"></i>
+        </div>
+    </section>
+
+    <section class="inicio-bienvenida">
+        <h2>Bienvenido al sistema</h2>
+        <p>
+            Una plataforma para organizar y administrar
+            los servicios de alquiler de equipamiento audiovisual.
+        </p>
+    </section>
+
+    <section class="modulos-container">
+
+        <div class="modulo-card modulo-activo">
+            <div class="modulo-icono clientes-icono">
+                <i class="fas fa-users"></i>
+            </div>
+
+            <h3>Clientes</h3>
+
+            <p>
+                Registrá, consultá, modificá y administrá
+                la información de tus clientes.
+            </p>
+
+            <a asp-page="/PageCliente/Listar">
+                Ir al módulo <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="modulo-card">
+            <div class="modulo-icono equipos-icono">
+                <i class="fas fa-volume-up"></i>
+            </div>
+
+            <h3>Equipamiento</h3>
+
+            <p>
+                Administración de equipos, stock
+                y disponibilidad en depósitos.
+            </p>
+
+            <span class="modulo-proximamente">En desarrollo</span>
+        </div>
+
+        <div class="modulo-card">
+            <div class="modulo-icono eventos-icono">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+
+            <h3>Eventos y alquileres</h3>
+
+            <p>
+                Organización de solicitudes,
+                contrataciones y devoluciones.
+            </p>
+
+            <span class="modulo-proximamente">En desarrollo</span>
+        </div>
+
+    </section>
+
+    <footer class="inicio-footer">
+        <p>Alquiler Audiovisual · Sistema de gestión</p>
+    </footer>
+
 </div>

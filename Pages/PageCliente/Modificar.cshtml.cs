@@ -1,0 +1,73 @@
+
+using AlquilerAudiovisual.Dominio;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace AlquilerAudiovisual.Pages.PageCliente
+{
+    public class ModificarModel : PageModel
+    {
+        public Cliente cliente { get; set; }
+        public string Mensaje { get; set; } = "";
+
+        public void OnGet(int id)
+        {
+            Controladora unaControladora = new Controladora();
+
+            cliente = unaControladora.BuscarCliente(id);
+        }
+
+        public IActionResult OnPostModificar()
+        {
+            try
+            {
+                if (Request.Form["id"] == "")
+                {
+                    throw new Exception("Debe ingresar el ID del Cliente");
+                }
+
+                if (!int.TryParse(Request.Form["id"], out _))
+                {
+                    throw new Exception("El ID del Cliente debe ser un numero");
+                }
+
+                if (Request.Form["nombre"] == "")
+                {
+                    throw new Exception("Debe ingresar el Nombre del Cliente");
+                }
+
+                if (Request.Form["telefono"] == "")
+                {
+                    throw new Exception("Debe ingresar el Telefono del Cliente");
+                }
+
+                if (Request.Form["email"] == "")
+                {
+                    throw new Exception("Debe ingresar el Email del Cliente");
+                }
+
+                if (Request.Form["direccion"] == "")
+                {
+                    throw new Exception("Debe ingresar la Direccion del Cliente");
+                }
+
+                int Id = int.Parse(Request.Form["id"]);
+                string Nombre = Request.Form["nombre"];
+                string Telefono = Request.Form["telefono"];
+                string Email = Request.Form["email"];
+                string Direccion = Request.Form["direccion"];
+
+                Controladora unaControladora = new Controladora();
+
+                unaControladora.ModificarCliente(Id, Nombre, Telefono, Direccion, Email);
+
+                return Redirect("/PageCliente/Listar");
+            }
+            catch (Exception Error)
+            {
+                Mensaje = Error.Message;
+                return Page();
+            }
+        }
+    }
+}
