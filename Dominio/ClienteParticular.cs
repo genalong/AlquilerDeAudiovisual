@@ -2,13 +2,14 @@
 {
     public class ClienteParticular : Cliente
     {
-        public string aDocumento;
+        private string aDocumento;
 
-        public string Documento
+        public string Documento { get { return aDocumento; } set { aDocumento = value; } }
+
+        public ClienteParticular(int pId, string pNombre, string pTelefono, string pEmail, string pDireccion, string pDocumento)
+            : base(pId, pNombre, pTelefono, pEmail, pDireccion)
         {
-            get { return aDocumento; }
-            set { aDocumento = value; }
+            aDocumento = pDocumento;
         }
-
     }
 }

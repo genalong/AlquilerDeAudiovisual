@@ -1,4 +1,5 @@
-﻿namespace AlquilerAudiovisual.Dominio
+﻿
+namespace AlquilerAudiovisual.Dominio
 {
     public class DetalleSolicitud
     {
@@ -6,22 +7,15 @@
         private int aCantidad;
         private double aPrecioEstimado;
 
-        public int Id
-        {
-            get { return aId; }
-            set { aId = value; }
-        }
+        public int Id { get { return aId; } set { aId = value; } }
+        public int Cantidad { get { return aCantidad; } set { aCantidad = value; } }
+        public double PrecioEstimado { get { return aPrecioEstimado; } set { aPrecioEstimado = value; } }
 
-        public int Cantidad
+        public DetalleSolicitud(int pId, int pCantidad, double pPrecioEstimado)
         {
-            get { return aCantidad; }
-            set { aCantidad = value; }
-        }
-
-        public double PrecioEstimado
-        {
-            get { return aPrecioEstimado; }
-            set { aPrecioEstimado = value; }
+            aId = pId;
+            aCantidad = pCantidad;
+            aPrecioEstimado = pPrecioEstimado;
         }
     }
 }

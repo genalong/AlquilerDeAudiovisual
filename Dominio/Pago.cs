@@ -1,30 +1,23 @@
-﻿namespace AlquilerAudiovisual.Dominio
+﻿
+namespace AlquilerAudiovisual.Dominio
 {
     public class Pago
     {
         private int aId;
         private DateTime aFecha;
-        
         private double aImporte;
-
         private string aMetodo = "";
 
-        public int Id
-        {
-            get { return aId; }
-            set { aId = value; }
-        }
+        public int Id { get { return aId; } set { aId = value; } }
+        public double Importe { get { return aImporte; } set { aImporte = value; } }
+        public string Metodo { get { return aMetodo; } set { aMetodo = value; } }
 
-        public double Importe
+        public Pago(int pId, DateTime pFecha, double pImporte, string pMetodo)
         {
-            get { return aImporte; }
-            set { aImporte = value; }
-        }
-
-        public string Metodo
-        {
-            get { return aMetodo; }
-            set { aMetodo = value; }
+            aId = pId;
+            aFecha = pFecha;
+            aImporte = pImporte;
+            aMetodo = pMetodo;
         }
     }
 }

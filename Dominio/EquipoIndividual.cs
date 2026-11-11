@@ -1,4 +1,5 @@
-﻿namespace AlquilerAudiovisual.Dominio
+﻿
+namespace AlquilerAudiovisual.Dominio
 {
     public class EquipoIndividual
     {
@@ -7,28 +8,16 @@
         private string aEstado = "";
         private Deposito aDeposito;
 
-        public int Id
-        {
-            get { return aId; }
-            set { aId = value; }
-        }
+        public int Id { get { return aId; } set { aId = value; } }
+        public string NumeroSerie { get { return aNumeroSerie; } set { aNumeroSerie = value; } }
+        public string Estado { get { return aEstado; } set { aEstado = value; } }
 
-        public string NumeroSerie
+        public EquipoIndividual(int pId, string pNumeroSerie, string pEstado, Deposito pDeposito)
         {
-            get { return aNumeroSerie; }
-            set { aNumeroSerie = value; }
-        }
-
-        public string Estado
-        {
-            get { return aEstado; }
-            set { aEstado = value; }
-        }
-
-        public Deposito Deposito
-        {
-            get { return aDeposito; }
-            set { aDeposito = value; }
+            aId = pId;
+            aNumeroSerie = pNumeroSerie;
+            aEstado = pEstado;
+            aDeposito = pDeposito;
         }
     }
 }

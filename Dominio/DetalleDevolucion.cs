@@ -1,21 +1,22 @@
-﻿namespace AlquilerAudiovisual.Dominio
+﻿
+namespace AlquilerAudiovisual.Dominio
 {
     public class DetalleDevolucion
     {
         private int aId;
         private int aCantidadDevuelta;
+        private string aEstado = "";
         private string aObservacion = "";
 
-        public int CantidadDevuelta
-        {
-            get { return aCantidadDevuelta; }
-            set { aCantidadDevuelta = value; }
-        }
+        public int CantidadDevuelta { get { return aCantidadDevuelta; } set { aCantidadDevuelta = value; } }
+        public string Estado { get { return aEstado; } set { aEstado = value; } }
 
-        public string Observacion
+        public DetalleDevolucion(int pId, int pCantidadDevuelta, string pEstado, string pObservacion)
         {
-            get { return aObservacion; }
-            set { aObservacion = value; }
+            aId = pId;
+            aCantidadDevuelta = pCantidadDevuelta;
+            aEstado = pEstado;
+            aObservacion = pObservacion;
         }
     }
 }

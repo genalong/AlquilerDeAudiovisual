@@ -1,4 +1,5 @@
-﻿namespace AlquilerAudiovisual.Dominio
+﻿
+namespace AlquilerAudiovisual.Dominio
 {
     public class Evento
     {
@@ -8,23 +9,17 @@
         private DateTime aFecha;
         private int aCantidadAsistentes;
 
-        public int Id
-        {
-            get { return aId; }
-            set { aId = value; }
-        }
+        public int Id { get { return aId; } set { aId = value; } }
+        public string Tipo { get { return aTipo; } set { aTipo = value; } }
+        public DateTime Fecha { get { return aFecha; } set { aFecha = value; } }
 
-        public string Tipo
+        public Evento(int pId, string pTipo, string pUbicacion, DateTime pFecha, int pCantidadAsistentes)
         {
-            get { return aTipo; }
-            set { aTipo = value; }
+            aId = pId;
+            aTipo = pTipo;
+            aUbicacion = pUbicacion;
+            aFecha = pFecha;
+            aCantidadAsistentes = pCantidadAsistentes;
         }
-
-        public DateTime Fecha
-        {
-            get { return aFecha; }
-            set { aFecha = value; }
-        }
-
     }
 }

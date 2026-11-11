@@ -5,17 +5,14 @@
         private string aNombreOrganizacion;
         private string aResponsable;
 
-        public string NombreOrganizacion
-        {
-            get { return aNombreOrganizacion; }
-            set { aNombreOrganizacion = value; }
-        }
+        public string NombreOrganizacion { get { return aNombreOrganizacion; } set { aNombreOrganizacion = value; } }
+        public string Responsable { get { return aResponsable; } set { aResponsable = value; } }
 
-        public string Responsable
+        public ClienteOrganizacion(int pId, string pNombre, string pTelefono, string pEmail, string pDireccion, string pNombreOrganizacion, string pResponsable)
+            : base(pId, pNombre, pTelefono, pEmail, pDireccion)
         {
-            get { return aResponsable; }
-            set { aResponsable = value; }
+            aNombreOrganizacion = pNombreOrganizacion;
+            aResponsable = pResponsable;
         }
-
     }
 }
