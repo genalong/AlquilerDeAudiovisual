@@ -1,0 +1,36 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageDeposito.ListarModel
+@{
+    ViewData["Title"] = "Listado de Depósitos";
+}
+<div class="text-left">
+    <h1 class="display-4 text-center">Listado de Depósitos</h1>
+    <hr />
+    <a class="btn btn-success" asp-page="./Alta">Agregar Depósito</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unDeposito in Model.ListaDepositos)
+            {
+                <tr>
+                    <td>@unDeposito.Id</td>
+                    <td>@unDeposito.Nombre</td>
+                    <td>@unDeposito.Direccion</td>
+                    <td>
+                        <a class="btn btn-warning" asp-page="./Modificar" asp-route-id="@unDeposito.Id">Modificar</a>
+                        <a class="btn btn-danger" asp-page="./Eliminar" asp-route-id="@unDeposito.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <hr />
+    <a class="btn btn-warning" asp-page="/Index">Volver</a>
+</div>

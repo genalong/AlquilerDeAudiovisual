@@ -1,0 +1,50 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageEquipamiento.ListarModel
+
+@{
+    ViewData["Title"] = "Listado de Equipamientos";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Listado de Equipamientos</h1>
+    <hr />
+
+    <a class="btn btn-success" asp-page="./Alta">Agregar Equipamiento</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Precio de alquiler</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var unEquipamiento in Model.ListaEquipamientos)
+            {
+                <tr>
+                    <td>@unEquipamiento.Id</td>
+                    <td>@unEquipamiento.Nombre</td>
+                    <td>@unEquipamiento.Tipo</td>
+                    <td>@unEquipamiento.PrecioAlquiler</td>
+                    <td>
+                        <a class="btn btn-warning"
+                           asp-page="./Modificar"
+                           asp-route-id="@unEquipamiento.Id">Modificar</a>
+
+                        <a class="btn btn-danger"
+                           asp-page="./Eliminar"
+                           asp-route-id="@unEquipamiento.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+
+    <a class="btn btn-warning" asp-page="/Index">Volver</a>
+</div>

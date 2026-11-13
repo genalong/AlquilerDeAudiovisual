@@ -1,0 +1,38 @@
+﻿
+@page
+@model AlquilerAudiovisual.Pages.PageEvento.ListarModel
+
+<h1>Listado de Eventos</h1>
+
+<a href="/PageEvento/Alta">Registrar nuevo evento</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var unEvento in Model.ListaEventos)
+        {
+            <tr>
+                <td>@unEvento.Id</td>
+                <td>@unEvento.Tipo</td>
+                <td>@unEvento.Fecha.ToShortDateString()</td>
+                <td>
+                    <a class="btn btn-warning"
+                       asp-page="./Modificar"
+                       asp-route-id="@unEvento.Id">Modificar</a>
+
+                    <a class="btn btn-danger"
+                       asp-page="./Eliminar"
+                       asp-route-id="@unEvento.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -6,69 +6,47 @@
 
 <div class="inicio-container">
 
-    <section class="inicio-banner">
+    <div class="inicio-banner">
         <div class="inicio-contenido">
-            <span class="inicio-etiqueta">
-                SISTEMA DE GESTIÓN
-            </span>
+            <span class="inicio-etiqueta">SISTEMA DE GESTIÓN</span>
 
-            <h1>Alquiler Audiovisual</h1>
+            <h1 class="inicio-bienvenida">
+                Bienvenido a Alquiler Audiovisual
+            </h1>
 
             <p>
-                Gestioná clientes, equipamiento y alquileres
-                para todo tipo de eventos desde un solo lugar.
+                Sistema para la gestión de clientes, eventos y equipamiento
+                audiovisual.
             </p>
-
-            <a class="btn btn-inicio" asp-page="/PageCliente/Listar">
-                <i class="fas fa-users"></i> Gestionar clientes
-            </a>
         </div>
+    </div>
 
-        <div class="inicio-icono">
-            <i class="fas fa-photo-video"></i>
-        </div>
-    </section>
+    <div class="modulos-container">
 
-    <section class="inicio-bienvenida">
-        <h2>Bienvenido al sistema</h2>
-        <p>
-            Una plataforma para organizar y administrar
-            los servicios de alquiler de equipamiento audiovisual.
-        </p>
-    </section>
-
-    <section class="modulos-container">
-
-        <div class="modulo-card modulo-activo">
+        <div class="modulo-card">
             <div class="modulo-icono clientes-icono">
                 <i class="fas fa-users"></i>
             </div>
 
             <h3>Clientes</h3>
+            <p>Gestión de clientes de la empresa.</p>
 
-            <p>
-                Registrá, consultá, modificá y administrá
-                la información de tus clientes.
-            </p>
-
-            <a asp-page="/PageCliente/Listar">
-                Ir al módulo <i class="fas fa-arrow-right"></i>
+            <a class="btn btn-success" asp-page="/PageCliente/Listar">
+                Gestionar clientes
             </a>
         </div>
 
         <div class="modulo-card">
             <div class="modulo-icono equipos-icono">
-                <i class="fas fa-volume-up"></i>
+                <i class="fas fa-camera"></i>
             </div>
 
             <h3>Equipamiento</h3>
+            <p>Administración de los equipos audiovisuales.</p>
 
-            <p>
-                Administración de equipos, stock
-                y disponibilidad en depósitos.
-            </p>
-
-            <span class="modulo-proximamente">En desarrollo</span>
+            <a class="btn btn-success" asp-page="/PageEquipamiento/Listar">
+                Gestionar equipamiento
+            </a>
         </div>
 
         <div class="modulo-card">
@@ -76,20 +54,31 @@
                 <i class="fas fa-calendar-alt"></i>
             </div>
 
-            <h3>Eventos y alquileres</h3>
+            <h3>Eventos</h3>
+            <p>Gestión de eventos asociados a los clientes.</p>
 
-            <p>
-                Organización de solicitudes,
-                contrataciones y devoluciones.
-            </p>
-
-            <span class="modulo-proximamente">En desarrollo</span>
+            <a class="btn btn-success" asp-page="/PageEvento/Listar">
+                Gestionar eventos
+            </a>
         </div>
 
-    </section>
+        <div class="modulo-card">
+            <div class="modulo-icono depositos-icono">
+                <i class="fas fa-warehouse"></i>
+            </div>
 
-    <footer class="inicio-footer">
-        <p>Alquiler Audiovisual · Sistema de gestión</p>
-    </footer>
+            <h3>Depósitos</h3>
+            <p>Administración de depósitos y ubicaciones.</p>
+
+            <a class="btn btn-success" asp-page="/PageDeposito/Listar">
+                Gestionar depósitos
+            </a>
+        </div>
+
+    </div>
+
+    <div class="inicio-footer">
+        <p>Sistema de Gestión de Alquiler Audiovisual</p>
+    </div>
 
 </div>

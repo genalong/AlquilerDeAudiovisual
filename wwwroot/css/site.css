@@ -202,3 +202,123 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================
+   MODULO EVENTOS
+========================================== */
+
+.evento-container {
+    padding: 25px 0;
+}
+
+.evento-header {
+    margin-bottom: 30px;
+}
+
+    .evento-header h1 {
+        color: #172554;
+        font-weight: bold;
+        font-size: 32px;
+    }
+
+    .evento-header p {
+        color: #64748b;
+        margin-bottom: 0;
+    }
+
+.evento-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+    margin-bottom: 25px;
+}
+
+    .evento-card label {
+        color: #334155;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .evento-card .form-control {
+        border: 1px solid #cbd5e1;
+        border-radius: 7px;
+        padding: 10px 12px;
+        margin-bottom: 18px;
+    }
+
+        .evento-card .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+.evento-titulo {
+    color: #172554;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.evento-tabla {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+}
+
+    .evento-tabla table {
+        margin-bottom: 0;
+    }
+
+    .evento-tabla thead {
+        background: #172554;
+        color: white;
+    }
+
+    .evento-tabla th,
+    .evento-tabla td {
+        padding: 14px;
+        vertical-align: middle;
+    }
+
+    .evento-tabla tbody tr:hover {
+        background: #eff6ff;
+    }
+
+.evento-acciones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.evento-btn {
+    border-radius: 7px;
+    padding: 9px 18px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.evento-btn-volver {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+    .evento-btn-volver:hover {
+        background: #cbd5e1;
+        color: #172554;
+    }
+
+@media (max-width: 768px) {
+    .evento-card {
+        padding: 20px;
+    }
+
+    .evento-header h1 {
+        font-size: 26px;
+    }
+
+    .evento-tabla {
+        overflow-x: auto;
+    }
+}
