@@ -1,0 +1,28 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento.ListarModel
+
+<h1>Listado de Stock de Equipamiento</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Equipamiento</th>
+            <th>Depósito</th>
+            <th>Cantidad total</th>
+            <th>Cantidad disponible</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var unStock in Model.ListaStockEquipamientos)
+        {
+            <tr>
+                <td>@unStock.Id</td>
+                <td>@unStock.Equipamiento.Nombre</td>
+                <td>@unStock.Deposito.Nombre</td>
+                <td>@unStock.CantidadTotal</td>
+                <td>@unStock.CantidadDisponible</td>
+            </tr>
+        }
+    </tbody>
+</table>

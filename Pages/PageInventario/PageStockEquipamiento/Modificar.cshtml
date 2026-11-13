@@ -1,0 +1,71 @@
+﻿@page "{id:int}"
+@model AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento.ModificarModel
+@{
+    ViewData["Title"] = "Modificar Stock";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Modificar Stock de Equipamiento</h1>
+    <hr />
+
+    @if (Model.UnStock != null)
+    {
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Equipamiento:</label>
+                        <select class="form-control" asp-for="IdEquipamiento">
+                            @foreach (var unEquipamiento in Model.ListaEquipamientos)
+                            {
+                                <option value="@unEquipamiento.Id">@unEquipamiento.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Depósito:</label>
+                        <select class="form-control" asp-for="IdDeposito">
+                            @foreach (var unDeposito in Model.ListaDepositos)
+                            {
+                                <option value="@unDeposito.Id">@unDeposito.Nombre</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cantidad total:</label>
+                        <input class="form-control" type="number" asp-for="CantidadTotal" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cantidad disponible:</label>
+                        <input class="form-control" type="number" asp-for="CantidadDisponible" />
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <button class="btn btn-success" type="submit" asp-page-handler="Modificar">Guardar cambios</button>
+            <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            No se encontró el registro de stock.
+        </div>
+        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger" role="alert">
+            @Model.Mensaje
+        </div>
+    }
+</div>

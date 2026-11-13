@@ -1,0 +1,34 @@
+﻿@page "{id:int}"
+@model AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Stock";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Eliminar Stock de Equipamiento</h1>
+    <hr />
+
+    @if (Model.UnStock != null)
+    {
+        <p>¿Está seguro de que desea eliminar este registro de stock?</p>
+
+        <p><strong>ID:</strong> @Model.UnStock.Id</p>
+        <p><strong>Equipamiento:</strong> @Model.UnStock.Equipamiento.Nombre</p>
+        <p><strong>Depósito:</strong> @Model.UnStock.Deposito.Nombre</p>
+        <p><strong>Cantidad total:</strong> @Model.UnStock.CantidadTotal</p>
+        <p><strong>Cantidad disponible:</strong> @Model.UnStock.CantidadDisponible</p>
+
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+            <button class="btn btn-danger" type="submit" asp-page-handler="Eliminar">Eliminar</button>
+            <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            No se encontró el registro de stock.
+        </div>
+        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+    }
+</div>

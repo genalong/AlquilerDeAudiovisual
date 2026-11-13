@@ -1,0 +1,62 @@
+﻿@page "{id:int}"
+@model AlquilerAudiovisual.Pages.PageInventario.PageEquipoIndividual.ModificarModel
+@{
+    ViewData["Title"] = "Modificar Equipo Individual";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Modificar Equipo Individual</h1>
+    <hr />
+
+    @if (Model.UnEquipo != null)
+    {
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="NumeroSerie">Número de serie:</label>
+                        <input class="form-control" type="text" asp-for="NumeroSerie" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Estado">Estado:</label>
+                        <input class="form-control" type="text" asp-for="Estado" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IdDeposito">Depósito:</label>
+                        <select class="form-control" asp-for="IdDeposito">
+                            <option value="">Seleccione un depósito</option>
+                            @foreach (var unDeposito in Model.ListaDepositos)
+                            {
+                                <option value="@unDeposito.Id">@unDeposito.Nombre</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <button class="btn btn-success" type="submit" asp-page-handler="Modificar">Guardar cambios</button>
+            <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            No se encontró el equipo individual.
+        </div>
+        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger" role="alert">
+            @Model.Mensaje
+        </div>
+    }
+</div>

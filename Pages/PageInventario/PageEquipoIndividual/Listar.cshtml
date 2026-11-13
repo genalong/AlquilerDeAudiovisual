@@ -1,0 +1,24 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageInventario.PageEquipoIndividual.ListarModel
+
+<h1>Listado de Equipos Individuales</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Número de serie</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var unEquipo in Model.ListaEquiposIndividuales)
+        {
+            <tr>
+                <td>@unEquipo.Id</td>
+                <td>@unEquipo.NumeroSerie</td>
+                <td>@unEquipo.Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>

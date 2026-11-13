@@ -11,6 +11,7 @@ namespace AlquilerAudiovisual.Dominio
         public int Id { get { return aId; } set { aId = value; } }
         public string NumeroSerie { get { return aNumeroSerie; } set { aNumeroSerie = value; } }
         public string Estado { get { return aEstado; } set { aEstado = value; } }
+        public Deposito Deposito { get { return aDeposito; } set { aDeposito = value; } }
 
         public EquipoIndividual(int pId, string pNumeroSerie, string pEstado, Deposito pDeposito)
         {

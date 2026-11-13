@@ -9,6 +9,7 @@ namespace AlquilerAudiovisual.Dominio
         private Equipamiento aEquipamiento;
         private Deposito aDeposito;
 
+        public int Id { get { return aId; } set { aId = value; } }
         public int CantidadTotal { get { return aCantidadTotal; } set { aCantidadTotal = value; } }
         public int CantidadDisponible { get { return aCantidadDisponible; } set { aCantidadDisponible = value; } }
         public Equipamiento Equipamiento { get { return aEquipamiento; } set { aEquipamiento = value; } }

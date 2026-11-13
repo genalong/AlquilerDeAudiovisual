@@ -1,0 +1,31 @@
+﻿@page "{id:int}"
+@model AlquilerAudiovisual.Pages.PageInventario.PageEquipoIndividual.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Equipo Individual";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Eliminar Equipo Individual</h1>
+    <hr />
+
+    @if (Model.UnEquipo != null)
+    {
+        <p>¿Está seguro de que desea eliminar este equipo?</p>
+
+        <p><strong>ID:</strong> @Model.UnEquipo.Id</p>
+        <p><strong>Número de serie:</strong> @Model.UnEquipo.NumeroSerie</p>
+        <p><strong>Estado:</strong> @Model.UnEquipo.Estado</p>
+
+        <form method="post">
+            <button class="btn btn-danger" type="submit" asp-page-handler="Eliminar">Eliminar</button>
+            <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            No se encontró el equipo individual.
+        </div>
+        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+    }
+</div>
