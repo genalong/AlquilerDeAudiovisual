@@ -1,0 +1,93 @@
+﻿@page "{id:int}"
+@model AlquilerAudiovisual.Pages.PageDevolucion.ModificarModel
+@using AlquilerAudiovisual.Dominio
+
+@{
+    ViewData["Title"] = "Modificar Devolución";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Modificar Devolución</h1>
+    <hr />
+
+    <form method="post">
+
+        <div class="row">
+            <div class="col-sm-4">
+
+                <div class="form-group">
+                    <label for="id">ID:</label>
+                    <input class="form-control" type="number"
+                           name="id" id="id" value="@Model.Id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha:</label>
+                    <input class="form-control" type="date"
+                           name="fecha" id="fecha"
+                           value="@Model.Fecha.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="form-group">
+                    <label for="modalidad">Modalidad:</label>
+                    <input class="form-control" type="text"
+                           name="modalidad" id="modalidad"
+                           value="@Model.Modalidad" />
+                </div>
+
+                <div class="form-group">
+                    <label for="lugarDevolucion">Lugar de devolución:</label>
+                    <input class="form-control" type="text"
+                           name="lugarDevolucion" id="lugarDevolucion"
+                           value="@Model.LugarDevolucion" />
+                </div>
+
+                <div class="form-group">
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea class="form-control"
+                              name="observaciones" id="observaciones">@Model.Observaciones</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="contratacion">Contratación:</label>
+                    <select class="form-control" name="contratacion" id="contratacion">
+                        <option value="">Seleccione una contratación</option>
+
+                        @foreach (Contratacion unaContratacion in Model.Contrataciones)
+                        {
+                            if (unaContratacion.Id == Model.IdContratacion)
+                            {
+                                <option value="@unaContratacion.Id" selected>
+                                    Contratación Nº @unaContratacion.Id
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@unaContratacion.Id">
+                                    Contratación Nº @unaContratacion.Id
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <hr />
+
+        <button class="btn btn-success" type="submit"
+                asp-page-handler="Modificar">
+            Guardar cambios
+        </button>
+
+        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger">@Model.Mensaje</div>
+    }
+</div>

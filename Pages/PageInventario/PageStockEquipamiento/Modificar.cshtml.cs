@@ -75,6 +75,7 @@ namespace AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento
             }
 
             if (unaControladora.ModificarStockEquipamiento(
+                Id,
                 unEquipamiento,
                 unDeposito,
                 CantidadTotal,

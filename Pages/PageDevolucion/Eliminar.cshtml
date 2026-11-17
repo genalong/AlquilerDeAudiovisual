@@ -1,0 +1,44 @@
+﻿@page "{id:int}"
+@model AlquilerAudiovisual.Pages.PageDevolucion.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Devolución";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Eliminar Devolución</h1>
+    <hr />
+
+    @if (Model.UnaDevolucion != null)
+    {
+        <p>¿Está seguro de que desea eliminar esta Devolución?</p>
+
+        <p><strong>ID:</strong> @Model.UnaDevolucion.Id</p>
+        <p><strong>Fecha:</strong> @Model.UnaDevolucion.Fecha.ToString("dd/MM/yyyy")</p>
+        <p><strong>Observación:</strong> @Model.UnaDevolucion.Observaciones</p>
+
+        <form method="post">
+            <input type="hidden" name="id" value="@Model.UnaDevolucion.Id" />
+
+            <button class="btn btn-danger" type="submit"
+                    asp-page-handler="Eliminar">
+                Eliminar
+            </button>
+
+            <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            No se encontró la Devolución.
+        </div>
+
+        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger">@Model.Mensaje</div>
+    }
+</div>

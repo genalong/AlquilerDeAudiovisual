@@ -1,0 +1,150 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageRecepcionDevolucion.AltaModel
+@using AlquilerAudiovisual.Dominio
+
+@{
+    ViewData["Title"] = "Registrar recepción de devolución";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Registrar recepción de devolución</h1>
+    <hr />
+
+    <form method="get">
+        <div class="form-group">
+            <label for="idDevolucion">Devolución:</label>
+
+            <select class="form-control" name="idDevolucion"
+                id="idDevolucion" required>
+
+                <option value="">Seleccione una devolución</option>
+
+                @foreach (Devolucion unaDevolucion in Model.Devoluciones)
+                {
+                    if (unaDevolucion.Id == Model.IdDevolucionSeleccionada)
+                    {
+                        <option value="@unaDevolucion.Id" selected>
+                            Devolución Nº @unaDevolucion.Id -
+                            Contratación Nº @unaDevolucion.Contratacion.Id
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@unaDevolucion.Id">
+                            Devolución Nº @unaDevolucion.Id -
+                            Contratación Nº @unaDevolucion.Contratacion.Id
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            Cargar equipamiento
+        </button>
+    </form>
+
+    @if (Model.IdDevolucionSeleccionada > 0)
+    {
+        <hr />
+
+        @if (Model.DetallesContratacion.Count == 0)
+        {
+            <div class="alert alert-warning">
+                La contratación seleccionada no tiene detalles de equipamiento.
+            </div>
+        }
+        else
+        {
+            <h4>Datos del equipamiento recibido</h4>
+
+            <form method="post">
+                <input type="hidden" name="idDevolucion"
+                    value="@Model.IdDevolucionSeleccionada" />
+
+                <div class="row">
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label for="id">ID del detalle:</label>
+                            <input class="form-control" type="number"
+                                name="id" id="id" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="detalleContratacion">
+                                Equipamiento contratado:
+                            </label>
+
+                            <select class="form-control"
+                                name="detalleContratacion"
+                                id="detalleContratacion" required>
+
+                                <option value="">
+                                    Seleccione el equipamiento
+                                </option>
+
+                                @foreach (DetalleContratacion unDetalle
+                                    in Model.DetallesContratacion)
+                                {
+                                    <option value="@unDetalle.Id">
+                                        @if (unDetalle.Equipamiento != null)
+                                        {
+                                            @unDetalle.Equipamiento.Nombre
+                                        }
+                                        else
+                                        {
+                                            @:Equipamiento
+                                        }
+
+                                        - Cantidad: @unDetalle.Cantidad
+                                    </option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estadoRecepcion">
+                                Estado al recibirlo:
+                            </label>
+
+                            <input class="form-control" type="text"
+                                name="estadoRecepcion"
+                                id="estadoRecepcion"
+                                placeholder="Ej.: Bueno, dañado, incompleto"
+                                required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones:</label>
+
+                            <textarea class="form-control"
+                                name="observaciones"
+                                id="observaciones"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr />
+
+                <button class="btn btn-success" type="submit"
+                    asp-page-handler="Agregar">
+                    Registrar recepción
+                </button>
+
+                <a class="btn btn-warning" asp-page="./Listar">
+                    Volver al listado
+                </a>
+            </form>
+        }
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger">
+            @Model.Mensaje
+        </div>
+    }
+</div>

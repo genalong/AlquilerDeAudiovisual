@@ -1,0 +1,112 @@
+﻿@page "{id:int}"
+@model AlquilerAudiovisual.Pages.PageSolicitud.ModificarModel
+@{
+    ViewData["Title"] = "Modificar Solicitud";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Modificar Solicitud</h1>
+    <hr />
+
+    @if (Model.UnaSolicitud != null)
+    {
+        <form method="post">
+            <input type="hidden" name="id" value="@Model.UnaSolicitud.Id" />
+
+            <div class="row">
+                <div class="col-sm-4">
+
+                    <div class="form-group">
+                        <label for="cliente">Cliente:</label>
+                        <select class="form-control" name="cliente" id="cliente">
+                            @foreach (var unCliente in Model.Clientes)
+                            {
+                                if (unCliente.Id == Model.UnaSolicitud.Cliente.Id)
+                                {
+                                    <option value="@unCliente.Id" selected>
+                                        @unCliente.Id - @unCliente.Nombre
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@unCliente.Id">
+                                        @unCliente.Id - @unCliente.Nombre
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="evento">Evento:</label>
+                        <select class="form-control" name="evento" id="evento">
+                            @foreach (var unEvento in Model.Eventos)
+                            {
+                                if (unEvento.Id == Model.UnaSolicitud.Evento.Id)
+                                {
+                                    <option value="@unEvento.Id" selected>
+                                        @unEvento.Id - @unEvento.Tipo
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@unEvento.Id">
+                                        @unEvento.Id - @unEvento.Tipo
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaSolicitud">Fecha de solicitud:</label>
+                        <input class="form-control" type="date"
+                               name="fechaSolicitud" id="fechaSolicitud"
+                               value="@Model.UnaSolicitud.FechaSolicitud.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaInicio">Fecha de inicio:</label>
+                        <input class="form-control" type="date"
+                               name="fechaInicio" id="fechaInicio"
+                               value="@Model.UnaSolicitud.FechaInicio.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaFin">Fecha de fin:</label>
+                        <input class="form-control" type="date"
+                               name="fechaFin" id="fechaFin"
+                               value="@Model.UnaSolicitud.FechaFin.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <input class="form-control" type="text"
+                               name="estado" id="estado"
+                               value="@Model.UnaSolicitud.Estado" />
+                    </div>
+
+                </div>
+            </div>
+
+            <hr />
+
+            <button class="btn btn-success" type="submit"
+                    asp-page-handler="Modificar">
+                Guardar cambios
+            </button>
+
+            <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-danger">No se encontró la Solicitud.</div>
+        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <div class="alert alert-danger mt-2">@Model.Mensaje</div>
+    }
+</div>

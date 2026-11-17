@@ -1,0 +1,56 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageDevolucion.ListarModel
+@using AlquilerAudiovisual.Dominio
+@{
+    ViewData["Title"] = "Listar Devoluciones";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Listado de Devoluciones</h1>
+    <hr />
+
+    <div class="mb-3">
+        <a class="btn btn-success" asp-page="./Alta">Agregar Devolución</a>
+    </div>
+
+    @if (Model.ListaDevoluciones.Count > 0)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Observación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (Devolucion unaDevolucion in Model.ListaDevoluciones)
+                {
+                    <tr>
+                        <td>@unaDevolucion.Id</td>
+                        <td>@unaDevolucion.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td>@unaDevolucion.Observaciones</td>
+
+                        <td>
+                            <a class="btn btn-warning btn-sm"
+                               asp-page="./Modificar"
+                               asp-route-id="@unaDevolucion.Id">Modificar</a>
+
+                            <a class="btn btn-danger btn-sm"
+                               asp-page="./Eliminar"
+                               asp-route-id="@unaDevolucion.Id">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No hay devoluciones registradas.
+        </div>
+    }
+</div>

@@ -1,22 +1,52 @@
-﻿
-namespace AlquilerAudiovisual.Dominio
+﻿namespace AlquilerAudiovisual.Dominio
 {
     public class DetalleDevolucion
     {
         private int aId;
-        private int aCantidadDevuelta;
-        private string aEstado = "";
-        private string aObservacion = "";
+        private string aEstadoRecepcion = "";
+        private string aObservaciones = "";
+        private Devolucion aDevolucion;
+        private DetalleContratacion aDetalleContratacion;
 
-        public int CantidadDevuelta { get { return aCantidadDevuelta; } set { aCantidadDevuelta = value; } }
-        public string Estado { get { return aEstado; } set { aEstado = value; } }
+        public int Id
+        {
+            get { return aId; }
+            set { aId = value; }
+        }
 
-        public DetalleDevolucion(int pId, int pCantidadDevuelta, string pEstado, string pObservacion)
+        public string EstadoRecepcion
+        {
+            get { return aEstadoRecepcion; }
+            set { aEstadoRecepcion = value; }
+        }
+
+        public string Observaciones
+        {
+            get { return aObservaciones; }
+            set { aObservaciones = value; }
+        }
+
+        public Devolucion Devolucion
+        {
+            get { return aDevolucion; }
+            set { aDevolucion = value; }
+        }
+
+        public DetalleContratacion DetalleContratacion
+        {
+            get { return aDetalleContratacion; }
+            set { aDetalleContratacion = value; }
+        }
+
+        public DetalleDevolucion(int pId, string pEstadoRecepcion,
+            string pObservaciones, Devolucion pDevolucion,
+            DetalleContratacion pDetalleContratacion)
         {
             aId = pId;
-            aCantidadDevuelta = pCantidadDevuelta;
-            aEstado = pEstado;
-            aObservacion = pObservacion;
+            aEstadoRecepcion = pEstadoRecepcion;
+            aObservaciones = pObservaciones;
+            aDevolucion = pDevolucion;
+            aDetalleContratacion = pDetalleContratacion;
         }
     }
 }

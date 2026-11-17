@@ -1,0 +1,50 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageSolicitud.ListarModel
+@{
+    ViewData["Title"] = "Listar Solicitudes";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Listado de Solicitudes</h1>
+    <hr />
+
+    <a class="btn btn-success mb-3" asp-page="./Alta">Agregar Solicitud</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Evento</th>
+                <th>Fecha de solicitud</th>
+                <th>Fecha de inicio</th>
+                <th>Fecha de fin</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unaSolicitud in Model.ListaSolicitudes)
+            {
+                <tr>
+                    <td>@unaSolicitud.Id</td>
+                    <td>@unaSolicitud.Cliente.Nombre</td>
+                    <td>@unaSolicitud.Evento.Tipo</td>
+                    <td>@unaSolicitud.FechaSolicitud.ToShortDateString()</td>
+                    <td>@unaSolicitud.FechaInicio.ToShortDateString()</td>
+                    <td>@unaSolicitud.FechaFin.ToShortDateString()</td>
+                    <td>@unaSolicitud.Estado</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm"
+                           asp-page="./Modificar"
+                           asp-route-id="@unaSolicitud.Id">Modificar</a>
+
+                        <a class="btn btn-danger btn-sm"
+                           asp-page="./Eliminar"
+                           asp-route-id="@unaSolicitud.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

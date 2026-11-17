@@ -57,8 +57,10 @@ namespace AlquilerAudiovisual.Pages.PageEvento
 
                 Controladora unaControladora = new Controladora();
 
-                unaControladora.AltaEvento(unEvento);
-
+                if (!unaControladora.AltaEvento(unEvento))
+                {
+                    throw new Exception("Ya existe un Evento con ese ID");
+                }
                 return Redirect("/PageEvento/Listar");
             }
             catch (Exception Error)

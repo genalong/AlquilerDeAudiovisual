@@ -7,11 +7,16 @@ namespace AlquilerAudiovisual.Dominio
         private string aTipo;
         private string aUbicacion;
         private DateTime aFecha;
+
         private int aCantidadAsistentes;
 
         public int Id { get { return aId; } set { aId = value; } }
         public string Tipo { get { return aTipo; } set { aTipo = value; } }
         public DateTime Fecha { get { return aFecha; } set { aFecha = value; } }
+
+        public string Ubicacion { get { return aUbicacion; } set { aUbicacion = value; } }
+
+        public int CantidadAsistentes { get { return aCantidadAsistentes; } set { aCantidadAsistentes = value; } }
 
         public Evento(int pId, string pTipo, string pUbicacion, DateTime pFecha, int pCantidadAsistentes)
         {

@@ -7,6 +7,9 @@ namespace AlquilerAudiovisual.Dominio
         private int aCantidad;
         private double aPrecioAcordado;
 
+        private Contratacion aContratacion;
+        private Equipamiento aEquipamiento;
+
         public int Id { get { return aId; } set { aId = value; } }
         public int Cantidad { get { return aCantidad; } set { aCantidad = value; } }
         public double PrecioAcordado { get { return aPrecioAcordado; } set { aPrecioAcordado = value; } }
@@ -17,5 +20,18 @@ namespace AlquilerAudiovisual.Dominio
             aCantidad = pCantidad;
             aPrecioAcordado = pPrecioAcordado;
         }
+
+        public Contratacion Contratacion
+        {
+            get { return aContratacion; }
+            set { aContratacion = value; }
+        }
+
+        public Equipamiento Equipamiento
+        {
+            get { return aEquipamiento; }
+            set { aEquipamiento = value; }
+        }
+
     }
 }

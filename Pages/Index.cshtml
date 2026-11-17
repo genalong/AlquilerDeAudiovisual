@@ -1,5 +1,6 @@
 ﻿@page
 @model IndexModel
+
 @{
     ViewData["Title"] = "Inicio";
 }
@@ -15,14 +16,15 @@
             </h1>
 
             <p>
-                Sistema para la gestión de clientes, eventos y equipamiento
-                audiovisual.
+                Sistema para la gestión de clientes, eventos, solicitudes,
+                contrataciones, equipamiento y devoluciones audiovisuales.
             </p>
         </div>
     </div>
 
     <div class="modulos-container">
 
+        <!-- CLIENTES -->
         <div class="modulo-card">
             <div class="modulo-icono clientes-icono">
                 <i class="fas fa-users"></i>
@@ -36,6 +38,7 @@
             </a>
         </div>
 
+        <!-- EQUIPAMIENTO -->
         <div class="modulo-card">
             <div class="modulo-icono equipos-icono">
                 <i class="fas fa-camera"></i>
@@ -49,6 +52,7 @@
             </a>
         </div>
 
+        <!-- EVENTOS -->
         <div class="modulo-card">
             <div class="modulo-icono eventos-icono">
                 <i class="fas fa-calendar-alt"></i>
@@ -62,6 +66,7 @@
             </a>
         </div>
 
+        <!-- DEPÓSITOS -->
         <div class="modulo-card">
             <div class="modulo-icono depositos-icono">
                 <i class="fas fa-warehouse"></i>
@@ -72,6 +77,76 @@
 
             <a class="btn btn-success" asp-page="/PageDeposito/Listar">
                 Gestionar depósitos
+            </a>
+        </div>
+
+        <!-- INVENTARIO -->
+        <div class="modulo-card">
+            <div class="modulo-icono equipos-icono">
+                <i class="fas fa-boxes"></i>
+            </div>
+
+            <h3>Inventario</h3>
+            <p>Consulta y administración del inventario disponible.</p>
+
+            <a class="btn btn-success" asp-page="/PageInventario/Listar">
+                Gestionar inventario
+            </a>
+        </div>
+
+        <!-- SOLICITUDES -->
+        <div class="modulo-card">
+            <div class="modulo-icono eventos-icono">
+                <i class="fas fa-file-alt"></i>
+            </div>
+
+            <h3>Solicitudes</h3>
+            <p>Administración de solicitudes de alquiler.</p>
+
+            <a class="btn btn-success" asp-page="/PageSolicitud/Listar">
+                Gestionar solicitudes
+            </a>
+        </div>
+
+        <!-- CONTRATACIONES -->
+        <div class="modulo-card">
+            <div class="modulo-icono clientes-icono">
+                <i class="fas fa-file-signature"></i>
+            </div>
+
+            <h3>Contrataciones</h3>
+            <p>Gestión de contrataciones y alquileres confirmados.</p>
+
+            <a class="btn btn-success" asp-page="/PageContratacion/Listar">
+                Gestionar contrataciones
+            </a>
+        </div>
+
+        <!-- DEVOLUCIONES -->
+        <div class="modulo-card">
+            <div class="modulo-icono depositos-icono">
+                <i class="fas fa-undo-alt"></i>
+            </div>
+
+            <h3>Devoluciones</h3>
+            <p>Registro y administración de las devoluciones de equipamiento.</p>
+
+            <a class="btn btn-success" asp-page="/PageDevolucion/Listar">
+                Gestionar devoluciones
+            </a>
+        </div>
+
+        <!-- RECEPCIÓN DE DEVOLUCIONES -->
+        <div class="modulo-card">
+            <div class="modulo-icono equipos-icono">
+                <i class="fas fa-clipboard-check"></i>
+            </div>
+
+            <h3>Recepción de devoluciones</h3>
+            <p>Registro del equipamiento recibido y su estado al momento de la devolución.</p>
+
+            <a class="btn btn-success" asp-page="/PageRecepcionDevolucion/Listar">
+                Gestionar recepción
             </a>
         </div>
 

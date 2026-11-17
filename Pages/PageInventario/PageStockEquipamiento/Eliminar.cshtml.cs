@@ -7,7 +7,6 @@ namespace AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento
 {
     public class EliminarModel : PageModel
     {
-        [BindProperty]
         public int Id { get; set; }
 
         public StockEquipamiento UnStock { get; set; }
@@ -31,9 +30,7 @@ namespace AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento
 
             if (UnStock != null)
             {
-                if (unaControladora.BajaStockEquipamiento(
-                    UnStock.Equipamiento,
-                    UnStock.Deposito))
+                if (unaControladora.BajaStockEquipamiento(Id))
                 {
                     return RedirectToPage("./Listar");
                 }

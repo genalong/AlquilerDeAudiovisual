@@ -1,0 +1,62 @@
+﻿@page
+@using AlquilerAudiovisual.Dominio
+@model AlquilerAudiovisual.Pages.PageContratacion.ListarModel
+@{
+    ViewData["Title"] = "Listar Contrataciones";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Listado de Contrataciones</h1>
+    <hr />
+
+    <div class="mb-3">
+        <a class="btn btn-success" asp-page="./Alta">Agregar Contratación</a>
+    </div>
+
+    @if (Model.ListaContrataciones.Count > 0)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (Contratacion unaContratacion in Model.ListaContrataciones)
+                {
+                    <tr>
+                        <td>@unaContratacion.Id</td>
+                        <td>@unaContratacion.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td>@unaContratacion.Total.ToString("0.00")</td>
+                        <td>@unaContratacion.Estado</td>
+
+                        <td>
+                            <a class="btn btn-warning btn-sm"
+                               asp-page="./Modificar"
+                               asp-route-id="@unaContratacion.Id">
+                                Modificar
+                            </a>
+
+                            <a class="btn btn-danger btn-sm"
+                               asp-page="./Eliminar"
+                               asp-route-id="@unaContratacion.Id">
+                                Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No hay contrataciones registradas.
+        </div>
+    }
+</div>

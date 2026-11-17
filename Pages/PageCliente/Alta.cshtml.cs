@@ -57,7 +57,10 @@ namespace AlquilerAudiovisual.Pages.PageCliente
 
                 Controladora unaControladora = new Controladora();
 
-                unaControladora.AltaCliente(unCliente);
+                if (!unaControladora.AltaCliente(unCliente))
+                {
+                    throw new Exception("Ya existe un cliente con ese ID");
+                }
 
                 return Redirect("/PageCliente/Listar");
             }

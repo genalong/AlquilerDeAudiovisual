@@ -122,19 +122,23 @@ namespace AlquilerAudiovisual.Dominio
             }
             return false;
         }
-
-        public bool ModificarEvento(int pId, string pTipo, DateTime pFecha)
-        {
+          public bool ModificarEvento(int pId, string pTipo, string pUbicacion, DateTime pFecha, int pCantidadAsistentes)
+            {
             Evento EventoAModificar = BuscarEvento(pId);
 
             if (EventoAModificar != null)
             {
                 EventoAModificar.Tipo = pTipo;
+                EventoAModificar.Ubicacion = pUbicacion;
                 EventoAModificar.Fecha = pFecha;
+                EventoAModificar.CantidadAsistentes = pCantidadAsistentes;
+
                 return true;
             }
+
             return false;
         }
+
 
         #endregion
 
@@ -182,15 +186,22 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarSolicitud(int pId, string pEstado)
+        public bool ModificarSolicitud(int pId, DateTime pFechaSolicitud,  DateTime pFechaInicio, DateTime pFechaFin, string pEstado, Cliente pCliente, Evento pEvento)
         {
             Solicitud SolicitudAModificar = BuscarSolicitud(pId);
 
             if (SolicitudAModificar != null)
             {
+                SolicitudAModificar.FechaSolicitud = pFechaSolicitud;
+                SolicitudAModificar.FechaInicio = pFechaInicio;
+                SolicitudAModificar.FechaFin = pFechaFin;
                 SolicitudAModificar.Estado = pEstado;
+                SolicitudAModificar.Cliente = pCliente;
+                SolicitudAModificar.Evento = pEvento;
+
                 return true;
             }
+
             return false;
         }
 
@@ -454,6 +465,18 @@ namespace AlquilerAudiovisual.Dominio
             return null;
         }
 
+        public StockEquipamiento BuscarStockEquipamiento(int pId)
+        {
+            foreach (StockEquipamiento unStock in aListaStockEquipamientos)
+            {
+                if (unStock.Id == pId)
+                {
+                    return unStock;
+                }
+            }
+            return null;
+        }
+
         public bool AltaStockEquipamiento(StockEquipamiento pStock)
         {
             StockEquipamiento StockExistente = BuscarStockEquipamiento(pStock.Equipamiento, pStock.Deposito);
@@ -466,9 +489,9 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool BajaStockEquipamiento(Equipamiento pEquipamiento, Deposito pDeposito)
+        public bool BajaStockEquipamiento(int pId)
         {
-            StockEquipamiento StockAEliminar = BuscarStockEquipamiento(pEquipamiento, pDeposito);
+            StockEquipamiento StockAEliminar = BuscarStockEquipamiento(pId);
 
             if (StockAEliminar != null)
             {
@@ -478,19 +501,29 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarStockEquipamiento(Equipamiento pEquipamiento, Deposito pDeposito, int pCantidadTotal, int pCantidadDisponible)
+        public bool ModificarStockEquipamiento(int pId, Equipamiento pEquipamiento, Deposito pDeposito, int pCantidadTotal, int pCantidadDisponible)
         {
-            StockEquipamiento StockAModificar = BuscarStockEquipamiento(pEquipamiento, pDeposito);
+            StockEquipamiento StockAModificar = BuscarStockEquipamiento(pId);
 
             if (StockAModificar != null)
             {
+                StockEquipamiento StockExistente =
+                    BuscarStockEquipamiento(pEquipamiento, pDeposito);
+
+                if (StockExistente != null && StockExistente.Id != pId)
+                {
+                    return false;
+                }
+
+                StockAModificar.Equipamiento = pEquipamiento;
+                StockAModificar.Deposito = pDeposito;
                 StockAModificar.CantidadTotal = pCantidadTotal;
                 StockAModificar.CantidadDisponible = pCantidadDisponible;
+
                 return true;
             }
             return false;
         }
-
         #endregion
 
 
@@ -499,6 +532,21 @@ namespace AlquilerAudiovisual.Dominio
         public List<DetalleSolicitud> ListarDetallesSolicitud()
         {
             return aListaDetallesSolicitud;
+        }
+
+        public List<DetalleSolicitud> ListarDetallesSolicitud(Solicitud pSolicitud)
+        {
+            List<DetalleSolicitud> ListaDetalles = new List<DetalleSolicitud>();
+
+            foreach (DetalleSolicitud unDetalle in aListaDetallesSolicitud)
+            {
+                if (unDetalle.Solicitud != null && unDetalle.Solicitud.Id == pSolicitud.Id)
+                {
+                    ListaDetalles.Add(unDetalle);
+                }
+            }
+
+            return ListaDetalles;
         }
 
         public DetalleSolicitud BuscarDetalleSolicitud(int pId)
@@ -558,6 +606,52 @@ namespace AlquilerAudiovisual.Dominio
         public List<DetalleContratacion> ListarDetallesContratacion()
         {
             return aListaDetallesContratacion;
+        }
+
+        public bool GenerarDetallesContratacion(Solicitud pSolicitud, Contratacion pContratacion)
+        {
+            List<DetalleSolicitud> ListaDetalles = ListarDetallesSolicitud(pSolicitud);
+
+            if (ListaDetalles.Count == 0)
+            {
+                return false;
+            }
+
+            double Total = 0;
+            int IdNuevo = 1;
+
+            foreach (DetalleContratacion unDetalleExistente in aListaDetallesContratacion)
+            {
+                if (unDetalleExistente.Id >= IdNuevo)
+                {
+                    IdNuevo = unDetalleExistente.Id + 1;
+                }
+            }
+
+            foreach (DetalleSolicitud unDetalleSolicitud in ListaDetalles)
+            {
+                DetalleContratacion unDetalle = new DetalleContratacion(
+                    IdNuevo,
+                    unDetalleSolicitud.Cantidad,
+                    unDetalleSolicitud.PrecioEstimado
+                );
+
+                unDetalle.Contratacion = pContratacion;
+                unDetalle.Equipamiento = unDetalleSolicitud.Equipamiento;
+
+                if (!AltaDetalleContratacion(unDetalle))
+                {
+                    return false;
+                }
+
+                Total = Total + (unDetalleSolicitud.Cantidad * unDetalleSolicitud.PrecioEstimado);
+
+                IdNuevo++;
+            }
+
+            pContratacion.Total = Total;
+
+            return true;
         }
 
         public DetalleContratacion BuscarDetalleContratacion(int pId)
@@ -714,16 +808,21 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarDevolucion(int pId, DateTime pFecha, string pObservacion)
+        public bool ModificarDevolucion(int pId, DateTime pFecha, string pModalidad, string pLugarDevolucion, string pObservaciones, Contratacion pContratacion)
         {
             Devolucion DevolucionAModificar = BuscarDevolucion(pId);
 
             if (DevolucionAModificar != null)
             {
                 DevolucionAModificar.Fecha = pFecha;
-                DevolucionAModificar.Observacion = pObservacion;
+                DevolucionAModificar.Modalidad = pModalidad;
+                DevolucionAModificar.LugarDevolucion = pLugarDevolucion;
+                DevolucionAModificar.Observaciones = pObservaciones;
+                DevolucionAModificar.Contratacion = pContratacion;
+
                 return true;
             }
+
             return false;
         }
 
@@ -736,34 +835,55 @@ namespace AlquilerAudiovisual.Dominio
             return aListaDetallesDevolucion;
         }
 
+        public DetalleDevolucion BuscarDetalleDevolucion(int pId)
+        {
+            foreach (DetalleDevolucion unDetalle in aListaDetallesDevolucion)
+            {
+                if (unDetalle.Id == pId)
+                {
+                    return unDetalle;
+                }
+            }
+
+            return null;
+        }
+
         public bool AltaDetalleDevolucion(DetalleDevolucion pDetalle)
         {
-            if (pDetalle != null)
+            if (pDetalle != null && BuscarDetalleDevolucion(pDetalle.Id) == null)
             {
                 aListaDetallesDevolucion.Add(pDetalle);
                 return true;
             }
+
             return false;
         }
 
-        public bool BajaDetalleDevolucion(DetalleDevolucion pDetalle)
+        public bool BajaDetalleDevolucion(int pId)
         {
-            if (aListaDetallesDevolucion.Contains(pDetalle))
+            DetalleDevolucion DetalleAEliminar = BuscarDetalleDevolucion(pId);
+
+            if (DetalleAEliminar != null)
             {
-                aListaDetallesDevolucion.Remove(pDetalle);
+                aListaDetallesDevolucion.Remove(DetalleAEliminar);
                 return true;
             }
+
             return false;
         }
 
-        public bool ModificarDetalleDevolucion(DetalleDevolucion pDetalle, int pCantidadDevuelta, string pEstado)
+        public bool ModificarDetalleDevolucion(int pId,
+            string pEstadoRecepcion, string pObservaciones)
         {
-            if (aListaDetallesDevolucion.Contains(pDetalle))
+            DetalleDevolucion DetalleAModificar = BuscarDetalleDevolucion(pId);
+
+            if (DetalleAModificar != null)
             {
-                pDetalle.CantidadDevuelta = pCantidadDevuelta;
-                pDetalle.Estado = pEstado;
+                DetalleAModificar.EstadoRecepcion = pEstadoRecepcion;
+                DetalleAModificar.Observaciones = pObservaciones;
                 return true;
             }
+
             return false;
         }
 

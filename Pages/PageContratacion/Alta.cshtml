@@ -1,0 +1,76 @@
+﻿@page
+@using AlquilerAudiovisual.Dominio
+@model AlquilerAudiovisual.Pages.PageContratacion.AltaModel
+@{
+    ViewData["Title"] = "Agregar Contratación";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Agregar una Contratación</h1>
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <div class="form-group">
+                    <label for="id">ID:</label>
+                    <input class="form-control" type="number" name="id" id="id" />
+                </div>
+
+                <div class="form-group">
+                    <label for="idSolicitud">Solicitud:</label>
+
+                    <select class="form-control" name="idSolicitud" id="idSolicitud">
+                        <option value="">Seleccione una solicitud</option>
+
+                        @foreach (Solicitud unaSolicitud in Model.ListaSolicitudes)
+                        {
+                            <option value="@unaSolicitud.Id">
+                                Solicitud Nº @unaSolicitud.Id
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fecha">Fecha de Contratación:</label>
+                    <input class="form-control" type="date" name="fecha" id="fecha" />
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <input class="form-control" type="text" name="estado" id="estado" />
+                </div>
+
+                <div class="form-group">
+                    <label>Total:</label>
+                    <p class="text-muted">
+                        El total se calculará automáticamente según los detalles de la solicitud.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="mt-2">
+                <button class="btn btn-success" type="submit" asp-page-handler="Agregar">
+                    Agregar
+                </button>
+
+                <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+            </div>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger" role="alert">
+            @Model.Mensaje
+        </div>
+    }
+</div>

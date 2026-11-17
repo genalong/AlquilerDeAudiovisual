@@ -8,6 +8,7 @@ namespace AlquilerAudiovisual.Dominio
         private double aTotal;
         private string aEstado = "";
 
+        private int aIdSolicitud;
         public int Id { get { return aId; } set { aId = value; } }
         public DateTime Fecha { get { return aFecha; } set { aFecha = value; } }
         public double Total { get { return aTotal; } set { aTotal = value; } }
@@ -19,6 +20,12 @@ namespace AlquilerAudiovisual.Dominio
             aFecha = pFecha;
             aTotal = pTotal;
             aEstado = pEstado;
+        }
+
+        public int IdSolicitud
+        {
+            get { return aIdSolicitud; }
+            set { aIdSolicitud = value; }
         }
     }
 }

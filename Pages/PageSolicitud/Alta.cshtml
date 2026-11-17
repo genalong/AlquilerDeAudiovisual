@@ -1,0 +1,82 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageSolicitud.AltaModel
+@{
+    ViewData["Title"] = "Agregar Solicitud";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Agregar una Solicitud</h1>
+    <hr />
+
+    <form method="post">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <div class="form-group">
+                    <label for="id">ID:</label>
+                    <input class="form-control" type="number" name="id" id="id" />
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente">Cliente:</label>
+                    <select class="form-control" name="cliente" id="cliente">
+                        <option value="">Seleccione un cliente</option>
+                        @foreach (var unCliente in Model.Clientes)
+                        {
+                            <option value="@unCliente.Id">@unCliente.Id - @unCliente.Nombre</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="evento">Evento:</label>
+                    <select class="form-control" name="evento" id="evento">
+                        <option value="">Seleccione un evento</option>
+                        @foreach (var unEvento in Model.Eventos)
+                        {
+                            <option value="@unEvento.Id">@unEvento.Id - @unEvento.Tipo</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaSolicitud">Fecha de solicitud:</label>
+                    <input class="form-control" type="date" name="fechaSolicitud" id="fechaSolicitud" />
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de inicio:</label>
+                    <input class="form-control" type="date" name="fechaInicio" id="fechaInicio" />
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de fin:</label>
+                    <input class="form-control" type="date" name="fechaFin" id="fechaFin" />
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <input class="form-control" type="text" name="estado" id="estado" />
+                </div>
+
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="mt-2">
+                <button class="btn btn-success" type="submit" asp-page-handler="Agregar">Agregar</button>
+                <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+            </div>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger" role="alert">
+            @Model.Mensaje
+        </div>
+    }
+</div>

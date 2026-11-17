@@ -10,7 +10,9 @@ namespace AlquilerAudiovisual.Pages.PageEvento
         public string Mensaje { get; set; } = "";
         public int Id { get; set; }
         public string Tipo { get; set; } = "";
+        public string Ubicacion { get; set; } = "";
         public DateTime Fecha { get; set; }
+        public int CantidadAsistentes { get; set; }
 
         public IActionResult OnGet(int id)
         {
@@ -25,7 +27,9 @@ namespace AlquilerAudiovisual.Pages.PageEvento
 
             Id = unEvento.Id;
             Tipo = unEvento.Tipo;
+            Ubicacion = unEvento.Ubicacion;
             Fecha = unEvento.Fecha;
+            CantidadAsistentes = unEvento.CantidadAsistentes;
 
             return Page();
         }
@@ -34,29 +38,36 @@ namespace AlquilerAudiovisual.Pages.PageEvento
         {
             try
             {
-                if (Request.Form["id"] == "")
-                {
-                    throw new Exception("Debe ingresar el ID del Evento");
-                }
+                if (!int.TryParse(Request.Form["id"], out int IdEvento))
+                    throw new Exception("El ID del Evento no es válido");
 
                 if (Request.Form["tipo"] == "")
-                {
                     throw new Exception("Debe ingresar el Tipo del Evento");
-                }
 
-                if (Request.Form["fecha"] == "")
-                {
-                    throw new Exception("Debe ingresar la Fecha del Evento");
-                }
+                if (Request.Form["ubicacion"] == "")
+                    throw new Exception("Debe ingresar la Ubicación del Evento");
 
-                int IdEvento = int.Parse(Request.Form["id"]);
+                if (!DateTime.TryParse(Request.Form["fecha"], out DateTime FechaEvento))
+                    throw new Exception("Debe ingresar una Fecha válida");
+
+                if (!int.TryParse(Request.Form["cantidadAsistentes"], out int Cantidad))
+                    throw new Exception("La cantidad de asistentes debe ser un número");
+
+                if (Cantidad <= 0)
+                    throw new Exception("La cantidad de asistentes debe ser mayor a cero");
+
                 string TipoEvento = Request.Form["tipo"];
-                DateTime FechaEvento = DateTime.Parse(Request.Form["fecha"]);
+                string UbicacionEvento = Request.Form["ubicacion"];
 
                 Controladora unaControladora = new Controladora();
 
                 bool Modificado = unaControladora.ModificarEvento(
-                    IdEvento, TipoEvento, FechaEvento);
+                    IdEvento,
+                    TipoEvento,
+                    UbicacionEvento,
+                    FechaEvento,
+                    Cantidad
+                );
 
                 if (Modificado)
                 {
@@ -68,10 +79,15 @@ namespace AlquilerAudiovisual.Pages.PageEvento
             catch (Exception Error)
             {
                 Mensaje = Error.Message;
-                Id = int.Parse(Request.Form["id"]);
+
+                int.TryParse(Request.Form["id"], out int IdFormulario);
+                Id = IdFormulario;
                 Tipo = Request.Form["tipo"];
-                DateTime.TryParse(Request.Form["fecha"], out DateTime fecha);
-                Fecha = fecha;
+                Ubicacion = Request.Form["ubicacion"];
+                DateTime.TryParse(Request.Form["fecha"], out DateTime FechaFormulario);
+                Fecha = FechaFormulario;
+                int.TryParse(Request.Form["cantidadAsistentes"], out int CantidadFormulario);
+                CantidadAsistentes = CantidadFormulario;
 
                 return Page();
             }
