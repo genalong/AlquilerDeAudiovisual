@@ -84,7 +84,7 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
                     }
                 }
 
-                List<DetalleSolicitud> ListaDetalles =
+                List<LineaSolicitud> ListaDetalles =
                     unaControladora.ListarDetallesSolicitud(unaSolicitud);
 
                 if (ListaDetalles.Count == 0)

@@ -8,7 +8,7 @@ namespace AlquilerAudiovisual.Pages.PageRecepcionDevolucion
     {
         public List<Devolucion> Devoluciones { get; set; } = new List<Devolucion>();
 
-        public List<DetalleContratacion> DetallesContratacion { get; set; } = new List<DetalleContratacion>();
+        public List<LineaContratacion> DetallesContratacion { get; set; } = new List<LineaContratacion>();
 
         public int IdDevolucionSeleccionada { get; set; }
 
@@ -30,7 +30,7 @@ namespace AlquilerAudiovisual.Pages.PageRecepcionDevolucion
                 if (unaDevolucion != null &&
                     unaDevolucion.Contratacion != null)
                 {
-                    foreach (DetalleContratacion unDetalle in
+                    foreach (LineaContratacion unDetalle in
                         unaControladora.ListarDetallesContratacion())
                     {
                         if (unDetalle.Contratacion != null &&
@@ -89,7 +89,7 @@ namespace AlquilerAudiovisual.Pages.PageRecepcionDevolucion
                         "La devolución seleccionada no existe o no tiene contratación");
                 }
 
-                DetalleContratacion unDetalleContratacion =
+                LineaContratacion unDetalleContratacion =
                     unaControladora.BuscarDetalleContratacion(
                         IdDetalleContratacion);
 

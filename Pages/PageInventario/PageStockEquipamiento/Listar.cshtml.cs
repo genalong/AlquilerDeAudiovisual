@@ -6,7 +6,7 @@ namespace AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento
 {
     public class ListarModel : PageModel
     {
-        public List<StockEquipamiento> ListaStockEquipamientos { get; set; } = new List<StockEquipamiento>();
+        public List<EquipoPorCantidad> ListaStockEquipamientos { get; set; } = new List<EquipoPorCantidad>();
 
         public void OnGet()
         {

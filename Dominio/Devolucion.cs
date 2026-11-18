@@ -3,29 +3,38 @@
     public class Devolucion
     {
         private int aId;
-        private DateTime aFecha;
-        private string aModalidad = "";
-        private string aLugarDevolucion = "";
-        private string aObservaciones = "";
-        private Contratacion aContratacion;
+        private int aContratacionId;
+        private DateTime aFechaDevolucion;
+        private double aCargoAdicionalTotal;
+        private string aObservaciones;
+        private List<DetalleDevolucion> aDetalles;
 
         public int Id { get { return aId; } set { aId = value; } }
-        public DateTime Fecha { get { return aFecha; } set { aFecha = value; } }
-        public string Modalidad { get { return aModalidad; } set { aModalidad = value; } }
-        public string LugarDevolucion { get { return aLugarDevolucion; } set { aLugarDevolucion = value; } }
+        public int ContratacionId { get { return aContratacionId; } set { aContratacionId = value; } }
+        public DateTime FechaDevolucion { get { return aFechaDevolucion; } set { aFechaDevolucion = value; } }
+        public double CargoAdicionalTotal { get { return aCargoAdicionalTotal; } set { aCargoAdicionalTotal = value; } }
         public string Observaciones { get { return aObservaciones; } set { aObservaciones = value; } }
-        public Contratacion Contratacion { get { return aContratacion; } set { aContratacion = value; } }
+        public List<DetalleDevolucion> Detalles { get { return aDetalles; } set { aDetalles = value; } }
 
-        public Devolucion(int pId, DateTime pFecha, string pModalidad,
-            string pLugarDevolucion, string pObservaciones,
-            Contratacion pContratacion)
+        public Devolucion(int pId, int pContratacionId, DateTime pFechaDevolucion,
+                          double pCargoAdicionalTotal, string pObservaciones)
         {
             aId = pId;
-            aFecha = pFecha;
-            aModalidad = pModalidad;
-            aLugarDevolucion = pLugarDevolucion;
+            aContratacionId = pContratacionId;
+            aFechaDevolucion = pFechaDevolucion;
+            aCargoAdicionalTotal = pCargoAdicionalTotal;
             aObservaciones = pObservaciones;
-            aContratacion = pContratacion;
+            aDetalles = new List<DetalleDevolucion>();
+        }
+
+        public Devolucion()
+        {
+            aId = 0;
+            aContratacionId = 0;
+            aFechaDevolucion = DateTime.Now;
+            aCargoAdicionalTotal = 0;
+            aObservaciones = "";
+            aDetalles = new List<DetalleDevolucion>();
         }
     }
 }

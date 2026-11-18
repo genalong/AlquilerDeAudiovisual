@@ -3,50 +3,43 @@
     public class DetalleDevolucion
     {
         private int aId;
-        private string aEstadoRecepcion = "";
-        private string aObservaciones = "";
-        private Devolucion aDevolucion;
-        private DetalleContratacion aDetalleContratacion;
+        private int aDevolucionId;
+        private int aEquipamientoId;
+        private int aCantidad;
+        private string aTipoIncidencia;   // "Correcta" | "Daño" | "Faltante" | "Requiere mantenimiento"
+        private double aCargoAdicional;
+        private string aObservacion;
 
-        public int Id
-        {
-            get { return aId; }
-            set { aId = value; }
-        }
+        public int Id { get { return aId; } set { aId = value; } }
+        public int DevolucionId { get { return aDevolucionId; } set { aDevolucionId = value; } }
+        public int EquipamientoId { get { return aEquipamientoId; } set { aEquipamientoId = value; } }
+        public int Cantidad { get { return aCantidad; } set { aCantidad = value; } }
+        public string TipoIncidencia { get { return aTipoIncidencia; } set { aTipoIncidencia = value; } }
+        public double CargoAdicional { get { return aCargoAdicional; } set { aCargoAdicional = value; } }
+        public string Observacion { get { return aObservacion; } set { aObservacion = value; } }
 
-        public string EstadoRecepcion
-        {
-            get { return aEstadoRecepcion; }
-            set { aEstadoRecepcion = value; }
-        }
-
-        public string Observaciones
-        {
-            get { return aObservaciones; }
-            set { aObservaciones = value; }
-        }
-
-        public Devolucion Devolucion
-        {
-            get { return aDevolucion; }
-            set { aDevolucion = value; }
-        }
-
-        public DetalleContratacion DetalleContratacion
-        {
-            get { return aDetalleContratacion; }
-            set { aDetalleContratacion = value; }
-        }
-
-        public DetalleDevolucion(int pId, string pEstadoRecepcion,
-            string pObservaciones, Devolucion pDevolucion,
-            DetalleContratacion pDetalleContratacion)
+        public DetalleDevolucion(int pId, int pDevolucionId, int pEquipamientoId,
+                                 int pCantidad, string pTipoIncidencia,
+                                 double pCargoAdicional, string pObservacion)
         {
             aId = pId;
-            aEstadoRecepcion = pEstadoRecepcion;
-            aObservaciones = pObservaciones;
-            aDevolucion = pDevolucion;
-            aDetalleContratacion = pDetalleContratacion;
+            aDevolucionId = pDevolucionId;
+            aEquipamientoId = pEquipamientoId;
+            aCantidad = pCantidad;
+            aTipoIncidencia = pTipoIncidencia;
+            aCargoAdicional = pCargoAdicional;
+            aObservacion = pObservacion;
+        }
+
+        public DetalleDevolucion()
+        {
+            aId = 0;
+            aDevolucionId = 0;
+            aEquipamientoId = 0;
+            aCantidad = 0;
+            aTipoIncidencia = "Correcta";
+            aCargoAdicional = 0;
+            aObservacion = "";
         }
     }
 }

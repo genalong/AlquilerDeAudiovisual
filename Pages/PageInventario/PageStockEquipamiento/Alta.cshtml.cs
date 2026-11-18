@@ -56,7 +56,7 @@ namespace AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento
                 return Page();
             }
 
-            StockEquipamiento unStock = new StockEquipamiento(
+            EquipoPorCantidad unStock = new EquipoPorCantidad(
                 Id,
                 CantidadTotal,
                 CantidadDisponible,

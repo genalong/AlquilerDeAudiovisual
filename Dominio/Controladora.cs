@@ -1,23 +1,17 @@
-﻿
-namespace AlquilerAudiovisual.Dominio
+﻿namespace AlquilerAudiovisual.Dominio
 {
     public class Controladora
     {
         private static List<Cliente> aListaClientes = new List<Cliente>();
-        private static List<Evento> aListaEventos = new List<Evento>();
-        private static List<Solicitud> aListaSolicitudes = new List<Solicitud>();
-        private static List<Contratacion> aListaContrataciones = new List<Contratacion>();
-        private static List<Equipamiento> aListaEquipamientos = new List<Equipamiento>();
         private static List<Deposito> aListaDepositos = new List<Deposito>();
-        private static List<EquipoIndividual> aListaEquiposIndividuales = new List<EquipoIndividual>();
-        private static List<StockEquipamiento> aListaStockEquipamientos = new List<StockEquipamiento>();
-        private static List<DetalleSolicitud> aListaDetallesSolicitud = new List<DetalleSolicitud>();
-        private static List<DetalleContratacion> aListaDetallesContratacion = new List<DetalleContratacion>();
-        private static List<Pago> aListaPagos = new List<Pago>();
+        private static List<Equipamiento> aListaEquipamientos = new List<Equipamiento>();
+        private static List<SolicitudAlquiler> aListaSolicitudes = new List<SolicitudAlquiler>();
+        private static List<LineaSolicitud> aListaDetallesSolicitud = new List<LineaSolicitud>();
+        private static List<Contratacion> aListaContrataciones = new List<Contratacion>();
+        private static List<LineaContratacion> aListaDetallesContratacion = new List<LineaContratacion>();
         private static List<Devolucion> aListaDevoluciones = new List<Devolucion>();
         private static List<DetalleDevolucion> aListaDetallesDevolucion = new List<DetalleDevolucion>();
-        private static List<Incidencia> aListaIncidencias = new List<Incidencia>();
-
+        private static List<Pago> aListaPagos = new List<Pago>();
 
         #region Clientes
 
@@ -62,264 +56,19 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarCliente(int pId, string pNombre, string pTelefono, string pDireccion, string pEmail)
+        public bool ModificarCliente(int pId, string pNombre, string pTipo, string pDocumento,
+                                     string pEmail, string pTelefono, string pDireccion)
         {
             Cliente ClienteAModificar = BuscarCliente(pId);
 
             if (ClienteAModificar != null)
             {
                 ClienteAModificar.Nombre = pNombre;
+                ClienteAModificar.Tipo = pTipo;
+                ClienteAModificar.Documento = pDocumento;
+                ClienteAModificar.Email = pEmail;
                 ClienteAModificar.Telefono = pTelefono;
                 ClienteAModificar.Direccion = pDireccion;
-                ClienteAModificar.Email = pEmail;
-                return true;
-            }
-            return false;
-        }
-
-        #endregion
-
-
-        #region Eventos
-
-        public List<Evento> ListarEventos()
-        {
-            return aListaEventos;
-        }
-
-        public Evento BuscarEvento(int pId)
-        {
-            foreach (Evento unEvento in aListaEventos)
-            {
-                if (unEvento.Id == pId)
-                {
-                    return unEvento;
-                }
-            }
-            return null;
-        }
-
-        public bool AltaEvento(Evento pEvento)
-        {
-            Evento ComparoEvento = BuscarEvento(pEvento.Id);
-
-            if (ComparoEvento == null)
-            {
-                aListaEventos.Add(pEvento);
-                return true;
-            }
-            return false;
-        }
-
-        public bool BajaEvento(int pId)
-        {
-            Evento EventoAEliminar = BuscarEvento(pId);
-
-            if (EventoAEliminar != null)
-            {
-                aListaEventos.Remove(EventoAEliminar);
-                return true;
-            }
-            return false;
-        }
-          public bool ModificarEvento(int pId, string pTipo, string pUbicacion, DateTime pFecha, int pCantidadAsistentes)
-            {
-            Evento EventoAModificar = BuscarEvento(pId);
-
-            if (EventoAModificar != null)
-            {
-                EventoAModificar.Tipo = pTipo;
-                EventoAModificar.Ubicacion = pUbicacion;
-                EventoAModificar.Fecha = pFecha;
-                EventoAModificar.CantidadAsistentes = pCantidadAsistentes;
-
-                return true;
-            }
-
-            return false;
-        }
-
-
-        #endregion
-
-
-        #region Solicitudes
-
-        public List<Solicitud> ListarSolicitudes()
-        {
-            return aListaSolicitudes;
-        }
-
-        public Solicitud BuscarSolicitud(int pId)
-        {
-            foreach (Solicitud unaSolicitud in aListaSolicitudes)
-            {
-                if (unaSolicitud.Id == pId)
-                {
-                    return unaSolicitud;
-                }
-            }
-            return null;
-        }
-
-        public bool AltaSolicitud(Solicitud pSolicitud)
-        {
-            Solicitud ComparoSolicitud = BuscarSolicitud(pSolicitud.Id);
-
-            if (ComparoSolicitud == null)
-            {
-                aListaSolicitudes.Add(pSolicitud);
-                return true;
-            }
-            return false;
-        }
-
-        public bool BajaSolicitud(int pId)
-        {
-            Solicitud SolicitudAEliminar = BuscarSolicitud(pId);
-
-            if (SolicitudAEliminar != null)
-            {
-                aListaSolicitudes.Remove(SolicitudAEliminar);
-                return true;
-            }
-            return false;
-        }
-
-        public bool ModificarSolicitud(int pId, DateTime pFechaSolicitud,  DateTime pFechaInicio, DateTime pFechaFin, string pEstado, Cliente pCliente, Evento pEvento)
-        {
-            Solicitud SolicitudAModificar = BuscarSolicitud(pId);
-
-            if (SolicitudAModificar != null)
-            {
-                SolicitudAModificar.FechaSolicitud = pFechaSolicitud;
-                SolicitudAModificar.FechaInicio = pFechaInicio;
-                SolicitudAModificar.FechaFin = pFechaFin;
-                SolicitudAModificar.Estado = pEstado;
-                SolicitudAModificar.Cliente = pCliente;
-                SolicitudAModificar.Evento = pEvento;
-
-                return true;
-            }
-
-            return false;
-        }
-
-        #endregion
-
-
-        #region Contrataciones
-
-        public List<Contratacion> ListarContrataciones()
-        {
-            return aListaContrataciones;
-        }
-
-        public Contratacion BuscarContratacion(int pId)
-        {
-            foreach (Contratacion unaContratacion in aListaContrataciones)
-            {
-                if (unaContratacion.Id == pId)
-                {
-                    return unaContratacion;
-                }
-            }
-            return null;
-        }
-
-        public bool AltaContratacion(Contratacion pContratacion)
-        {
-            Contratacion ComparoContratacion = BuscarContratacion(pContratacion.Id);
-
-            if (ComparoContratacion == null)
-            {
-                aListaContrataciones.Add(pContratacion);
-                return true;
-            }
-            return false;
-        }
-
-        public bool BajaContratacion(int pId)
-        {
-            Contratacion ContratacionAEliminar = BuscarContratacion(pId);
-
-            if (ContratacionAEliminar != null)
-            {
-                aListaContrataciones.Remove(ContratacionAEliminar);
-                return true;
-            }
-            return false;
-        }
-
-        public bool ModificarContratacion(int pId, DateTime pFecha, double pTotal, string pEstado)
-        {
-            Contratacion ContratacionAModificar = BuscarContratacion(pId);
-
-            if (ContratacionAModificar != null)
-            {
-                ContratacionAModificar.Fecha = pFecha;
-                ContratacionAModificar.Total = pTotal;
-                ContratacionAModificar.Estado = pEstado;
-                return true;
-            }
-            return false;
-        }
-
-        #endregion
-
-
-        #region Equipamientos
-
-        public List<Equipamiento> ListarEquipamientos()
-        {
-            return aListaEquipamientos;
-        }
-
-        public Equipamiento BuscarEquipamiento(int pId)
-        {
-            foreach (Equipamiento unEquipamiento in aListaEquipamientos)
-            {
-                if (unEquipamiento.Id == pId)
-                {
-                    return unEquipamiento;
-                }
-            }
-            return null;
-        }
-
-        public bool AltaEquipamiento(Equipamiento pEquipamiento)
-        {
-            Equipamiento ComparoEquipamiento = BuscarEquipamiento(pEquipamiento.Id);
-
-            if (ComparoEquipamiento == null)
-            {
-                aListaEquipamientos.Add(pEquipamiento);
-                return true;
-            }
-            return false;
-        }
-
-        public bool BajaEquipamiento(int pId)
-        {
-            Equipamiento EquipamientoAEliminar = BuscarEquipamiento(pId);
-
-            if (EquipamientoAEliminar != null)
-            {
-                aListaEquipamientos.Remove(EquipamientoAEliminar);
-                return true;
-            }
-            return false;
-        }
-
-        public bool ModificarEquipamiento(int pId, string pNombre, string pTipo, double pPrecioAlquiler)
-        {
-            Equipamiento EquipamientoAModificar = BuscarEquipamiento(pId);
-
-            if (EquipamientoAModificar != null)
-            {
-                EquipamientoAModificar.Nombre = pNombre;
-                EquipamientoAModificar.Tipo = pTipo;
-                EquipamientoAModificar.PrecioAlquiler = pPrecioAlquiler;
                 return true;
             }
             return false;
@@ -371,7 +120,7 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarDeposito(int pId, string pNombre, string pDireccion)
+        public bool ModificarDeposito(int pId, string pNombre, string pDireccion, string pResponsable)
         {
             Deposito DepositoAModificar = BuscarDeposito(pId);
 
@@ -379,6 +128,7 @@ namespace AlquilerAudiovisual.Dominio
             {
                 DepositoAModificar.Nombre = pNombre;
                 DepositoAModificar.Direccion = pDireccion;
+                DepositoAModificar.Responsable = pResponsable;
                 return true;
             }
             return false;
@@ -387,57 +137,67 @@ namespace AlquilerAudiovisual.Dominio
         #endregion
 
 
-        #region EquiposIndividuales
+        #region Equipamientos
 
-        public List<EquipoIndividual> ListarEquiposIndividuales()
+        public List<Equipamiento> ListarEquipamientos()
         {
-            return aListaEquiposIndividuales;
+            return aListaEquipamientos;
         }
 
-        public EquipoIndividual BuscarEquipoIndividual(int pId)
+        public Equipamiento BuscarEquipamiento(int pId)
         {
-            foreach (EquipoIndividual unEquipo in aListaEquiposIndividuales)
+            foreach (Equipamiento unEquipamiento in aListaEquipamientos)
             {
-                if (unEquipo.Id == pId)
+                if (unEquipamiento.Id == pId)
                 {
-                    return unEquipo;
+                    return unEquipamiento;
                 }
             }
             return null;
         }
 
-        public bool AltaEquipoIndividual(EquipoIndividual pEquipo)
+        public bool AltaEquipamiento(Equipamiento pEquipamiento)
         {
-            EquipoIndividual ComparoEquipo = BuscarEquipoIndividual(pEquipo.Id);
+            Equipamiento ComparoEquipamiento = BuscarEquipamiento(pEquipamiento.Id);
 
-            if (ComparoEquipo == null)
+            if (ComparoEquipamiento == null)
             {
-                aListaEquiposIndividuales.Add(pEquipo);
+                aListaEquipamientos.Add(pEquipamiento);
                 return true;
             }
             return false;
         }
 
-        public bool BajaEquipoIndividual(int pId)
+        public bool BajaEquipamiento(int pId)
         {
-            EquipoIndividual EquipoAEliminar = BuscarEquipoIndividual(pId);
+            Equipamiento EquipamientoAEliminar = BuscarEquipamiento(pId);
 
-            if (EquipoAEliminar != null)
+            if (EquipamientoAEliminar != null)
             {
-                aListaEquiposIndividuales.Remove(EquipoAEliminar);
+                aListaEquipamientos.Remove(EquipamientoAEliminar);
                 return true;
             }
             return false;
         }
 
-        public bool ModificarEquipoIndividual(int pId, string pNumeroSerie, string pEstado)
+        public bool ModificarEquipamiento(int pId, string pNombre, string pMarca, string pModelo,
+                                          string pCaracteristicas, int pDepositoId,
+                                          double pPrecioBaseAlquiler, string pCodigo,
+                                          string pEstado, int pStock)
         {
-            EquipoIndividual EquipoAModificar = BuscarEquipoIndividual(pId);
+            Equipamiento EquipamientoAModificar = BuscarEquipamiento(pId);
 
-            if (EquipoAModificar != null)
+            if (EquipamientoAModificar != null)
             {
-                EquipoAModificar.NumeroSerie = pNumeroSerie;
-                EquipoAModificar.Estado = pEstado;
+                EquipamientoAModificar.Nombre = pNombre;
+                EquipamientoAModificar.Marca = pMarca;
+                EquipamientoAModificar.Modelo = pModelo;
+                EquipamientoAModificar.Caracteristicas = pCaracteristicas;
+                EquipamientoAModificar.DepositoId = pDepositoId;
+                EquipamientoAModificar.PrecioBaseAlquiler = pPrecioBaseAlquiler;
+                EquipamientoAModificar.Codigo = pCodigo;
+                EquipamientoAModificar.Estado = pEstado;
+                EquipamientoAModificar.Stock = pStock;
                 return true;
             }
             return false;
@@ -446,101 +206,88 @@ namespace AlquilerAudiovisual.Dominio
         #endregion
 
 
-        #region StockEquipamientos
+        #region SolicitudesAlquiler
 
-        public List<StockEquipamiento> ListarStockEquipamientos()
+        public List<SolicitudAlquiler> ListarSolicitudes()
         {
-            return aListaStockEquipamientos;
+            return aListaSolicitudes;
         }
 
-        public StockEquipamiento BuscarStockEquipamiento(Equipamiento pEquipamiento, Deposito pDeposito)
+        public SolicitudAlquiler BuscarSolicitud(int pId)
         {
-            foreach (StockEquipamiento unStock in aListaStockEquipamientos)
+            foreach (SolicitudAlquiler unaSolicitud in aListaSolicitudes)
             {
-                if (unStock.Equipamiento == pEquipamiento && unStock.Deposito == pDeposito)
+                if (unaSolicitud.Id == pId)
                 {
-                    return unStock;
+                    return unaSolicitud;
                 }
             }
             return null;
         }
 
-        public StockEquipamiento BuscarStockEquipamiento(int pId)
+        public bool AltaSolicitud(SolicitudAlquiler pSolicitud)
         {
-            foreach (StockEquipamiento unStock in aListaStockEquipamientos)
-            {
-                if (unStock.Id == pId)
-                {
-                    return unStock;
-                }
-            }
-            return null;
-        }
+            SolicitudAlquiler ComparoSolicitud = BuscarSolicitud(pSolicitud.Id);
 
-        public bool AltaStockEquipamiento(StockEquipamiento pStock)
-        {
-            StockEquipamiento StockExistente = BuscarStockEquipamiento(pStock.Equipamiento, pStock.Deposito);
-
-            if (StockExistente == null)
+            if (ComparoSolicitud == null)
             {
-                aListaStockEquipamientos.Add(pStock);
+                aListaSolicitudes.Add(pSolicitud);
                 return true;
             }
             return false;
         }
 
-        public bool BajaStockEquipamiento(int pId)
+        public bool BajaSolicitud(int pId)
         {
-            StockEquipamiento StockAEliminar = BuscarStockEquipamiento(pId);
+            SolicitudAlquiler SolicitudAEliminar = BuscarSolicitud(pId);
 
-            if (StockAEliminar != null)
+            if (SolicitudAEliminar != null)
             {
-                aListaStockEquipamientos.Remove(StockAEliminar);
+                aListaSolicitudes.Remove(SolicitudAEliminar);
                 return true;
             }
             return false;
         }
 
-        public bool ModificarStockEquipamiento(int pId, Equipamiento pEquipamiento, Deposito pDeposito, int pCantidadTotal, int pCantidadDisponible)
+        public bool ModificarSolicitud(int pId, int pClienteId, string pNombreEvento,
+                                        DateTime pFechaEvento, string pUbicacion,
+                                        string pHoraInicio, string pHoraFin,
+                                        int pCantidadAsistentes, string pEstado)
         {
-            StockEquipamiento StockAModificar = BuscarStockEquipamiento(pId);
+            SolicitudAlquiler SolicitudAModificar = BuscarSolicitud(pId);
 
-            if (StockAModificar != null)
+            if (SolicitudAModificar != null)
             {
-                StockEquipamiento StockExistente =
-                    BuscarStockEquipamiento(pEquipamiento, pDeposito);
-
-                if (StockExistente != null && StockExistente.Id != pId)
-                {
-                    return false;
-                }
-
-                StockAModificar.Equipamiento = pEquipamiento;
-                StockAModificar.Deposito = pDeposito;
-                StockAModificar.CantidadTotal = pCantidadTotal;
-                StockAModificar.CantidadDisponible = pCantidadDisponible;
-
+                SolicitudAModificar.ClienteId = pClienteId;
+                SolicitudAModificar.NombreEvento = pNombreEvento;
+                SolicitudAModificar.FechaEvento = pFechaEvento;
+                SolicitudAModificar.Ubicacion = pUbicacion;
+                SolicitudAModificar.HoraInicio = pHoraInicio;
+                SolicitudAModificar.HoraFin = pHoraFin;
+                SolicitudAModificar.CantidadAsistentes = pCantidadAsistentes;
+                SolicitudAModificar.Estado = pEstado;
                 return true;
             }
             return false;
         }
+
         #endregion
 
 
         #region DetallesSolicitud
 
-        public List<DetalleSolicitud> ListarDetallesSolicitud()
+        public List<LineaSolicitud> ListarDetallesSolicitud()
         {
             return aListaDetallesSolicitud;
         }
 
-        public List<DetalleSolicitud> ListarDetallesSolicitud(Solicitud pSolicitud)
+        public List<LineaSolicitud> ListarDetallesSolicitud(int pSolicitudId)
         {
-            List<DetalleSolicitud> ListaDetalles = new List<DetalleSolicitud>();
+            List<LineaSolicitud> ListaDetalles = new List<LineaSolicitud>();
 
-            foreach (DetalleSolicitud unDetalle in aListaDetallesSolicitud)
+            foreach (LineaSolicitud unDetalle in aListaDetallesSolicitud)
             {
-                if (unDetalle.Solicitud != null && unDetalle.Solicitud.Id == pSolicitud.Id)
+                if (unDetalle.SolicitudId == pSolicitudId)
                 {
                     ListaDetalles.Add(unDetalle);
                 }
@@ -549,9 +296,9 @@ namespace AlquilerAudiovisual.Dominio
             return ListaDetalles;
         }
 
-        public DetalleSolicitud BuscarDetalleSolicitud(int pId)
+        public LineaSolicitud BuscarDetalleSolicitud(int pId)
         {
-            foreach (DetalleSolicitud unDetalle in aListaDetallesSolicitud)
+            foreach (LineaSolicitud unDetalle in aListaDetallesSolicitud)
             {
                 if (unDetalle.Id == pId)
                 {
@@ -561,9 +308,9 @@ namespace AlquilerAudiovisual.Dominio
             return null;
         }
 
-        public bool AltaDetalleSolicitud(DetalleSolicitud pDetalle)
+        public bool AltaDetalleSolicitud(LineaSolicitud pDetalle)
         {
-            DetalleSolicitud DetalleExistente = BuscarDetalleSolicitud(pDetalle.Id);
+            LineaSolicitud DetalleExistente = BuscarDetalleSolicitud(pDetalle.Id);
 
             if (DetalleExistente == null)
             {
@@ -575,7 +322,7 @@ namespace AlquilerAudiovisual.Dominio
 
         public bool BajaDetalleSolicitud(int pId)
         {
-            DetalleSolicitud DetalleAEliminar = BuscarDetalleSolicitud(pId);
+            LineaSolicitud DetalleAEliminar = BuscarDetalleSolicitud(pId);
 
             if (DetalleAEliminar != null)
             {
@@ -585,14 +332,78 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarDetalleSolicitud(int pId, int pCantidad, double pPrecioEstimado)
+        public bool ModificarDetalleSolicitud(int pId, int pCantidad)
         {
-            DetalleSolicitud DetalleAModificar = BuscarDetalleSolicitud(pId);
+            LineaSolicitud DetalleAModificar = BuscarDetalleSolicitud(pId);
 
             if (DetalleAModificar != null)
             {
                 DetalleAModificar.Cantidad = pCantidad;
-                DetalleAModificar.PrecioEstimado = pPrecioEstimado;
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+
+        #region Contrataciones
+
+        public List<Contratacion> ListarContrataciones()
+        {
+            return aListaContrataciones;
+        }
+
+        public Contratacion BuscarContratacion(int pId)
+        {
+            foreach (Contratacion unaContratacion in aListaContrataciones)
+            {
+                if (unaContratacion.Id == pId)
+                {
+                    return unaContratacion;
+                }
+            }
+            return null;
+        }
+
+        public bool AltaContratacion(Contratacion pContratacion)
+        {
+            Contratacion ComparoContratacion = BuscarContratacion(pContratacion.Id);
+
+            if (ComparoContratacion == null)
+            {
+                aListaContrataciones.Add(pContratacion);
+                return true;
+            }
+            return false;
+        }
+
+        public bool BajaContratacion(int pId)
+        {
+            Contratacion ContratacionAEliminar = BuscarContratacion(pId);
+
+            if (ContratacionAEliminar != null)
+            {
+                aListaContrataciones.Remove(ContratacionAEliminar);
+                return true;
+            }
+            return false;
+        }
+
+        public bool ModificarContratacion(int pId, DateTime pFechaEvento, string pUbicacion,
+                                           string pHoraInicio, string pHoraFin,
+                                           double pImporteTotal, string pEstado)
+        {
+            Contratacion ContratacionAModificar = BuscarContratacion(pId);
+
+            if (ContratacionAModificar != null)
+            {
+                ContratacionAModificar.FechaEvento = pFechaEvento;
+                ContratacionAModificar.Ubicacion = pUbicacion;
+                ContratacionAModificar.HoraInicio = pHoraInicio;
+                ContratacionAModificar.HoraFin = pHoraFin;
+                ContratacionAModificar.ImporteTotal = pImporteTotal;
+                ContratacionAModificar.Estado = pEstado;
                 return true;
             }
             return false;
@@ -603,60 +414,29 @@ namespace AlquilerAudiovisual.Dominio
 
         #region DetallesContratacion
 
-        public List<DetalleContratacion> ListarDetallesContratacion()
+        public List<LineaContratacion> ListarDetallesContratacion()
         {
             return aListaDetallesContratacion;
         }
 
-        public bool GenerarDetallesContratacion(Solicitud pSolicitud, Contratacion pContratacion)
+        public List<LineaContratacion> ListarDetallesContratacion(int pContratacionId)
         {
-            List<DetalleSolicitud> ListaDetalles = ListarDetallesSolicitud(pSolicitud);
+            List<LineaContratacion> ListaDetalles = new List<LineaContratacion>();
 
-            if (ListaDetalles.Count == 0)
+            foreach (LineaContratacion unDetalle in aListaDetallesContratacion)
             {
-                return false;
-            }
-
-            double Total = 0;
-            int IdNuevo = 1;
-
-            foreach (DetalleContratacion unDetalleExistente in aListaDetallesContratacion)
-            {
-                if (unDetalleExistente.Id >= IdNuevo)
+                if (unDetalle.ContratacionId == pContratacionId)
                 {
-                    IdNuevo = unDetalleExistente.Id + 1;
+                    ListaDetalles.Add(unDetalle);
                 }
             }
 
-            foreach (DetalleSolicitud unDetalleSolicitud in ListaDetalles)
-            {
-                DetalleContratacion unDetalle = new DetalleContratacion(
-                    IdNuevo,
-                    unDetalleSolicitud.Cantidad,
-                    unDetalleSolicitud.PrecioEstimado
-                );
-
-                unDetalle.Contratacion = pContratacion;
-                unDetalle.Equipamiento = unDetalleSolicitud.Equipamiento;
-
-                if (!AltaDetalleContratacion(unDetalle))
-                {
-                    return false;
-                }
-
-                Total = Total + (unDetalleSolicitud.Cantidad * unDetalleSolicitud.PrecioEstimado);
-
-                IdNuevo++;
-            }
-
-            pContratacion.Total = Total;
-
-            return true;
+            return ListaDetalles;
         }
 
-        public DetalleContratacion BuscarDetalleContratacion(int pId)
+        public LineaContratacion BuscarDetalleContratacion(int pId)
         {
-            foreach (DetalleContratacion unDetalle in aListaDetallesContratacion)
+            foreach (LineaContratacion unDetalle in aListaDetallesContratacion)
             {
                 if (unDetalle.Id == pId)
                 {
@@ -666,9 +446,9 @@ namespace AlquilerAudiovisual.Dominio
             return null;
         }
 
-        public bool AltaDetalleContratacion(DetalleContratacion pDetalle)
+        public bool AltaDetalleContratacion(LineaContratacion pDetalle)
         {
-            DetalleContratacion DetalleExistente = BuscarDetalleContratacion(pDetalle.Id);
+            LineaContratacion DetalleExistente = BuscarDetalleContratacion(pDetalle.Id);
 
             if (DetalleExistente == null)
             {
@@ -680,7 +460,7 @@ namespace AlquilerAudiovisual.Dominio
 
         public bool BajaDetalleContratacion(int pId)
         {
-            DetalleContratacion DetalleAEliminar = BuscarDetalleContratacion(pId);
+            LineaContratacion DetalleAEliminar = BuscarDetalleContratacion(pId);
 
             if (DetalleAEliminar != null)
             {
@@ -690,73 +470,14 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarDetalleContratacion(int pId, int pCantidad, double pPrecioAcordado)
+        public bool ModificarDetalleContratacion(int pId, int pCantidad, double pPrecioUnitario)
         {
-            DetalleContratacion DetalleAModificar = BuscarDetalleContratacion(pId);
+            LineaContratacion DetalleAModificar = BuscarDetalleContratacion(pId);
 
             if (DetalleAModificar != null)
             {
                 DetalleAModificar.Cantidad = pCantidad;
-                DetalleAModificar.PrecioAcordado = pPrecioAcordado;
-                return true;
-            }
-            return false;
-        }
-
-        #endregion
-
-
-        #region Pagos
-
-        public List<Pago> ListarPagos()
-        {
-            return aListaPagos;
-        }
-
-        public Pago BuscarPago(int pId)
-        {
-            foreach (Pago unPago in aListaPagos)
-            {
-                if (unPago.Id == pId)
-                {
-                    return unPago;
-                }
-            }
-            return null;
-        }
-
-        public bool AltaPago(Pago pPago)
-        {
-            Pago PagoExistente = BuscarPago(pPago.Id);
-
-            if (PagoExistente == null)
-            {
-                aListaPagos.Add(pPago);
-                return true;
-            }
-            return false;
-        }
-
-        public bool BajaPago(int pId)
-        {
-            Pago PagoAEliminar = BuscarPago(pId);
-
-            if (PagoAEliminar != null)
-            {
-                aListaPagos.Remove(PagoAEliminar);
-                return true;
-            }
-            return false;
-        }
-
-        public bool ModificarPago(int pId, double pImporte, string pMetodo)
-        {
-            Pago PagoAModificar = BuscarPago(pId);
-
-            if (PagoAModificar != null)
-            {
-                PagoAModificar.Importe = pImporte;
-                PagoAModificar.Metodo = pMetodo;
+                DetalleAModificar.PrecioUnitario = pPrecioUnitario;
                 return true;
             }
             return false;
@@ -808,31 +529,44 @@ namespace AlquilerAudiovisual.Dominio
             return false;
         }
 
-        public bool ModificarDevolucion(int pId, DateTime pFecha, string pModalidad, string pLugarDevolucion, string pObservaciones, Contratacion pContratacion)
+        public bool ModificarDevolucion(int pId, DateTime pFechaDevolucion,
+                                         double pCargoAdicionalTotal, string pObservaciones)
         {
             Devolucion DevolucionAModificar = BuscarDevolucion(pId);
 
             if (DevolucionAModificar != null)
             {
-                DevolucionAModificar.Fecha = pFecha;
-                DevolucionAModificar.Modalidad = pModalidad;
-                DevolucionAModificar.LugarDevolucion = pLugarDevolucion;
+                DevolucionAModificar.FechaDevolucion = pFechaDevolucion;
+                DevolucionAModificar.CargoAdicionalTotal = pCargoAdicionalTotal;
                 DevolucionAModificar.Observaciones = pObservaciones;
-                DevolucionAModificar.Contratacion = pContratacion;
-
                 return true;
             }
-
             return false;
         }
 
         #endregion
+
 
         #region DetallesDevolucion
 
         public List<DetalleDevolucion> ListarDetallesDevolucion()
         {
             return aListaDetallesDevolucion;
+        }
+
+        public List<DetalleDevolucion> ListarDetallesDevolucion(int pDevolucionId)
+        {
+            List<DetalleDevolucion> ListaDetalles = new List<DetalleDevolucion>();
+
+            foreach (DetalleDevolucion unDetalle in aListaDetallesDevolucion)
+            {
+                if (unDetalle.DevolucionId == pDevolucionId)
+                {
+                    ListaDetalles.Add(unDetalle);
+                }
+            }
+
+            return ListaDetalles;
         }
 
         public DetalleDevolucion BuscarDetalleDevolucion(int pId)
@@ -844,18 +578,18 @@ namespace AlquilerAudiovisual.Dominio
                     return unDetalle;
                 }
             }
-
             return null;
         }
 
         public bool AltaDetalleDevolucion(DetalleDevolucion pDetalle)
         {
-            if (pDetalle != null && BuscarDetalleDevolucion(pDetalle.Id) == null)
+            DetalleDevolucion DetalleExistente = BuscarDetalleDevolucion(pDetalle.Id);
+
+            if (DetalleExistente == null)
             {
                 aListaDetallesDevolucion.Add(pDetalle);
                 return true;
             }
-
             return false;
         }
 
@@ -868,81 +602,480 @@ namespace AlquilerAudiovisual.Dominio
                 aListaDetallesDevolucion.Remove(DetalleAEliminar);
                 return true;
             }
-
             return false;
         }
 
-        public bool ModificarDetalleDevolucion(int pId,
-            string pEstadoRecepcion, string pObservaciones)
+        public bool ModificarDetalleDevolucion(int pId, int pCantidad,
+                                               string pTipoIncidencia,
+                                               double pCargoAdicional,
+                                               string pObservacion)
         {
             DetalleDevolucion DetalleAModificar = BuscarDetalleDevolucion(pId);
 
             if (DetalleAModificar != null)
             {
-                DetalleAModificar.EstadoRecepcion = pEstadoRecepcion;
-                DetalleAModificar.Observaciones = pObservaciones;
+                DetalleAModificar.Cantidad = pCantidad;
+                DetalleAModificar.TipoIncidencia = pTipoIncidencia;
+                DetalleAModificar.CargoAdicional = pCargoAdicional;
+                DetalleAModificar.Observacion = pObservacion;
                 return true;
             }
-
             return false;
         }
 
         #endregion
 
-        #region Incidencias
 
-        public List<Incidencia> ListarIncidencias()
+        #region Pagos
+
+        public List<Pago> ListarPagos()
         {
-            return aListaIncidencias;
+            return aListaPagos;
         }
 
-        public Incidencia BuscarIncidencia(int pId)
+        public Pago BuscarPago(int pId)
         {
-            foreach (Incidencia unaIncidencia in aListaIncidencias)
+            foreach (Pago unPago in aListaPagos)
             {
-                if (unaIncidencia.Id == pId)
+                if (unPago.Id == pId)
                 {
-                    return unaIncidencia;
+                    return unPago;
                 }
             }
             return null;
         }
 
-        public bool AltaIncidencia(Incidencia pIncidencia)
+        public List<Pago> ListarPagosPorContratacion(int pContratacionId)
         {
-            Incidencia IncidenciaExistente = BuscarIncidencia(pIncidencia.Id);
+            List<Pago> PagosDeContratacion = new List<Pago>();
 
-            if (IncidenciaExistente == null)
+            foreach (Pago unPago in aListaPagos)
             {
-                aListaIncidencias.Add(pIncidencia);
+                if (unPago.ContratacionId == pContratacionId)
+                {
+                    PagosDeContratacion.Add(unPago);
+                }
+            }
+
+            return PagosDeContratacion;
+        }
+
+        public bool AltaPago(Pago pPago)
+        {
+            Pago PagoExistente = BuscarPago(pPago.Id);
+
+            if (PagoExistente == null)
+            {
+                aListaPagos.Add(pPago);
                 return true;
             }
             return false;
         }
 
-        public bool BajaIncidencia(int pId)
+        public bool BajaPago(int pId)
         {
-            Incidencia IncidenciaAEliminar = BuscarIncidencia(pId);
+            Pago PagoAEliminar = BuscarPago(pId);
 
-            if (IncidenciaAEliminar != null)
+            if (PagoAEliminar != null)
             {
-                aListaIncidencias.Remove(IncidenciaAEliminar);
+                aListaPagos.Remove(PagoAEliminar);
                 return true;
             }
             return false;
         }
 
-        public bool ModificarIncidencia(int pId, string pDescripcion, double pCosto)
+        public bool ModificarPago(int pId, double pMonto, string pMetodoPago, string pObservacion)
         {
-            Incidencia IncidenciaAModificar = BuscarIncidencia(pId);
+            Pago PagoAModificar = BuscarPago(pId);
 
-            if (IncidenciaAModificar != null)
+            if (PagoAModificar != null)
             {
-                IncidenciaAModificar.Descripcion = pDescripcion;
-                IncidenciaAModificar.Costo = pCosto;
+                PagoAModificar.Monto = pMonto;
+                PagoAModificar.MetodoPago = pMetodoPago;
+                PagoAModificar.Observacion = pObservacion;
                 return true;
             }
             return false;
+        }
+
+        #endregion
+
+
+        #region Lógica de negocio
+
+        // Verifica si hay disponibilidad de un equipamiento para una fecha y cantidad dadas
+        public bool HayDisponibilidad(int pEquipamientoId, DateTime pFecha, int pCantidad)
+        {
+            Equipamiento elEquipamiento = BuscarEquipamiento(pEquipamientoId);
+
+            if (elEquipamiento == null || !elEquipamiento.Activo)
+            {
+                return false;
+            }
+
+            if (elEquipamiento.Estado == "Fuera de servicio")
+            {
+                return false;
+            }
+
+            int comprometido = CantidadComprometida(pEquipamientoId, pFecha);
+            int enMantenimiento = 0;
+
+            if (elEquipamiento.Estado == "En mantenimiento")
+            {
+                enMantenimiento = elEquipamiento.Stock;
+            }
+
+            int disponible = elEquipamiento.Stock - enMantenimiento - comprometido;
+
+            return disponible >= pCantidad;
+        }
+
+        // Suma las cantidades de un equipamiento ya comprometidas en contrataciones activas para esa fecha
+        public int CantidadComprometida(int pEquipamientoId, DateTime pFecha)
+        {
+            int total = 0;
+
+            foreach (Contratacion unaContratacion in aListaContrataciones)
+            {
+                if (unaContratacion.Estado == "Cancelada" || unaContratacion.Estado == "Finalizada")
+                {
+                    continue;
+                }
+
+                if (unaContratacion.FechaEvento.Date != pFecha.Date)
+                {
+                    continue;
+                }
+
+                foreach (LineaContratacion unDetalle in aListaDetallesContratacion)
+                {
+                    if (unDetalle.ContratacionId == unaContratacion.Id &&
+                        unDetalle.EquipamientoId == pEquipamientoId)
+                    {
+                        total = total + unDetalle.Cantidad;
+                    }
+                }
+            }
+
+            return total;
+        }
+
+        // Acepta una solicitud: verifica disponibilidad, genera contratación y detalles,
+        // y cambia el estado de la solicitud. Devuelve el Id de la nueva contratación,
+        // o -1 si falló por disponibilidad, -2 si la solicitud no existe o no está pendiente.
+        public int AceptarSolicitud(int pSolicitudId)
+        {
+            SolicitudAlquiler laSolicitud = BuscarSolicitud(pSolicitudId);
+
+            if (laSolicitud == null || laSolicitud.Estado != "Pendiente")
+            {
+                return -2;
+            }
+
+            List<LineaSolicitud> Detalles = ListarDetallesSolicitud(pSolicitudId);
+
+            if (Detalles.Count == 0)
+            {
+                return -2;
+            }
+
+            // Verifico disponibilidad de todas las líneas antes de aceptar
+            foreach (LineaSolicitud unDetalle in Detalles)
+            {
+                if (!HayDisponibilidad(unDetalle.EquipamientoId, laSolicitud.FechaEvento, unDetalle.Cantidad))
+                {
+                    return -1;
+                }
+            }
+
+            // Genero la contratación
+            int NuevoIdContratacion = 1;
+            foreach (Contratacion unaContratacion in aListaContrataciones)
+            {
+                if (unaContratacion.Id >= NuevoIdContratacion)
+                {
+                    NuevoIdContratacion = unaContratacion.Id + 1;
+                }
+            }
+
+            Contratacion laContratacion = new Contratacion(
+                NuevoIdContratacion,
+                laSolicitud.Id,
+                laSolicitud.ClienteId,
+                laSolicitud.FechaEvento,
+                laSolicitud.Ubicacion,
+                laSolicitud.HoraInicio,
+                laSolicitud.HoraFin,
+                0,
+                "En preparación"
+            );
+
+            if (!AltaContratacion(laContratacion))
+            {
+                return -3;
+            }
+
+            // Genero los detalles de la contratación a partir de los de la solicitud
+            double Total = 0;
+            int NuevoIdDetalle = 1;
+
+            foreach (LineaContratacion unDetalleExistente in aListaDetallesContratacion)
+            {
+                if (unDetalleExistente.Id >= NuevoIdDetalle)
+                {
+                    NuevoIdDetalle = unDetalleExistente.Id + 1;
+                }
+            }
+
+            foreach (LineaSolicitud unDetalleSolicitud in Detalles)
+            {
+                Equipamiento elEquipamiento = BuscarEquipamiento(unDetalleSolicitud.EquipamientoId);
+                double PrecioUnitario = 0;
+
+                if (elEquipamiento != null)
+                {
+                    PrecioUnitario = elEquipamiento.PrecioBaseAlquiler;
+                }
+
+                LineaContratacion unDetalle = new LineaContratacion(
+                    NuevoIdDetalle,
+                    laContratacion.Id,
+                    unDetalleSolicitud.EquipamientoId,
+                    unDetalleSolicitud.Cantidad,
+                    PrecioUnitario
+                );
+
+                AltaDetalleContratacion(unDetalle);
+                Total = Total + (unDetalleSolicitud.Cantidad * PrecioUnitario);
+                NuevoIdDetalle++;
+            }
+
+            laContratacion.ImporteTotal = Total;
+
+            // Cambio el estado de la solicitud
+            laSolicitud.Estado = "Aceptada";
+
+            return laContratacion.Id;
+        }
+
+        // Saldo pendiente de una contratación: importe total menos la suma de pagos
+        public double SaldoPendiente(int pContratacionId)
+        {
+            Contratacion laContratacion = BuscarContratacion(pContratacionId);
+
+            if (laContratacion == null)
+            {
+                return 0;
+            }
+
+            double TotalPagado = 0;
+            List<Pago> PagosDeContratacion = ListarPagosPorContratacion(pContratacionId);
+
+            foreach (Pago unPago in PagosDeContratacion)
+            {
+                TotalPagado = TotalPagado + unPago.Monto;
+            }
+
+            return laContratacion.ImporteTotal - TotalPagado;
+        }
+
+        // Reporte: equipamiento más alquilado
+        public List<string[]> ReporteMasAlquilado()
+        {
+            List<string[]> Resultado = new List<string[]>();
+
+            foreach (Equipamiento unEquipamiento in aListaEquipamientos)
+            {
+                int UnidadesAlquiladas = 0;
+                int CantidadContrataciones = 0;
+
+                foreach (Contratacion unaContratacion in aListaContrataciones)
+                {
+                    if (unaContratacion.Estado == "Cancelada")
+                    {
+                        continue;
+                    }
+
+                    bool Participo = false;
+
+                    foreach (LineaContratacion unDetalle in aListaDetallesContratacion)
+                    {
+                        if (unDetalle.ContratacionId == unaContratacion.Id &&
+                            unDetalle.EquipamientoId == unEquipamiento.Id)
+                        {
+                            UnidadesAlquiladas = UnidadesAlquiladas + unDetalle.Cantidad;
+                            Participo = true;
+                        }
+                    }
+
+                    if (Participo)
+                    {
+                        CantidadContrataciones++;
+                    }
+                }
+
+                if (UnidadesAlquiladas > 0)
+                {
+                    Resultado.Add(new string[] {
+                        unEquipamiento.Nombre,
+                        UnidadesAlquiladas.ToString(),
+                        CantidadContrataciones.ToString()
+                    });
+                }
+            }
+
+            return Resultado;
+        }
+
+        // Reporte: disponibilidad por depósito y fecha
+        public List<string[]> ReporteDisponibilidad(DateTime pFecha)
+        {
+            List<string[]> Resultado = new List<string[]>();
+
+            foreach (Equipamiento unEquipamiento in aListaEquipamientos)
+            {
+                if (!unEquipamiento.Activo)
+                {
+                    continue;
+                }
+
+                int Comprometido = CantidadComprometida(unEquipamiento.Id, pFecha);
+                int Disponible = unEquipamiento.Stock - Comprometido;
+                Deposito elDeposito = BuscarDeposito(unEquipamiento.DepositoId);
+
+                string NombreDeposito = "(sin depósito)";
+
+                if (elDeposito != null)
+                {
+                    NombreDeposito = elDeposito.Nombre;
+                }
+
+                Resultado.Add(new string[] {
+                    NombreDeposito,
+                    unEquipamiento.Nombre,
+                    unEquipamiento.Stock.ToString(),
+                    Comprometido.ToString(),
+                    Disponible.ToString()
+                });
+            }
+
+            return Resultado;
+        }
+
+        // Reporte: contrataciones por cliente en un período
+        public List<string[]> ReporteContratacionesPorCliente(DateTime pDesde, DateTime pHasta)
+        {
+            List<string[]> Resultado = new List<string[]>();
+
+            foreach (Cliente unCliente in aListaClientes)
+            {
+                int Cantidad = 0;
+                double ImporteTotal = 0;
+
+                foreach (Contratacion unaContratacion in aListaContrataciones)
+                {
+                    if (unaContratacion.ClienteId != unCliente.Id)
+                    {
+                        continue;
+                    }
+
+                    if (unaContratacion.FechaEvento.Date < pDesde.Date ||
+                        unaContratacion.FechaEvento.Date > pHasta.Date)
+                    {
+                        continue;
+                    }
+
+                    Cantidad++;
+                    ImporteTotal = ImporteTotal + unaContratacion.ImporteTotal;
+                }
+
+                if (Cantidad > 0)
+                {
+                    Resultado.Add(new string[] {
+                        unCliente.Nombre,
+                        Cantidad.ToString(),
+                        ImporteTotal.ToString("0.00")
+                    });
+                }
+            }
+
+            return Resultado;
+        }
+
+        // Reporte: estado de cuentas por cobrar
+        public List<string[]> ReporteCuentasPorCobrar()
+        {
+            List<string[]> Resultado = new List<string[]>();
+
+            foreach (Contratacion unaContratacion in aListaContrataciones)
+            {
+                if (unaContratacion.Estado == "Cancelada")
+                {
+                    continue;
+                }
+
+                Cliente elCliente = BuscarCliente(unaContratacion.ClienteId);
+
+                string NombreCliente = "(desconocido)";
+
+                if (elCliente != null)
+                {
+                    NombreCliente = elCliente.Nombre;
+                }
+
+                double TotalPagado = 0;
+                List<Pago> PagosDeContratacion = ListarPagosPorContratacion(unaContratacion.Id);
+
+                foreach (Pago unPago in PagosDeContratacion)
+                {
+                    TotalPagado = TotalPagado + unPago.Monto;
+                }
+
+                double Saldo = unaContratacion.ImporteTotal - TotalPagado;
+
+                Resultado.Add(new string[] {
+                    unaContratacion.Id.ToString(),
+                    NombreCliente,
+                    unaContratacion.ImporteTotal.ToString("0.00"),
+                    TotalPagado.ToString("0.00"),
+                    Saldo.ToString("0.00")
+                });
+            }
+
+            return Resultado;
+        }
+
+        // Reporte: incidencias en devoluciones (daños, faltantes, mantenimiento)
+        public List<string[]> ReporteIncidencias()
+        {
+            List<string[]> Resultado = new List<string[]>();
+
+            foreach (DetalleDevolucion unDetalle in aListaDetallesDevolucion)
+            {
+                if (unDetalle.TipoIncidencia == "Correcta")
+                {
+                    continue;
+                }
+
+                Equipamiento elEquipamiento = BuscarEquipamiento(unDetalle.EquipamientoId);
+
+                string NombreEquipamiento = "(desconocido)";
+
+                if (elEquipamiento != null)
+                {
+                    NombreEquipamiento = elEquipamiento.Nombre;
+                }
+
+                Resultado.Add(new string[] {
+                    NombreEquipamiento,
+                    unDetalle.Cantidad.ToString(),
+                    unDetalle.TipoIncidencia,
+                    unDetalle.CargoAdicional.ToString("0.00")
+                });
+            }
+
+            return Resultado;
         }
 
         #endregion

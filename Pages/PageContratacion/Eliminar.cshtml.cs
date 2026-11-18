@@ -45,12 +45,12 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
                     throw new Exception("No existe la Contratación");
                 }
 
-                List<DetalleContratacion> ListaDetalles =
-                    new List<DetalleContratacion>(
+                List<LineaContratacion> ListaDetalles =
+                    new List<LineaContratacion>(
                         unaControladora.ListarDetallesContratacion()
                     );
 
-                foreach (DetalleContratacion unDetalle in ListaDetalles)
+                foreach (LineaContratacion unDetalle in ListaDetalles)
                 {
                     if (unDetalle.Contratacion != null &&
                         unDetalle.Contratacion.Id == Id)

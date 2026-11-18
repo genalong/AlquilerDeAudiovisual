@@ -9,7 +9,7 @@ namespace AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento
     {
         public int Id { get; set; }
 
-        public StockEquipamiento UnStock { get; set; }
+        public EquipoPorCantidad UnStock { get; set; }
 
         public void OnGet(int id)
         {

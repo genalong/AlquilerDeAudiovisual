@@ -22,7 +22,7 @@ namespace AlquilerAudiovisual.Pages.PageInventario.PageStockEquipamiento
         [BindProperty]
         public int CantidadDisponible { get; set; }
 
-        public StockEquipamiento UnStock { get; set; }
+        public EquipoPorCantidad UnStock { get; set; }
 
         public List<Equipamiento> ListaEquipamientos { get; set; } = new List<Equipamiento>();
 
