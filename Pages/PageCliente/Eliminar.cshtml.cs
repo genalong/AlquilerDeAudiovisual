@@ -1,7 +1,6 @@
-
+using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PageCliente
 {
@@ -22,7 +21,7 @@ namespace AlquilerAudiovisual.Pages.PageCliente
 
             Controladora unaControladora = new Controladora();
 
-            unaControladora.BajaCliente(Id);
+            unaControladora.DesactivarCliente(Id);
 
             return Redirect("./Listar");
         }

@@ -18,9 +18,12 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Documento</th>
                 <th>Teléfono</th>
                 <th>Email</th>
                 <th>Dirección</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -32,17 +35,23 @@
                     <tr>
                         <td>@unCliente.Id</td>
                         <td>@unCliente.Nombre</td>
+                        <td>@unCliente.Tipo</td>
+                        <td>@unCliente.Documento</td>
                         <td>@unCliente.Telefono</td>
                         <td>@unCliente.Email</td>
                         <td>@unCliente.Direccion</td>
+                        <td>@(unCliente.Activo ? "Activo" : "Inactivo")</td>
                         <td>
                             <div>
                                 <a class="btn btn-primary" asp-page="./Modificar" asp-route-id="@unCliente.Id">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
-                                <a class="btn btn-danger" asp-page="./Eliminar" asp-route-id="@unCliente.Id">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
+                                @if (unCliente.Activo)
+                                {
+                                    <a class="btn btn-danger" asp-page="./Eliminar" asp-route-id="@unCliente.Id">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                }
                             </div>
                         </td>
                     </tr>
@@ -51,7 +60,7 @@
             else
             {
                 <tr>
-                    <td colspan="6" class="text-center">
+                    <td colspan="9" class="text-center">
                         No hay Clientes ingresados
                     </td>
                 </tr>

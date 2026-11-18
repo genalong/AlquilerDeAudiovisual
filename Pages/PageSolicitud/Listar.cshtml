@@ -1,47 +1,61 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageSolicitud.ListarModel
 @{
-    ViewData["Title"] = "Listar Solicitudes";
+    ViewData["Title"] = "Listado de Solicitudes";
 }
 
-<div class="text-left">
+<div>
     <h1 class="display-4 text-center">Listado de Solicitudes</h1>
-    <hr />
 
-    <a class="btn btn-success mb-3" asp-page="./Alta">Agregar Solicitud</a>
+    <div class="row">
+        <div class="col text-right">
+            <a class="btn btn-success" asp-page="./Alta">Nueva Solicitud</a>
+        </div>
+    </div>
 
-    <table class="table table-striped">
+    <table class="table text-center">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Evento</th>
-                <th>Fecha de solicitud</th>
-                <th>Fecha de inicio</th>
-                <th>Fecha de fin</th>
+                <th>Fecha</th>
+                <th>Horario</th>
+                <th>Ubicación</th>
+                <th>Asistentes</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var unaSolicitud in Model.ListaSolicitudes)
+            @if (Model.ListaSolicitudes != null && Model.ListaSolicitudes.Any())
+            {
+                @foreach (Dominio.SolicitudAlquiler unaSolicitud in Model.ListaSolicitudes)
+                {
+                    <tr>
+                        <td>@unaSolicitud.Id</td>
+                        <td>@Model.NombreCliente(unaSolicitud.ClienteId)</td>
+                        <td>@unaSolicitud.NombreEvento</td>
+                        <td>@unaSolicitud.FechaEvento.ToString("dd/MM/yyyy")</td>
+                        <td>@unaSolicitud.HoraInicio - @unaSolicitud.HoraFin</td>
+                        <td>@unaSolicitud.Ubicacion</td>
+                        <td>@unaSolicitud.CantidadAsistentes</td>
+                        <td>@unaSolicitud.Estado</td>
+                        <td>
+                            @if (unaSolicitud.Estado == "Pendiente")
+                            {
+                                <a class="btn btn-success" asp-page="./Aceptar" asp-route-id="@unaSolicitud.Id">Aceptar</a>
+                                <a class="btn btn-warning" asp-page="./Cancelar" asp-route-id="@unaSolicitud.Id">Cancelar</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@unaSolicitud.Id</td>
-                    <td>@unaSolicitud.Cliente.Nombre</td>
-                    <td>@unaSolicitud.Evento.Tipo</td>
-                    <td>@unaSolicitud.FechaSolicitud.ToShortDateString()</td>
-                    <td>@unaSolicitud.FechaInicio.ToShortDateString()</td>
-                    <td>@unaSolicitud.FechaFin.ToShortDateString()</td>
-                    <td>@unaSolicitud.Estado</td>
-                    <td>
-                        <a class="btn btn-warning btn-sm"
-                           asp-page="./Modificar"
-                           asp-route-id="@unaSolicitud.Id">Modificar</a>
-
-                        <a class="btn btn-danger btn-sm"
-                           asp-page="./Eliminar"
-                           asp-route-id="@unaSolicitud.Id">Eliminar</a>
+                    <td colspan="9" class="text-center">
+                        No hay Solicitudes ingresadas
                     </td>
                 </tr>
             }

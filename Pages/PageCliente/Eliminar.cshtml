@@ -1,48 +1,34 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageCliente.EliminarModel
 @{
-    ViewData["Title"] = "Eliminar Cliente";
+    ViewData["Title"] = "Desactivar Cliente";
 }
 
 <div class="text-left">
-    <h1 class="display-4 text-center">Eliminar Cliente</h1>
+    <h1 class="display-4 text-center">Desactivar Cliente</h1>
     <hr />
 
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.cliente.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.cliente.Id)
-        </dd>
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.cliente.Id)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.cliente.Nombre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.cliente.Nombre)
-        </dd>
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.cliente.Nombre)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.cliente.Telefono)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.cliente.Telefono)
-        </dd>
+        <dt class="col-sm-2">Tipo</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.cliente.Tipo)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.cliente.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.cliente.Email)
-        </dd>
+        <dt class="col-sm-2">Documento</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.cliente.Documento)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.cliente.Direccion)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.cliente.Direccion)
-        </dd>
+        <dt class="col-sm-2">Teléfono</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.cliente.Telefono)</dd>
+
+        <dt class="col-sm-2">Email</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.cliente.Email)</dd>
+
+        <dt class="col-sm-2">Dirección</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.cliente.Direccion)</dd>
     </dl>
 
     <hr />
@@ -52,7 +38,7 @@
 
         <div class="row">
             <div class="mt-2">
-                <button type="submit" asp-page-handler="Eliminar" class="btn btn-danger">Eliminar</button>
+                <button type="submit" asp-page-handler="Eliminar" class="btn btn-danger">Desactivar</button>
                 <a class="btn btn-warning" asp-page="./Listar">Volver</a>
             </div>
         </div>

@@ -56,6 +56,18 @@
             return false;
         }
 
+        public bool DesactivarCliente(int pId)
+        {
+            Cliente ClienteADesactivar = BuscarCliente(pId);
+
+            if (ClienteADesactivar != null)
+            {
+                ClienteADesactivar.Activo = false;
+                return true;
+            }
+            return false;
+        }
+
         public bool ModificarCliente(int pId, string pNombre, string pTipo, string pDocumento,
                                      string pEmail, string pTelefono, string pDireccion)
         {
@@ -174,7 +186,7 @@
 
             if (EquipamientoAEliminar != null)
             {
-                aListaEquipamientos.Remove(EquipamientoAEliminar);
+                EquipamientoAEliminar.Activo = false;
                 return true;
             }
             return false;
@@ -232,6 +244,7 @@
             if (ComparoSolicitud == null)
             {
                 aListaSolicitudes.Add(pSolicitud);
+                LimpiarDetallesSolicitud();
                 return true;
             }
             return false;
@@ -266,6 +279,25 @@
                 SolicitudAModificar.HoraFin = pHoraFin;
                 SolicitudAModificar.CantidadAsistentes = pCantidadAsistentes;
                 SolicitudAModificar.Estado = pEstado;
+                return true;
+            }
+            return false;
+        }
+
+        public bool ModificarSolicitud(SolicitudAlquiler pSolicitud)
+        {
+            SolicitudAlquiler SolicitudAModificar = BuscarSolicitud(pSolicitud.Id);
+
+            if (SolicitudAModificar != null)
+            {
+                SolicitudAModificar.ClienteId = pSolicitud.ClienteId;
+                SolicitudAModificar.NombreEvento = pSolicitud.NombreEvento;
+                SolicitudAModificar.FechaEvento = pSolicitud.FechaEvento;
+                SolicitudAModificar.Ubicacion = pSolicitud.Ubicacion;
+                SolicitudAModificar.HoraInicio = pSolicitud.HoraInicio;
+                SolicitudAModificar.HoraFin = pSolicitud.HoraFin;
+                SolicitudAModificar.CantidadAsistentes = pSolicitud.CantidadAsistentes;
+                SolicitudAModificar.Estado = pSolicitud.Estado;
                 return true;
             }
             return false;
@@ -330,6 +362,11 @@
                 return true;
             }
             return false;
+        }
+
+        public void LimpiarDetallesSolicitud()
+        {
+            aListaDetallesSolicitud.Clear();
         }
 
         public bool ModificarDetalleSolicitud(int pId, int pCantidad)
@@ -404,6 +441,25 @@
                 ContratacionAModificar.HoraFin = pHoraFin;
                 ContratacionAModificar.ImporteTotal = pImporteTotal;
                 ContratacionAModificar.Estado = pEstado;
+                return true;
+            }
+            return false;
+        }
+
+        public bool ModificarContratacion(Contratacion pContratacion)
+        {
+            Contratacion ContratacionAModificar = BuscarContratacion(pContratacion.Id);
+
+            if (ContratacionAModificar != null)
+            {
+                ContratacionAModificar.SolicitudId = pContratacion.SolicitudId;
+                ContratacionAModificar.ClienteId = pContratacion.ClienteId;
+                ContratacionAModificar.FechaEvento = pContratacion.FechaEvento;
+                ContratacionAModificar.Ubicacion = pContratacion.Ubicacion;
+                ContratacionAModificar.HoraInicio = pContratacion.HoraInicio;
+                ContratacionAModificar.HoraFin = pContratacion.HoraFin;
+                ContratacionAModificar.ImporteTotal = pContratacion.ImporteTotal;
+                ContratacionAModificar.Estado = pContratacion.Estado;
                 return true;
             }
             return false;
@@ -512,6 +568,14 @@
             if (DevolucionExistente == null)
             {
                 aListaDevoluciones.Add(pDevolucion);
+
+                Contratacion laContratacion = BuscarContratacion(pDevolucion.ContratacionId);
+
+                if (laContratacion != null)
+                {
+                    laContratacion.Estado = "Finalizada";
+                }
+
                 return true;
             }
             return false;
@@ -701,9 +765,8 @@
         #endregion
 
 
-        #region Lógica de negocio
+        #region Logica de negocio
 
-        // Verifica si hay disponibilidad de un equipamiento para una fecha y cantidad dadas
         public bool HayDisponibilidad(int pEquipamientoId, DateTime pFecha, int pCantidad)
         {
             Equipamiento elEquipamiento = BuscarEquipamiento(pEquipamientoId);
@@ -731,7 +794,6 @@
             return disponible >= pCantidad;
         }
 
-        // Suma las cantidades de un equipamiento ya comprometidas en contrataciones activas para esa fecha
         public int CantidadComprometida(int pEquipamientoId, DateTime pFecha)
         {
             int total = 0;
@@ -761,9 +823,6 @@
             return total;
         }
 
-        // Acepta una solicitud: verifica disponibilidad, genera contratación y detalles,
-        // y cambia el estado de la solicitud. Devuelve el Id de la nueva contratación,
-        // o -1 si falló por disponibilidad, -2 si la solicitud no existe o no está pendiente.
         public int AceptarSolicitud(int pSolicitudId)
         {
             SolicitudAlquiler laSolicitud = BuscarSolicitud(pSolicitudId);
@@ -780,7 +839,6 @@
                 return -2;
             }
 
-            // Verifico disponibilidad de todas las líneas antes de aceptar
             foreach (LineaSolicitud unDetalle in Detalles)
             {
                 if (!HayDisponibilidad(unDetalle.EquipamientoId, laSolicitud.FechaEvento, unDetalle.Cantidad))
@@ -789,7 +847,6 @@
                 }
             }
 
-            // Genero la contratación
             int NuevoIdContratacion = 1;
             foreach (Contratacion unaContratacion in aListaContrataciones)
             {
@@ -816,7 +873,6 @@
                 return -3;
             }
 
-            // Genero los detalles de la contratación a partir de los de la solicitud
             double Total = 0;
             int NuevoIdDetalle = 1;
 
@@ -852,14 +908,11 @@
             }
 
             laContratacion.ImporteTotal = Total;
-
-            // Cambio el estado de la solicitud
             laSolicitud.Estado = "Aceptada";
 
             return laContratacion.Id;
         }
 
-        // Saldo pendiente de una contratación: importe total menos la suma de pagos
         public double SaldoPendiente(int pContratacionId)
         {
             Contratacion laContratacion = BuscarContratacion(pContratacionId);
@@ -880,7 +933,6 @@
             return laContratacion.ImporteTotal - TotalPagado;
         }
 
-        // Reporte: equipamiento más alquilado
         public List<string[]> ReporteMasAlquilado()
         {
             List<string[]> Resultado = new List<string[]>();
@@ -928,7 +980,6 @@
             return Resultado;
         }
 
-        // Reporte: disponibilidad por depósito y fecha
         public List<string[]> ReporteDisponibilidad(DateTime pFecha)
         {
             List<string[]> Resultado = new List<string[]>();
@@ -963,7 +1014,6 @@
             return Resultado;
         }
 
-        // Reporte: contrataciones por cliente en un período
         public List<string[]> ReporteContratacionesPorCliente(DateTime pDesde, DateTime pHasta)
         {
             List<string[]> Resultado = new List<string[]>();
@@ -1003,7 +1053,6 @@
             return Resultado;
         }
 
-        // Reporte: estado de cuentas por cobrar
         public List<string[]> ReporteCuentasPorCobrar()
         {
             List<string[]> Resultado = new List<string[]>();
@@ -1046,7 +1095,6 @@
             return Resultado;
         }
 
-        // Reporte: incidencias en devoluciones (daños, faltantes, mantenimiento)
         public List<string[]> ReporteIncidencias()
         {
             List<string[]> Resultado = new List<string[]>();

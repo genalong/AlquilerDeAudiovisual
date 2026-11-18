@@ -1,62 +1,53 @@
 ﻿@page
-@using AlquilerAudiovisual.Dominio
 @model AlquilerAudiovisual.Pages.PageContratacion.ListarModel
 @{
-    ViewData["Title"] = "Listar Contrataciones";
+    ViewData["Title"] = "Listado de Contrataciones";
 }
 
-<div class="text-left">
+<div>
     <h1 class="display-4 text-center">Listado de Contrataciones</h1>
-    <hr />
 
-    <div class="mb-3">
-        <a class="btn btn-success" asp-page="./Alta">Agregar Contratación</a>
-    </div>
-
-    @if (Model.ListaContrataciones.Count > 0)
-    {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (Contratacion unaContratacion in Model.ListaContrataciones)
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Horario</th>
+                <th>Ubicación</th>
+                <th>Importe Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ListaContrataciones != null && Model.ListaContrataciones.Any())
+            {
+                @foreach (Dominio.Contratacion unaContratacion in Model.ListaContrataciones)
                 {
                     <tr>
                         <td>@unaContratacion.Id</td>
-                        <td>@unaContratacion.Fecha.ToString("dd/MM/yyyy")</td>
-                        <td>@unaContratacion.Total.ToString("0.00")</td>
+                        <td>@Model.NombreCliente(unaContratacion.ClienteId)</td>
+                        <td>@unaContratacion.FechaEvento.ToString("dd/MM/yyyy")</td>
+                        <td>@unaContratacion.HoraInicio - @unaContratacion.HoraFin</td>
+                        <td>@unaContratacion.Ubicacion</td>
+                        <td>@unaContratacion.ImporteTotal</td>
                         <td>@unaContratacion.Estado</td>
-
                         <td>
-                            <a class="btn btn-warning btn-sm"
-                               asp-page="./Modificar"
-                               asp-route-id="@unaContratacion.Id">
-                                Modificar
-                            </a>
-
-                            <a class="btn btn-danger btn-sm"
-                               asp-page="./Eliminar"
-                               asp-route-id="@unaContratacion.Id">
-                                Eliminar
-                            </a>
+                            <a class="btn btn-primary" asp-page="./Detalle" asp-route-id="@unaContratacion.Id">Detalle</a>
+                            <a class="btn btn-info" asp-page="./AsignarUnidades" asp-route-id="@unaContratacion.Id">Asignar</a>
                         </td>
                     </tr>
                 }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <div class="alert alert-info">
-            No hay contrataciones registradas.
-        </div>
-    }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" class="text-center">
+                        No hay Contrataciones ingresadas
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

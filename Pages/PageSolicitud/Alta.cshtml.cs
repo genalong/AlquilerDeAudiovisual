@@ -2,99 +2,259 @@ using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+
 namespace AlquilerAudiovisual.Pages.PageSolicitud
 {
     public class AltaModel : PageModel
     {
-        public string Mensaje { get; set; } = "";
-
-        public List<Cliente> Clientes { get; set; }
-        public List<Evento> Eventos { get; set; }
+        public string Mensaje { get; set; }
+        public SolicitudAlquiler SolicitudEnCurso { get; set; }
+        public List<LineaSolicitud> LineasEnCurso { get; set; }
+        public List<Cliente> ListaClientes { get; set; }
+        public List<Equipamiento> ListaEquipamientos { get; set; }
 
         public void OnGet()
         {
-            Controladora unaControladora = new Controladora();
-
-            Clientes = unaControladora.ListarClientes();
-            Eventos = unaControladora.ListarEventos();
+            CargarListas();
+            CargarSolicitudEnCurso();
         }
 
-        public IActionResult OnPostAgregar()
+        public IActionResult OnPostAgregarSolicitud()
         {
             try
             {
                 if (Request.Form["id"] == "")
+                {
                     throw new Exception("Debe ingresar el ID de la Solicitud");
+                }
 
                 if (!int.TryParse(Request.Form["id"], out _))
-                    throw new Exception("El ID debe ser un número");
-
-                if (Request.Form["fechaSolicitud"] == "")
-                    throw new Exception("Debe ingresar la Fecha de Solicitud");
-
-                if (Request.Form["fechaInicio"] == "")
-                    throw new Exception("Debe ingresar la Fecha de Inicio");
-
-                if (Request.Form["fechaFin"] == "")
-                    throw new Exception("Debe ingresar la Fecha de Fin");
-
-                if (Request.Form["estado"] == "")
-                    throw new Exception("Debe ingresar el Estado");
+                {
+                    throw new Exception("El ID debe ser un numero");
+                }
 
                 if (Request.Form["cliente"] == "")
+                {
                     throw new Exception("Debe seleccionar un Cliente");
+                }
 
-                if (Request.Form["evento"] == "")
-                    throw new Exception("Debe seleccionar un Evento");
+                if (Request.Form["nombreevento"] == "")
+                {
+                    throw new Exception("Debe ingresar el Nombre del Evento");
+                }
+
+                if (Request.Form["fecha"] == "")
+                {
+                    throw new Exception("Debe ingresar la Fecha del Evento");
+                }
+
+                if (Request.Form["ubicacion"] == "")
+                {
+                    throw new Exception("Debe ingresar la Ubicación");
+                }
+
+                if (Request.Form["horainicio"] == "")
+                {
+                    throw new Exception("Debe ingresar la Hora de Inicio");
+                }
+
+                if (Request.Form["horafin"] == "")
+                {
+                    throw new Exception("Debe ingresar la Hora de Fin");
+                }
+
+                if (Request.Form["asistentes"] == "")
+                {
+                    throw new Exception("Debe ingresar la Cantidad de Asistentes");
+                }
 
                 int Id = int.Parse(Request.Form["id"]);
-                DateTime FechaSolicitud = DateTime.Parse(Request.Form["fechaSolicitud"]);
-                DateTime FechaInicio = DateTime.Parse(Request.Form["fechaInicio"]);
-                DateTime FechaFin = DateTime.Parse(Request.Form["fechaFin"]);
-                string Estado = Request.Form["estado"];
+                int ClienteId = int.Parse(Request.Form["cliente"]);
+                string NombreEvento = Request.Form["nombreevento"];
+                DateTime FechaEvento = DateTime.Parse(Request.Form["fecha"]);
+                string Ubicacion = Request.Form["ubicacion"];
+                string HoraInicio = Request.Form["horainicio"];
+                string HoraFin = Request.Form["horafin"];
+                int CantidadAsistentes = int.Parse(Request.Form["asistentes"]);
 
-                int IdCliente = int.Parse(Request.Form["cliente"]);
-                int IdEvento = int.Parse(Request.Form["evento"]);
-
-                if (FechaFin < FechaInicio)
-                    throw new Exception("La Fecha de Fin no puede ser anterior a la Fecha de Inicio");
+                SolicitudAlquiler unaSolicitud = new SolicitudAlquiler(
+                    Id, ClienteId, NombreEvento, FechaEvento, Ubicacion,
+                    HoraInicio, HoraFin, CantidadAsistentes, "Borrador");
 
                 Controladora unaControladora = new Controladora();
 
-                Cliente unCliente = unaControladora.BuscarCliente(IdCliente);
-                Evento unEvento = unaControladora.BuscarEvento(IdEvento);
-
-                if (unCliente == null)
-                    throw new Exception("El Cliente seleccionado no existe");
-
-                if (unEvento == null)
-                    throw new Exception("El Evento seleccionado no existe");
-
-                Solicitud unaSolicitud = new Solicitud(
-                    Id,
-                    FechaSolicitud,
-                    FechaInicio,
-                    FechaFin,
-                    Estado,
-                    unCliente,
-                    unEvento
-                );
-
                 if (!unaControladora.AltaSolicitud(unaSolicitud))
-                    throw new Exception("Ya existe una Solicitud con ese ID");
+                {
+                    throw new Exception("Ya existe una solicitud con ese ID");
+                }
+
+                return Redirect("/PageSolicitud/Alta");
+            }
+            catch (Exception Error)
+            {
+                Mensaje = Error.Message;
+                CargarListas();
+                CargarSolicitudEnCurso();
+                return Page();
+            }
+        }
+
+        public IActionResult OnPostAgregarLinea()
+        {
+            try
+            {
+                Controladora unaControladora = new Controladora();
+
+                SolicitudEnCurso = ObtenerSolicitudEnBorrador();
+
+                if (SolicitudEnCurso == null)
+                {
+                    throw new Exception("Primero debe crear la solicitud con sus datos básicos");
+                }
+
+                if (Request.Form["equipamiento"] == "")
+                {
+                    throw new Exception("Debe seleccionar un Equipamiento");
+                }
+
+                if (Request.Form["cantidad"] == "")
+                {
+                    throw new Exception("Debe ingresar la Cantidad");
+                }
+
+                if (!int.TryParse(Request.Form["cantidad"], out _))
+                {
+                    throw new Exception("La Cantidad debe ser un numero entero");
+                }
+
+                int EquipamientoId = int.Parse(Request.Form["equipamiento"]);
+                int Cantidad = int.Parse(Request.Form["cantidad"]);
+
+                int NuevoId = 1;
+                foreach (LineaSolicitud unaLinea in unaControladora.ListarDetallesSolicitud())
+                {
+                    if (unaLinea.Id >= NuevoId)
+                    {
+                        NuevoId = unaLinea.Id + 1;
+                    }
+                }
+
+                LineaSolicitud nuevaLinea = new LineaSolicitud(
+                    NuevoId, SolicitudEnCurso.Id, EquipamientoId, Cantidad);
+
+                unaControladora.AltaDetalleSolicitud(nuevaLinea);
+
+                return Redirect("/PageSolicitud/Alta");
+            }
+            catch (Exception Error)
+            {
+                Mensaje = Error.Message;
+                CargarListas();
+                CargarSolicitudEnCurso();
+                return Page();
+            }
+        }
+
+        public IActionResult OnPostQuitarLinea()
+        {
+            int LineaId = int.Parse(Request.Form["lineaid"]);
+
+            Controladora unaControladora = new Controladora();
+            unaControladora.BajaDetalleSolicitud(LineaId);
+
+            return Redirect("/PageSolicitud/Alta");
+        }
+
+        public IActionResult OnPostFinalizar()
+        {
+            try
+            {
+                Controladora unaControladora = new Controladora();
+
+                SolicitudEnCurso = ObtenerSolicitudEnBorrador();
+
+                if (SolicitudEnCurso == null)
+                {
+                    throw new Exception("No hay solicitud en curso");
+                }
+
+                List<LineaSolicitud> lineas = unaControladora.ListarDetallesSolicitud(SolicitudEnCurso.Id);
+
+                if (lineas.Count == 0)
+                {
+                    throw new Exception("Debe agregar al menos un equipamiento a la solicitud");
+                }
+
+                SolicitudEnCurso.Estado = "Pendiente";
+                unaControladora.ModificarSolicitud(SolicitudEnCurso);     
 
                 return Redirect("/PageSolicitud/Listar");
             }
             catch (Exception Error)
             {
                 Mensaje = Error.Message;
-
-                Controladora unaControladora = new Controladora();
-                Clientes = unaControladora.ListarClientes();
-                Eventos = unaControladora.ListarEventos();
-
+                CargarListas();
+                CargarSolicitudEnCurso();
                 return Page();
             }
+        }
+
+        private void CargarListas()
+        {
+            Controladora unaControladora = new Controladora();
+
+            ListaClientes = unaControladora.ListarClientes();
+            ListaEquipamientos = unaControladora.ListarEquipamientos();
+        }
+
+        private void CargarSolicitudEnCurso()
+        {
+            Controladora unaControladora = new Controladora();
+
+            SolicitudEnCurso = ObtenerSolicitudEnBorrador();
+
+            if (SolicitudEnCurso != null)
+            {
+                LineasEnCurso = unaControladora.ListarDetallesSolicitud(SolicitudEnCurso.Id);
+            }
+            else
+            {
+                LineasEnCurso = new List<LineaSolicitud>();
+            }
+        }
+
+        private SolicitudAlquiler ObtenerSolicitudEnBorrador()
+        {
+            Controladora unaControladora = new Controladora();
+
+            foreach (SolicitudAlquiler unaSolicitud in unaControladora.ListarSolicitudes())
+            {
+                if (unaSolicitud.Estado == "Borrador")
+                {
+                    return unaSolicitud;
+                }
+            }
+
+            return null;
+        }
+
+        public string NombreEquipamiento(int pEquipamientoId)
+        {
+            if (ListaEquipamientos == null)
+            {
+                Controladora unaControladora = new Controladora();
+                ListaEquipamientos = unaControladora.ListarEquipamientos();
+            }
+
+            foreach (Equipamiento unEquipamiento in ListaEquipamientos)
+            {
+                if (unEquipamiento.Id == pEquipamientoId)
+                {
+                    return unEquipamiento.Nombre;
+                }
+            }
+
+            return "(desconocido)";
         }
     }
 }

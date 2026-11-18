@@ -1,48 +1,74 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageEquipamiento.AltaModel
-
 @{
     ViewData["Title"] = "Agregar Equipamiento";
 }
-
 <div class="text-left">
     <h1 class="display-4 text-center">Agregar un Equipamiento</h1>
     <hr />
-
     <form method="post">
         <div class="row">
             <div class="col-sm-4">
-
                 <div class="form-group">
                     <label for="id">ID:</label>
                     <input class="form-control" type="text" name="id" id="id" />
                 </div>
-
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
                     <input class="form-control" type="text" name="nombre" id="nombre" />
                 </div>
-
                 <div class="form-group">
-                    <label for="tipo">Tipo:</label>
-                    <input class="form-control" type="text" name="tipo" id="tipo" />
+                    <label for="marca">Marca:</label>
+                    <input class="form-control" type="text" name="marca" id="marca" />
                 </div>
-
                 <div class="form-group">
-                    <label for="descripcion">Descripción:</label>
-                    <input class="form-control" type="text" name="descripcion" id="descripcion" />
+                    <label for="modelo">Modelo:</label>
+                    <input class="form-control" type="text" name="modelo" id="modelo" />
                 </div>
-
                 <div class="form-group">
-                    <label for="precioAlquiler">Precio de alquiler:</label>
-                    <input class="form-control" type="number" step="0.01" name="precioAlquiler" id="precioAlquiler" />
+                    <label for="caracteristicas">Características:</label>
+                    <input class="form-control" type="text" name="caracteristicas" id="caracteristicas" />
                 </div>
-
+                <div class="form-group">
+                    <label for="deposito">Depósito:</label>
+                    <select class="form-control" name="deposito" id="deposito">
+                        <option value="">Seleccione...</option>
+                        @if (Model.ListaDepositos != null)
+                        {
+                            @foreach (Dominio.Deposito unDeposito in Model.ListaDepositos)
+                            {
+                                <option value="@unDeposito.Id">@unDeposito.Nombre</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio Base de Alquiler:</label>
+                    <input class="form-control" type="text" name="precio" id="precio" />
+                </div>
+                <div class="form-group">
+                    <label for="codigo">Código:</label>
+                    <input class="form-control" type="text" name="codigo" id="codigo" />
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select class="form-control" name="estado" id="estado">
+                        <option value="">Seleccione...</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Reservado">Reservado</option>
+                        <option value="En preparación">En preparación</option>
+                        <option value="Alquilado">Alquilado</option>
+                        <option value="En mantenimiento">En mantenimiento</option>
+                        <option value="Fuera de servicio">Fuera de servicio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input class="form-control" type="text" name="stock" id="stock" />
+                </div>
             </div>
         </div>
-
         <hr />
-
         <div class="row">
             <div class="mt-2">
                 <button class="btn btn-success" type="submit" asp-page-handler="Agregar">Agregar</button>

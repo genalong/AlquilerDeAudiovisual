@@ -1,50 +1,69 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageEquipamiento.ListarModel
-
 @{
     ViewData["Title"] = "Listado de Equipamientos";
 }
 
-<div class="text-left">
+<div>
     <h1 class="display-4 text-center">Listado de Equipamientos</h1>
-    <hr />
 
-    <a class="btn btn-success" asp-page="./Alta">Agregar Equipamiento</a>
+    <div class="row">
+        <div class="col text-right">
+            <a class="btn btn-success" asp-page="./Alta">Agregar</a>
+        </div>
+    </div>
 
-    <table class="table">
+    <table class="table text-center">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Precio de alquiler</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Código</th>
+                <th>Depósito</th>
+                <th>Precio Base</th>
+                <th>Estado</th>
+                <th>Stock</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-
         <tbody>
-            @foreach (var unEquipamiento in Model.ListaEquipamientos)
+            @if (Model.ListaEquipamientos != null && Model.ListaEquipamientos.Any())
+            {
+                @foreach (Dominio.Equipamiento unEquipamiento in Model.ListaEquipamientos)
+                {
+                    <tr>
+                        <td>@unEquipamiento.Id</td>
+                        <td>@unEquipamiento.Nombre</td>
+                        <td>@unEquipamiento.Marca</td>
+                        <td>@unEquipamiento.Modelo</td>
+                        <td>@unEquipamiento.Codigo</td>
+                        <td>@Model.NombreDeposito(unEquipamiento.DepositoId)</td>
+                        <td>@unEquipamiento.PrecioBaseAlquiler</td>
+                        <td>@unEquipamiento.Estado</td>
+                        <td>@unEquipamiento.Stock</td>
+                        <td>
+                            <div>
+                                <a class="btn btn-primary" asp-page="./Modificar" asp-route-id="@unEquipamiento.Id">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </a>
+                                <a class="btn btn-danger" asp-page="./Eliminar" asp-route-id="@unEquipamiento.Id">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@unEquipamiento.Id</td>
-                    <td>@unEquipamiento.Nombre</td>
-                    <td>@unEquipamiento.Tipo</td>
-                    <td>@unEquipamiento.PrecioAlquiler</td>
-                    <td>
-                        <a class="btn btn-warning"
-                           asp-page="./Modificar"
-                           asp-route-id="@unEquipamiento.Id">Modificar</a>
-
-                        <a class="btn btn-danger"
-                           asp-page="./Eliminar"
-                           asp-route-id="@unEquipamiento.Id">Eliminar</a>
+                    <td colspan="10" class="text-center">
+                        No hay Equipamientos ingresados
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-
-    <hr />
-
-    <a class="btn btn-warning" asp-page="/Index">Volver</a>
 </div>

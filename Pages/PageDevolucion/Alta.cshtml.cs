@@ -1,4 +1,3 @@
-
 using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,13 +6,13 @@ namespace AlquilerAudiovisual.Pages.PageDevolucion
 {
     public class AltaModel : PageModel
     {
-        public string Mensaje { get; set; } = "";
-        public List<Contratacion> Contrataciones { get; set; } = new List<Contratacion>();
+        public string Mensaje { get; set; }
+        public List<Contratacion> ListaContrataciones { get; set; }
 
         public void OnGet()
         {
             Controladora unaControladora = new Controladora();
-            Contrataciones = unaControladora.ListarContrataciones();
+            ListaContrataciones = unaControladora.ListarContrataciones();
         }
 
         public IActionResult OnPostAgregar()
@@ -21,52 +20,58 @@ namespace AlquilerAudiovisual.Pages.PageDevolucion
             try
             {
                 if (Request.Form["id"] == "")
+                {
                     throw new Exception("Debe ingresar el ID de la Devolución");
+                }
 
-                if (!int.TryParse(Request.Form["id"], out int Id))
-                    throw new Exception("El ID debe ser un número");
+                if (!int.TryParse(Request.Form["id"], out _))
+                {
+                    throw new Exception("El ID debe ser un numero");
+                }
+
+                if (Request.Form["contratacion"] == "")
+                {
+                    throw new Exception("Debe seleccionar una Contratación");
+                }
 
                 if (Request.Form["fecha"] == "")
-                    throw new Exception("Debe ingresar la Fecha");
+                {
+                    throw new Exception("Debe ingresar la Fecha de Devolución");
+                }
 
-                if (Request.Form["modalidad"] == "")
-                    throw new Exception("Debe ingresar la Modalidad");
+                if (Request.Form["cargo"] == "")
+                {
+                    throw new Exception("Debe ingresar el Cargo Adicional (puede ser 0)");
+                }
 
-                if (Request.Form["lugarDevolucion"] == "")
-                    throw new Exception("Debe ingresar el Lugar de devolución");
+                if (!double.TryParse(Request.Form["cargo"], out _))
+                {
+                    throw new Exception("El Cargo Adicional debe ser un numero");
+                }
 
-                if (Request.Form["observaciones"] == "")
-                    throw new Exception("Debe ingresar las Observaciones");
-
-                if (!int.TryParse(Request.Form["contratacion"], out int IdContratacion))
-                    throw new Exception("Debe seleccionar una Contratación");
-
-                DateTime Fecha = DateTime.Parse(Request.Form["fecha"]);
-                string Modalidad = Request.Form["modalidad"];
-                string LugarDevolucion = Request.Form["lugarDevolucion"];
+                int Id = int.Parse(Request.Form["id"]);
+                int ContratacionId = int.Parse(Request.Form["contratacion"]);
+                DateTime FechaDevolucion = DateTime.Parse(Request.Form["fecha"]);
+                double CargoAdicionalTotal = double.Parse(Request.Form["cargo"]);
                 string Observaciones = Request.Form["observaciones"];
+
+                Devolucion unaDevolucion = new Devolucion(
+                    Id, ContratacionId, FechaDevolucion, CargoAdicionalTotal, Observaciones);
 
                 Controladora unaControladora = new Controladora();
 
-                Contratacion unaContratacion = unaControladora.BuscarContratacion(IdContratacion);
-
-                if (unaContratacion == null)
-                    throw new Exception("La Contratación seleccionada no existe");
-
-                Devolucion unaDevolucion = new Devolucion(
-                    Id, Fecha, Modalidad, LugarDevolucion,
-                    Observaciones, unaContratacion
-                );
-
                 if (!unaControladora.AltaDevolucion(unaDevolucion))
-                    throw new Exception("Ya existe una Devolución con ese ID");
+                {
+                    throw new Exception("Ya existe una devolución con ese ID");
+                }
 
-                return RedirectToPage("./Listar");
+                return Redirect("/PageDevolucion/Listar");
             }
             catch (Exception Error)
             {
                 Mensaje = Error.Message;
-                OnGet();
+                Controladora unaControladora = new Controladora();
+                ListaContrataciones = unaControladora.ListarContrataciones();
                 return Page();
             }
         }

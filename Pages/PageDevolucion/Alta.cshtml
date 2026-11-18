@@ -1,72 +1,62 @@
 ﻿@page
-@using AlquilerAudiovisual.Dominio
 @model AlquilerAudiovisual.Pages.PageDevolucion.AltaModel
-
 @{
-    ViewData["Title"] = "Agregar Devolución";
+    ViewData["Title"] = "Registrar Devolución";
 }
-
 <div class="text-left">
-    <h1 class="display-4 text-center">Agregar una Devolución</h1>
+    <h1 class="display-4 text-center">Registrar Devolución</h1>
     <hr />
-
     <form method="post">
         <div class="row">
             <div class="col-sm-4">
-
                 <div class="form-group">
-                    <label for="id">ID:</label>
-                    <input class="form-control" type="number" name="id" id="id" />
+                    <label for="id">ID Devolución:</label>
+                    <input class="form-control" type="text" name="id" id="id" />
                 </div>
-
-                <div class="form-group">
-                    <label for="fecha">Fecha:</label>
-                    <input class="form-control" type="date" name="fecha" id="fecha" />
-                </div>
-
-                <div class="form-group">
-                    <label for="modalidad">Modalidad:</label>
-                    <input class="form-control" type="text" name="modalidad" id="modalidad" />
-                </div>
-
-                <div class="form-group">
-                    <label for="lugarDevolucion">Lugar de devolución:</label>
-                    <input class="form-control" type="text" name="lugarDevolucion" id="lugarDevolucion" />
-                </div>
-
-                <div class="form-group">
-                    <label for="observaciones">Observaciones:</label>
-                    <textarea class="form-control" name="observaciones" id="observaciones"></textarea>
-                </div>
-
                 <div class="form-group">
                     <label for="contratacion">Contratación:</label>
                     <select class="form-control" name="contratacion" id="contratacion">
-                        <option value="">Seleccione una contratación</option>
-                        @foreach (Contratacion unaContratacion in Model.Contrataciones)
+                        <option value="">Seleccione...</option>
+                        @if (Model.ListaContrataciones != null)
                         {
-                            <option value="@unaContratacion.Id">
-                                Contratación Nº @unaContratacion.Id
-                            </option>
+                            @foreach (Dominio.Contratacion unaContratacion in Model.ListaContrataciones)
+                            {
+                                if (unaContratacion.Estado != "Finalizada" && unaContratacion.Estado != "Cancelada")
+                                {
+                                    <option value="@unaContratacion.Id">ID @unaContratacion.Id - @unaContratacion.FechaEvento.ToString("dd/MM/yyyy")</option>
+                                }
+                            }
                         }
                     </select>
                 </div>
-
+                <div class="form-group">
+                    <label for="fecha">Fecha de Devolución:</label>
+                    <input class="form-control" type="date" name="fecha" id="fecha" />
+                </div>
+                <div class="form-group">
+                    <label for="cargo">Cargo Adicional Total:</label>
+                    <input class="form-control" type="text" name="cargo" id="cargo" value="0" />
+                </div>
+                <div class="form-group">
+                    <label for="observaciones">Observaciones:</label>
+                    <input class="form-control" type="text" name="observaciones" id="observaciones" />
+                </div>
             </div>
         </div>
-
         <hr />
-
-        <button class="btn btn-success" type="submit" asp-page-handler="Agregar">
-            Agregar
-        </button>
-
-        <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+        <div class="row">
+            <div class="mt-2">
+                <button class="btn btn-success" type="submit" asp-page-handler="Agregar">Registrar</button>
+                <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+            </div>
+        </div>
     </form>
 
     @if (!string.IsNullOrEmpty(Model.Mensaje))
     {
         <br />
-        <div class="alert alert-danger">@Model.Mensaje</div>
+        <div class="alert alert-danger" role="alert">
+            @Model.Mensaje
+        </div>
     }
 </div>

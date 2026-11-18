@@ -1,6 +1,5 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageEquipamiento.ModificarModel
-
 @{
     ViewData["Title"] = "Modificar Equipamiento";
 }
@@ -10,30 +9,126 @@
     <hr />
 
     <form method="post">
-        <input type="hidden" name="id" value="@Model.Id" />
-
         <div class="row">
             <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="id">ID:</label>
+                    <input class="form-control" type="text" name="id" id="id" value="@Model.equipamiento.Id" readonly />
+                </div>
 
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
-                    <input class="form-control" type="text"
-                           name="nombre" id="nombre" value="@Model.Nombre" />
+                    <input class="form-control" type="text" name="nombre" id="nombre" value="@Model.equipamiento.Nombre" />
                 </div>
 
                 <div class="form-group">
-                    <label for="tipo">Tipo:</label>
-                    <input class="form-control" type="text"
-                           name="tipo" id="tipo" value="@Model.Tipo" />
+                    <label for="marca">Marca:</label>
+                    <input class="form-control" type="text" name="marca" id="marca" value="@Model.equipamiento.Marca" />
                 </div>
 
                 <div class="form-group">
-                    <label for="precioAlquiler">Precio de alquiler:</label>
-                    <input class="form-control" type="number" step="0.01"
-                           name="precioAlquiler" id="precioAlquiler"
-                           value="@Model.PrecioAlquiler" />
+                    <label for="modelo">Modelo:</label>
+                    <input class="form-control" type="text" name="modelo" id="modelo" value="@Model.equipamiento.Modelo" />
                 </div>
 
+                <div class="form-group">
+                    <label for="caracteristicas">Características:</label>
+                    <input class="form-control" type="text" name="caracteristicas" id="caracteristicas" value="@Model.equipamiento.Caracteristicas" />
+                </div>
+
+                <div class="form-group">
+                    <label for="deposito">Depósito:</label>
+                    <select class="form-control" name="deposito" id="deposito">
+                        @if (Model.ListaDepositos != null)
+                        {
+                            @foreach (Dominio.Deposito unDeposito in Model.ListaDepositos)
+                            {
+                                if (unDeposito.Id == Model.equipamiento.DepositoId)
+                                {
+                                    <option value="@unDeposito.Id" selected>@unDeposito.Nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@unDeposito.Id">@unDeposito.Nombre</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio Base de Alquiler:</label>
+                    <input class="form-control" type="text" name="precio" id="precio" value="@Model.equipamiento.PrecioBaseAlquiler" />
+                </div>
+
+                <div class="form-group">
+                    <label for="codigo">Código:</label>
+                    <input class="form-control" type="text" name="codigo" id="codigo" value="@Model.equipamiento.Codigo" />
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select class="form-control" name="estado" id="estado">
+                        @if (Model.equipamiento.Estado == "Disponible")
+                        {
+                            <option value="Disponible" selected>Disponible</option>
+                        }
+                        else
+                        {
+                            <option value="Disponible">Disponible</option>
+                        }
+
+                        @if (Model.equipamiento.Estado == "Reservado")
+                        {
+                            <option value="Reservado" selected>Reservado</option>
+                        }
+                        else
+                        {
+                            <option value="Reservado">Reservado</option>
+                        }
+
+                        @if (Model.equipamiento.Estado == "En preparación")
+                        {
+                            <option value="En preparación" selected>En preparación</option>
+                        }
+                        else
+                        {
+                            <option value="En preparación">En preparación</option>
+                        }
+
+                        @if (Model.equipamiento.Estado == "Alquilado")
+                        {
+                            <option value="Alquilado" selected>Alquilado</option>
+                        }
+                        else
+                        {
+                            <option value="Alquilado">Alquilado</option>
+                        }
+
+                        @if (Model.equipamiento.Estado == "En mantenimiento")
+                        {
+                            <option value="En mantenimiento" selected>En mantenimiento</option>
+                        }
+                        else
+                        {
+                            <option value="En mantenimiento">En mantenimiento</option>
+                        }
+
+                        @if (Model.equipamiento.Estado == "Fuera de servicio")
+                        {
+                            <option value="Fuera de servicio" selected>Fuera de servicio</option>
+                        }
+                        else
+                        {
+                            <option value="Fuera de servicio">Fuera de servicio</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input class="form-control" type="text" name="stock" id="stock" value="@Model.equipamiento.Stock" />
+                </div>
             </div>
         </div>
 
@@ -41,11 +136,7 @@
 
         <div class="row">
             <div class="mt-2">
-                <button class="btn btn-success" type="submit"
-                        asp-page-handler="Modificar">
-                    Modificar
-                </button>
-
+                <button class="btn btn-success" type="submit" asp-page-handler="Modificar">Modificar</button>
                 <a class="btn btn-warning" asp-page="./Listar">Volver</a>
             </div>
         </div>

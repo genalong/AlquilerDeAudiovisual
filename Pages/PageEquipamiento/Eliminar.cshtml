@@ -1,60 +1,64 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageEquipamiento.EliminarModel
-
 @{
-    ViewData["Title"] = "Eliminar Equipamiento";
+    ViewData["Title"] = "Desactivar Equipamiento";
 }
 
 <div class="text-left">
-    <h1 class="display-4 text-center">Eliminar un Equipamiento</h1>
+    <h1 class="display-4 text-center">Desactivar Equipamiento</h1>
     <hr />
 
-    <form method="post" asp-page-handler="Eliminar">
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Id)</dd>
 
-        <input type="hidden" name="id" value="@Model.Id" />
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Nombre)</dd>
 
-        <div class="row">
-            <div class="col-sm-4">
+        <dt class="col-sm-2">Marca</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Marca)</dd>
 
-                <div class="form-group">
-                    <label for="id">ID:</label>
-                    <input class="form-control" type="text"
-                           id="id" value="@Model.Id" disabled />
-                </div>
+        <dt class="col-sm-2">Modelo</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Modelo)</dd>
 
-                <div class="form-group">
-                    <label for="nombre">Nombre:</label>
-                    <input class="form-control" type="text"
-                           id="nombre" value="@Model.Nombre" disabled />
-                </div>
+        <dt class="col-sm-2">Características</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Caracteristicas)</dd>
 
-                <div class="form-group">
-                    <label for="tipo">Tipo:</label>
-                    <input class="form-control" type="text"
-                           id="tipo" value="@Model.Tipo" disabled />
-                </div>
+        <dt class="col-sm-2">Depósito</dt>
+        <dd class="col-sm-10">
+            @if (Model.deposito != null)
+            {
+                @Model.deposito.Nombre
+            }
+            else
+            {
+                @("(sin depósito)")
+            }
+        </dd>
 
-            </div>
-        </div>
+        <dt class="col-sm-2">Precio Base</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.PrecioBaseAlquiler)</dd>
 
-        <hr />
+        <dt class="col-sm-2">Código</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Codigo)</dd>
 
-        <p>¿Está seguro de que desea eliminar este equipamiento?</p>
+        <dt class="col-sm-2">Estado</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Estado)</dd>
+
+        <dt class="col-sm-2">Stock</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.equipamiento.Stock)</dd>
+    </dl>
+
+    <hr />
+
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.equipamiento.Id" />
 
         <div class="row">
             <div class="mt-2">
-                <button class="btn btn-danger" type="submit">Eliminar</button>
+                <button type="submit" asp-page-handler="Eliminar" class="btn btn-danger">Desactivar</button>
                 <a class="btn btn-warning" asp-page="./Listar">Volver</a>
             </div>
         </div>
-
     </form>
-
-    @if (!string.IsNullOrEmpty(Model.Mensaje))
-    {
-        <br />
-        <div class="alert alert-danger" role="alert">
-            @Model.Mensaje
-        </div>
-    }
 </div>

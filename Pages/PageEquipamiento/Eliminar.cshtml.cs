@@ -1,4 +1,3 @@
-
 using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,54 +6,30 @@ namespace AlquilerAudiovisual.Pages.PageEquipamiento
 {
     public class EliminarModel : PageModel
     {
-        public string Mensaje { get; set; } = "";
-        public int Id { get; set; }
-        public string Nombre { get; set; } = "";
-        public string Tipo { get; set; } = "";
+        public Equipamiento equipamiento { get; set; }
+        public Deposito deposito { get; set; }
 
-        public IActionResult OnGet(int id)
+        public void OnGet(int id)
         {
             Controladora unaControladora = new Controladora();
 
-            Equipamiento unEquipamiento = unaControladora.BuscarEquipamiento(id);
+            equipamiento = unaControladora.BuscarEquipamiento(id);
 
-            if (unEquipamiento == null)
+            if (equipamiento != null)
             {
-                return RedirectToPage("./Listar");
+                deposito = unaControladora.BuscarDeposito(equipamiento.DepositoId);
             }
-
-            Id = unEquipamiento.Id;
-            Nombre = unEquipamiento.Nombre;
-            Tipo = unEquipamiento.Tipo;
-
-            return Page();
         }
 
         public IActionResult OnPostEliminar()
         {
-            try
-            {
-                if (!int.TryParse(Request.Form["id"], out int IdEquipamiento))
-                {
-                    throw new Exception("El ID del Equipamiento no es válido");
-                }
+            int Id = int.Parse(Request.Form["id"]);
 
-                Controladora unaControladora = new Controladora();
+            Controladora unaControladora = new Controladora();
 
-                bool Eliminado = unaControladora.BajaEquipamiento(IdEquipamiento);
+            unaControladora.BajaEquipamiento(Id);
 
-                if (Eliminado)
-                {
-                    return RedirectToPage("./Listar");
-                }
-
-                throw new Exception("No se pudo eliminar el Equipamiento");
-            }
-            catch (Exception Error)
-            {
-                Mensaje = Error.Message;
-                return Page();
-            }
+            return Redirect("./Listar");
         }
     }
 }

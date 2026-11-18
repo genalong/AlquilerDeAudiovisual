@@ -1,4 +1,3 @@
-
 using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -32,6 +31,16 @@ namespace AlquilerAudiovisual.Pages.PageCliente
                     throw new Exception("Debe ingresar el Nombre del Cliente");
                 }
 
+                if (Request.Form["tipo"] == "")
+                {
+                    throw new Exception("Debe ingresar el Tipo (Particular / Empresa / Organizacion)");
+                }
+
+                if (Request.Form["documento"] == "")
+                {
+                    throw new Exception("Debe ingresar el Documento del Cliente");
+                }
+
                 if (Request.Form["telefono"] == "")
                 {
                     throw new Exception("Debe ingresar el Telefono del Cliente");
@@ -49,11 +58,13 @@ namespace AlquilerAudiovisual.Pages.PageCliente
 
                 int Id = int.Parse(Request.Form["id"]);
                 string Nombre = Request.Form["nombre"];
-                string Telefono = Request.Form["telefono"];
+                string Tipo = Request.Form["tipo"];
+                string Documento = Request.Form["documento"];
                 string Email = Request.Form["email"];
+                string Telefono = Request.Form["telefono"];
                 string Direccion = Request.Form["direccion"];
 
-                Cliente unCliente = new Cliente(Id, Nombre, Telefono, Email, Direccion);
+                Cliente unCliente = new Cliente(Id, Nombre, Tipo, Documento, Email, Telefono, Direccion, true);
 
                 Controladora unaControladora = new Controladora();
 
