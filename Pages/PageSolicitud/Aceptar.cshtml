@@ -10,25 +10,28 @@
 
     <dl class="row">
         <dt class="col-sm-2">ID</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.solicitud.Id)</dd>
+        <dd class="col-sm-10">@Model.solicitud.Id</dd>
 
-        <dt class="col-sm-2">Evento</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.solicitud.NombreEvento)</dd>
+        <dt class="col-sm-2">Tipo Evento</dt>
+        <dd class="col-sm-10">@Model.solicitud.TipoEvento</dd>
 
-        <dt class="col-sm-2">Fecha</dt>
-        <dd class="col-sm-10">@Model.solicitud.FechaEvento.ToString("dd/MM/yyyy")</dd>
+        <dt class="col-sm-2">Nombre Evento</dt>
+        <dd class="col-sm-10">@Model.solicitud.NombreEvento</dd>
 
-        <dt class="col-sm-2">Horario</dt>
-        <dd class="col-sm-10">@Model.solicitud.HoraInicio - @Model.solicitud.HoraFin</dd>
+        <dt class="col-sm-2">Fecha Inicio</dt>
+        <dd class="col-sm-10">@Model.solicitud.FechaInicio.ToString("dd/MM/yyyy")</dd>
 
-        <dt class="col-sm-2">Ubicación</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.solicitud.Ubicacion)</dd>
+        <dt class="col-sm-2">Fecha Fin</dt>
+        <dd class="col-sm-10">@Model.solicitud.FechaFin.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">Ubicacion</dt>
+        <dd class="col-sm-10">@Model.solicitud.Ubicacion</dd>
 
         <dt class="col-sm-2">Asistentes</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.solicitud.CantidadAsistentes)</dd>
+        <dd class="col-sm-10">@Model.solicitud.CantidadAsistentes</dd>
 
         <dt class="col-sm-2">Estado</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.solicitud.Estado)</dd>
+        <dd class="col-sm-10">@Model.solicitud.Estado</dd>
     </dl>
 
     <hr />
@@ -65,10 +68,9 @@
 
     <form method="post">
         <input type="hidden" name="id" value="@Model.solicitud.Id" />
-
         <div class="row">
             <div class="mt-2">
-                <button type="submit" asp-page-handler="Aceptar" class="btn btn-success">Aceptar y Generar Contratación</button>
+                <button type="submit" asp-page-handler="Aceptar" class="btn btn-success">Aceptar y Generar Contratacion</button>
                 <a class="btn btn-warning" asp-page="./Listar">Volver</a>
             </div>
         </div>

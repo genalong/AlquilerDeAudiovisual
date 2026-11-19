@@ -31,47 +31,44 @@
                         aria-label="Mostrar navegación">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
-                <div class="navbar-collapse collapse" id="navbarContenido">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Index">Inicio</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Inicio</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/PageCliente/Listar">Clientes</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PageCliente/Listar">Clientes</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/PageDeposito/Listar">Depósitos</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PageDeposito/Listar">Depositos</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/PageEquipamiento/Listar">Equipamiento</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PageEquipamiento/Listar">Equipamiento</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/PageEvento/Listar">Eventos</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PageSolicitud/Listar">Solicitudes</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/PageInventario/Listar">Inventario</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PageContratacion/Listar">Contrataciones</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/PageSolicitud/Listar">Solicitudes</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PageDevolucion/Listar">Devoluciones</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/PageContratacion/Listar">Contrataciones</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/PagePago/Listar">Pagos</a>
                         </li>
-
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarReportes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Reportes
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarReportes">
+                                <li><a class="dropdown-item" asp-area="" asp-page="/PageReporte/MasAlquilado">Equipamiento Mas Alquilado</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/PageReporte/Disponibilidad">Disponibilidad</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-page="/PageReporte/ContratacionesPorCliente">Contrataciones por Cliente</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
-
-            </div>
-        </nav>
     </header>
 
     <div class="container">

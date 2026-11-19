@@ -1,34 +1,34 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageContratacion.DetalleModel
 @{
-    ViewData["Title"] = "Detalle de Contratación";
+    ViewData["Title"] = "Detalle de Contratacion";
 }
 
 <div class="text-left">
-    <h1 class="display-4 text-center">Detalle de Contratación</h1>
+    <h1 class="display-4 text-center">Detalle de Contratacion</h1>
     <hr />
 
     <dl class="row">
         <dt class="col-sm-2">ID</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.contratacion.Id)</dd>
+        <dd class="col-sm-10">@Model.contratacion.Id</dd>
 
-        <dt class="col-sm-2">Fecha</dt>
-        <dd class="col-sm-10">@Model.contratacion.FechaEvento.ToString("dd/MM/yyyy")</dd>
+        <dt class="col-sm-2">Fecha Inicio</dt>
+        <dd class="col-sm-10">@Model.contratacion.FechaInicio.ToString("dd/MM/yyyy")</dd>
 
-        <dt class="col-sm-2">Horario</dt>
-        <dd class="col-sm-10">@Model.contratacion.HoraInicio - @Model.contratacion.HoraFin</dd>
+        <dt class="col-sm-2">Fecha Fin</dt>
+        <dd class="col-sm-10">@Model.contratacion.FechaFin.ToString("dd/MM/yyyy")</dd>
 
-        <dt class="col-sm-2">Ubicación</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.contratacion.Ubicacion)</dd>
+        <dt class="col-sm-2">Ubicacion</dt>
+        <dd class="col-sm-10">@Model.contratacion.Ubicacion</dd>
 
         <dt class="col-sm-2">Importe Total</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.contratacion.ImporteTotal)</dd>
+        <dd class="col-sm-10">@Model.contratacion.ImporteTotal</dd>
 
         <dt class="col-sm-2">Saldo Pendiente</dt>
         <dd class="col-sm-10">@Model.SaldoPendiente</dd>
 
         <dt class="col-sm-2">Estado</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.contratacion.Estado)</dd>
+        <dd class="col-sm-10">@Model.contratacion.Estado</dd>
     </dl>
 
     <hr />
@@ -58,9 +58,7 @@
             }
             else
             {
-                <tr>
-                    <td colspan="4" class="text-center">No hay equipamiento en la contratación</td>
-                </tr>
+                <tr><td colspan="4" class="text-center">No hay equipamiento en la contratacion</td></tr>
             }
         </tbody>
     </table>
@@ -74,8 +72,8 @@
                 <th>ID</th>
                 <th>Fecha</th>
                 <th>Monto</th>
-                <th>Método</th>
-                <th>Observación</th>
+                <th>Metodo</th>
+                <th>Observacion</th>
             </tr>
         </thead>
         <tbody>
@@ -94,9 +92,7 @@
             }
             else
             {
-                <tr>
-                    <td colspan="5" class="text-center">No hay pagos registrados</td>
-                </tr>
+                <tr><td colspan="5" class="text-center">No hay pagos registrados</td></tr>
             }
         </tbody>
     </table>

@@ -1,7 +1,7 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageEquipamiento.AltaModel
 @{
-    ViewData["Title"] = "Agregar Equipamiento";
+    ViewData["Title"] = "Alta de Equipamiento";
 }
 <div class="text-left">
     <h1 class="display-4 text-center">Agregar un Equipamiento</h1>
@@ -11,7 +11,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="id">ID:</label>
-                    <input class="form-control" type="text" name="id" id="id" />
+                    <input class="form-control" type="text" name="id" id="id" asp-for="id" readonly />
                 </div>
                 <div class="form-group">
                     <label for="nombre">Nombre:</label>
@@ -30,9 +30,20 @@
                     <input class="form-control" type="text" name="caracteristicas" id="caracteristicas" />
                 </div>
                 <div class="form-group">
+                    <label for="categoria">Categoría:</label>
+                    <select class="form-control" id="categoria" name="categoria">
+                        <option value="Seleccione una opcion">Seleccione una opcion</option>
+                        <option value="Audio">Audio</option>
+                        <option value="Video">Video</option>
+                        <option value="Iluminación">Iluminación</option>
+                        <option value="Escenario">Escenario</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="deposito">Depósito:</label>
-                    <select class="form-control" name="deposito" id="deposito">
-                        <option value="">Seleccione...</option>
+                    <select class="form-control" id="deposito" name="deposito">
+                        <option value="0">Seleccione una opcion</option>
                         @if (Model.ListaDepositos != null)
                         {
                             @foreach (Dominio.Deposito unDeposito in Model.ListaDepositos)
@@ -44,7 +55,7 @@
                 </div>
                 <div class="form-group">
                     <label for="precio">Precio Base de Alquiler:</label>
-                    <input class="form-control" type="text" name="precio" id="precio" />
+                    <input class="form-control" type="number" name="precio" id="precio" />
                 </div>
                 <div class="form-group">
                     <label for="codigo">Código:</label>
@@ -52,8 +63,8 @@
                 </div>
                 <div class="form-group">
                     <label for="estado">Estado:</label>
-                    <select class="form-control" name="estado" id="estado">
-                        <option value="">Seleccione...</option>
+                    <select class="form-control" id="estado" name="estado">
+                        <option value="Seleccione una opcion">Seleccione una opcion</option>
                         <option value="Disponible">Disponible</option>
                         <option value="Reservado">Reservado</option>
                         <option value="En preparación">En preparación</option>
@@ -64,7 +75,7 @@
                 </div>
                 <div class="form-group">
                     <label for="stock">Stock:</label>
-                    <input class="form-control" type="text" name="stock" id="stock" />
+                    <input class="form-control" type="number" name="stock" id="stock" />
                 </div>
             </div>
         </div>

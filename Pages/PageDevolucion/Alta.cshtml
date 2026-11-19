@@ -1,41 +1,41 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageDevolucion.AltaModel
 @{
-    ViewData["Title"] = "Registrar Devolución";
+    ViewData["Title"] = "Registrar Devolucion";
 }
 <div class="text-left">
-    <h1 class="display-4 text-center">Registrar Devolución</h1>
+    <h1 class="display-4 text-center">Registrar Devolucion</h1>
     <hr />
     <form method="post">
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="id">ID Devolución:</label>
-                    <input class="form-control" type="text" name="id" id="id" />
+                    <label for="id">ID Devolucion:</label>
+                    <input class="form-control" type="text" name="id" id="id" asp-for="id" readonly />
                 </div>
                 <div class="form-group">
-                    <label for="contratacion">Contratación:</label>
-                    <select class="form-control" name="contratacion" id="contratacion">
-                        <option value="">Seleccione...</option>
+                    <label for="contratacion">Contratacion:</label>
+                    <select class="form-control" id="contratacion" name="contratacion">
+                        <option value="0">Seleccione una opcion</option>
                         @if (Model.ListaContrataciones != null)
                         {
                             @foreach (Dominio.Contratacion unaContratacion in Model.ListaContrataciones)
                             {
                                 if (unaContratacion.Estado != "Finalizada" && unaContratacion.Estado != "Cancelada")
                                 {
-                                    <option value="@unaContratacion.Id">ID @unaContratacion.Id - @unaContratacion.FechaEvento.ToString("dd/MM/yyyy")</option>
+                                    <option value="@unaContratacion.Id">ID @unaContratacion.Id - @unaContratacion.FechaInicio.ToString("dd/MM/yyyy")</option>
                                 }
                             }
                         }
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="fecha">Fecha de Devolución:</label>
+                    <label for="fecha">Fecha de Devolucion:</label>
                     <input class="form-control" type="date" name="fecha" id="fecha" />
                 </div>
                 <div class="form-group">
                     <label for="cargo">Cargo Adicional Total:</label>
-                    <input class="form-control" type="text" name="cargo" id="cargo" value="0" />
+                    <input class="form-control" type="number" name="cargo" id="cargo" value="0" />
                 </div>
                 <div class="form-group">
                     <label for="observaciones">Observaciones:</label>

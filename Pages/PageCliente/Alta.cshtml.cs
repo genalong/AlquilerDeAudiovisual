@@ -1,15 +1,18 @@
-using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PageCliente
 {
     public class AltaModel : PageModel
     {
         public string Mensaje { get; set; }
+        public int id { get; set; } = 0;
 
         public void OnGet()
         {
+            Controladora unaControladora = new Controladora();
+            id = unaControladora.ProximoIdCliente();
         }
 
         public IActionResult OnPostAgregar()
@@ -20,37 +23,30 @@ namespace AlquilerAudiovisual.Pages.PageCliente
                 {
                     throw new Exception("Debe ingresar el ID del Cliente");
                 }
-
                 if (!int.TryParse(Request.Form["id"], out _))
                 {
                     throw new Exception("El ID del Cliente debe ser un numero");
                 }
-
                 if (Request.Form["nombre"] == "")
                 {
                     throw new Exception("Debe ingresar el Nombre del Cliente");
                 }
-
                 if (Request.Form["tipo"] == "")
                 {
-                    throw new Exception("Debe ingresar el Tipo (Particular / Empresa / Organizacion)");
+                    throw new Exception("Debe ingresar el Tipo del Cliente");
                 }
-
                 if (Request.Form["documento"] == "")
                 {
                     throw new Exception("Debe ingresar el Documento del Cliente");
                 }
-
                 if (Request.Form["telefono"] == "")
                 {
                     throw new Exception("Debe ingresar el Telefono del Cliente");
                 }
-
                 if (Request.Form["email"] == "")
                 {
                     throw new Exception("Debe ingresar el Email del Cliente");
                 }
-
                 if (Request.Form["direccion"] == "")
                 {
                     throw new Exception("Debe ingresar la Direccion del Cliente");
@@ -68,10 +64,7 @@ namespace AlquilerAudiovisual.Pages.PageCliente
 
                 Controladora unaControladora = new Controladora();
 
-                if (!unaControladora.AltaCliente(unCliente))
-                {
-                    throw new Exception("Ya existe un cliente con ese ID");
-                }
+                unaControladora.AltaCliente(unCliente);
 
                 return Redirect("/PageCliente/Listar");
             }

@@ -4,38 +4,37 @@
     {
         private int aId;
         private int aClienteId;
+        private string aTipoEvento;
         private string aNombreEvento;
-        private DateTime aFechaEvento;
+        private DateTime aFechaInicio;
+        private DateTime aFechaFin;
         private string aUbicacion;
-        private string aHoraInicio;      // "HH:mm"
-        private string aHoraFin;         // "HH:mm"
         private int aCantidadAsistentes;
-        private string aEstado;          // "Pendiente" | "Aceptada" | "Rechazada" | "Cancelada"
+        private string aEstado;
         private List<LineaSolicitud> aLineas;
 
         public int Id { get { return aId; } set { aId = value; } }
         public int ClienteId { get { return aClienteId; } set { aClienteId = value; } }
+        public string TipoEvento { get { return aTipoEvento; } set { aTipoEvento = value; } }
         public string NombreEvento { get { return aNombreEvento; } set { aNombreEvento = value; } }
-        public DateTime FechaEvento { get { return aFechaEvento; } set { aFechaEvento = value; } }
+        public DateTime FechaInicio { get { return aFechaInicio; } set { aFechaInicio = value; } }
+        public DateTime FechaFin { get { return aFechaFin; } set { aFechaFin = value; } }
         public string Ubicacion { get { return aUbicacion; } set { aUbicacion = value; } }
-        public string HoraInicio { get { return aHoraInicio; } set { aHoraInicio = value; } }
-        public string HoraFin { get { return aHoraFin; } set { aHoraFin = value; } }
         public int CantidadAsistentes { get { return aCantidadAsistentes; } set { aCantidadAsistentes = value; } }
         public string Estado { get { return aEstado; } set { aEstado = value; } }
         public List<LineaSolicitud> Lineas { get { return aLineas; } set { aLineas = value; } }
 
-        public SolicitudAlquiler(int pId, int pClienteId, string pNombreEvento,
-                                 DateTime pFechaEvento, string pUbicacion,
-                                 string pHoraInicio, string pHoraFin,
+        public SolicitudAlquiler(int pId, int pClienteId, string pTipoEvento, string pNombreEvento,
+                                 DateTime pFechaInicio, DateTime pFechaFin, string pUbicacion,
                                  int pCantidadAsistentes, string pEstado)
         {
             aId = pId;
             aClienteId = pClienteId;
+            aTipoEvento = pTipoEvento;
             aNombreEvento = pNombreEvento;
-            aFechaEvento = pFechaEvento;
+            aFechaInicio = pFechaInicio;
+            aFechaFin = pFechaFin;
             aUbicacion = pUbicacion;
-            aHoraInicio = pHoraInicio;
-            aHoraFin = pHoraFin;
             aCantidadAsistentes = pCantidadAsistentes;
             aEstado = pEstado;
             aLineas = new List<LineaSolicitud>();
@@ -45,11 +44,11 @@
         {
             aId = 0;
             aClienteId = 0;
+            aTipoEvento = "";
             aNombreEvento = "";
-            aFechaEvento = DateTime.Now;
+            aFechaInicio = DateTime.Now;
+            aFechaFin = DateTime.Now;
             aUbicacion = "";
-            aHoraInicio = "";
-            aHoraFin = "";
             aCantidadAsistentes = 0;
             aEstado = "Pendiente";
             aLineas = new List<LineaSolicitud>();

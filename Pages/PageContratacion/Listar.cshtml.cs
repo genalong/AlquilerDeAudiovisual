@@ -1,5 +1,5 @@
-using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PageContratacion
 {
@@ -11,18 +11,12 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
         public void OnGet()
         {
             Controladora unaControladora = new Controladora();
-
             ListaContrataciones = unaControladora.ListarContrataciones();
             ListaClientes = unaControladora.ListarClientes();
         }
 
         public string NombreCliente(int pClienteId)
         {
-            if (ListaClientes == null)
-            {
-                return "(desconocido)";
-            }
-
             foreach (Cliente unCliente in ListaClientes)
             {
                 if (unCliente.Id == pClienteId)
@@ -30,7 +24,6 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
                     return unCliente.Nombre;
                 }
             }
-
             return "(desconocido)";
         }
     }

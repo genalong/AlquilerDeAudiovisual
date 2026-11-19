@@ -1,17 +1,19 @@
-using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PageDevolucion
 {
     public class AltaModel : PageModel
     {
         public string Mensaje { get; set; }
+        public int id { get; set; } = 0;
         public List<Contratacion> ListaContrataciones { get; set; }
 
         public void OnGet()
         {
             Controladora unaControladora = new Controladora();
+            id = unaControladora.ProximoIdDevolucion();
             ListaContrataciones = unaControladora.ListarContrataciones();
         }
 
@@ -21,29 +23,24 @@ namespace AlquilerAudiovisual.Pages.PageDevolucion
             {
                 if (Request.Form["id"] == "")
                 {
-                    throw new Exception("Debe ingresar el ID de la Devolución");
+                    throw new Exception("Debe ingresar el ID de la Devolucion");
                 }
-
                 if (!int.TryParse(Request.Form["id"], out _))
                 {
-                    throw new Exception("El ID debe ser un numero");
+                    throw new Exception("El ID de la Devolucion debe ser un numero");
                 }
-
                 if (Request.Form["contratacion"] == "")
                 {
-                    throw new Exception("Debe seleccionar una Contratación");
+                    throw new Exception("Debe seleccionar una Contratacion");
                 }
-
                 if (Request.Form["fecha"] == "")
                 {
-                    throw new Exception("Debe ingresar la Fecha de Devolución");
+                    throw new Exception("Debe ingresar la Fecha de Devolucion");
                 }
-
                 if (Request.Form["cargo"] == "")
                 {
-                    throw new Exception("Debe ingresar el Cargo Adicional (puede ser 0)");
+                    throw new Exception("Debe ingresar el Cargo Adicional");
                 }
-
                 if (!double.TryParse(Request.Form["cargo"], out _))
                 {
                     throw new Exception("El Cargo Adicional debe ser un numero");
@@ -55,23 +52,18 @@ namespace AlquilerAudiovisual.Pages.PageDevolucion
                 double CargoAdicionalTotal = double.Parse(Request.Form["cargo"]);
                 string Observaciones = Request.Form["observaciones"];
 
-                Devolucion unaDevolucion = new Devolucion(
-                    Id, ContratacionId, FechaDevolucion, CargoAdicionalTotal, Observaciones);
+                Devolucion unaDevolucion = new Devolucion(Id, ContratacionId, FechaDevolucion,
+                    CargoAdicionalTotal, Observaciones);
 
                 Controladora unaControladora = new Controladora();
 
-                if (!unaControladora.AltaDevolucion(unaDevolucion))
-                {
-                    throw new Exception("Ya existe una devolución con ese ID");
-                }
+                unaControladora.AltaDevolucion(unaDevolucion);
 
                 return Redirect("/PageDevolucion/Listar");
             }
             catch (Exception Error)
             {
                 Mensaje = Error.Message;
-                Controladora unaControladora = new Controladora();
-                ListaContrataciones = unaControladora.ListarContrataciones();
                 return Page();
             }
         }

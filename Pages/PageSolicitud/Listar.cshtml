@@ -6,22 +6,21 @@
 
 <div>
     <h1 class="display-4 text-center">Listado de Solicitudes</h1>
-
     <div class="row">
         <div class="col text-right">
             <a class="btn btn-success" asp-page="./Alta">Nueva Solicitud</a>
         </div>
     </div>
-
     <table class="table text-center">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Cliente</th>
-                <th>Evento</th>
-                <th>Fecha</th>
-                <th>Horario</th>
-                <th>Ubicación</th>
+                <th>Tipo Evento</th>
+                <th>Nombre Evento</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Ubicacion</th>
                 <th>Asistentes</th>
                 <th>Estado</th>
                 <th>Acciones</th>
@@ -35,9 +34,10 @@
                     <tr>
                         <td>@unaSolicitud.Id</td>
                         <td>@Model.NombreCliente(unaSolicitud.ClienteId)</td>
+                        <td>@unaSolicitud.TipoEvento</td>
                         <td>@unaSolicitud.NombreEvento</td>
-                        <td>@unaSolicitud.FechaEvento.ToString("dd/MM/yyyy")</td>
-                        <td>@unaSolicitud.HoraInicio - @unaSolicitud.HoraFin</td>
+                        <td>@unaSolicitud.FechaInicio.ToString("dd/MM/yyyy")</td>
+                        <td>@unaSolicitud.FechaFin.ToString("dd/MM/yyyy")</td>
                         <td>@unaSolicitud.Ubicacion</td>
                         <td>@unaSolicitud.CantidadAsistentes</td>
                         <td>@unaSolicitud.Estado</td>
@@ -53,11 +53,7 @@
             }
             else
             {
-                <tr>
-                    <td colspan="9" class="text-center">
-                        No hay Solicitudes ingresadas
-                    </td>
-                </tr>
+                <tr><td colspan="10" class="text-center">No hay Solicitudes ingresadas</td></tr>
             }
         </tbody>
     </table>

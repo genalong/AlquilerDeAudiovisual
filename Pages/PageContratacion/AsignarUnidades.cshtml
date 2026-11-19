@@ -1,15 +1,15 @@
 ﻿@page
 @model AlquilerAudiovisual.Pages.PageContratacion.AsignarUnidadesModel
 @{
-    ViewData["Title"] = "Preparar Contratación";
+    ViewData["Title"] = "Preparar Contratacion";
 }
 
 <div class="text-left">
-    <h1 class="display-4 text-center">Preparar Contratación</h1>
+    <h1 class="display-4 text-center">Preparar Contratacion</h1>
     <hr />
 
     <p>
-        <strong>Contratación ID:</strong> @Model.contratacion.Id<br />
+        <strong>Contratacion ID:</strong> @Model.contratacion.Id<br />
         <strong>Estado actual:</strong> @Model.contratacion.Estado
     </p>
 
@@ -38,7 +38,7 @@
     <hr />
 
     <form method="post">
-        <input type="hidden" name="contratacionid" value="@Model.contratacion.Id" />
+        <input type="hidden" name="id" value="@Model.contratacion.Id" />
         <div class="row">
             <div class="mt-2">
                 <button type="submit" asp-page-handler="Asignar" class="btn btn-success">Marcar como Activa</button>

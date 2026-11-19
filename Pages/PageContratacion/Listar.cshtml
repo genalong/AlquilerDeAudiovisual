@@ -12,9 +12,9 @@
             <tr>
                 <th>ID</th>
                 <th>Cliente</th>
-                <th>Fecha</th>
-                <th>Horario</th>
-                <th>Ubicación</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Ubicacion</th>
                 <th>Importe Total</th>
                 <th>Estado</th>
                 <th>Acciones</th>
@@ -28,8 +28,8 @@
                     <tr>
                         <td>@unaContratacion.Id</td>
                         <td>@Model.NombreCliente(unaContratacion.ClienteId)</td>
-                        <td>@unaContratacion.FechaEvento.ToString("dd/MM/yyyy")</td>
-                        <td>@unaContratacion.HoraInicio - @unaContratacion.HoraFin</td>
+                        <td>@unaContratacion.FechaInicio.ToString("dd/MM/yyyy")</td>
+                        <td>@unaContratacion.FechaFin.ToString("dd/MM/yyyy")</td>
                         <td>@unaContratacion.Ubicacion</td>
                         <td>@unaContratacion.ImporteTotal</td>
                         <td>@unaContratacion.Estado</td>
@@ -43,9 +43,7 @@
             else
             {
                 <tr>
-                    <td colspan="8" class="text-center">
-                        No hay Contrataciones ingresadas
-                    </td>
+                    <td colspan="8" class="text-center">No hay Contrataciones ingresadas</td>
                 </tr>
             }
         </tbody>

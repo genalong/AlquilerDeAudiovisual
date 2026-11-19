@@ -9,10 +9,10 @@
         private string aCaracteristicas;
         private int aDepositoId;
         private double aPrecioBaseAlquiler;
-        private string aCodigo;        // identifica el ítem / lote
-        private string aEstado;        // "Disponible", "Reservado", "En preparación",
-                                       // "Alquilado", "En mantenimiento", "Fuera de servicio"
-        private int aStock;            // cuántas unidades hay
+        private string aCodigo;
+        private string aCategoria;
+        private string aEstado;
+        private int aStock;
         private bool aActivo;
 
         public int Id { get { return aId; } set { aId = value; } }
@@ -23,13 +23,14 @@
         public int DepositoId { get { return aDepositoId; } set { aDepositoId = value; } }
         public double PrecioBaseAlquiler { get { return aPrecioBaseAlquiler; } set { aPrecioBaseAlquiler = value; } }
         public string Codigo { get { return aCodigo; } set { aCodigo = value; } }
+        public string Categoria { get { return aCategoria; } set { aCategoria = value; } }
         public string Estado { get { return aEstado; } set { aEstado = value; } }
         public int Stock { get { return aStock; } set { aStock = value; } }
         public bool Activo { get { return aActivo; } set { aActivo = value; } }
 
         public Equipamiento(int pId, string pNombre, string pMarca, string pModelo,
                             string pCaracteristicas, int pDepositoId,
-                            double pPrecioBaseAlquiler, string pCodigo,
+                            double pPrecioBaseAlquiler, string pCodigo, string pCategoria,
                             string pEstado, int pStock, bool pActivo)
         {
             aId = pId;
@@ -40,6 +41,7 @@
             aDepositoId = pDepositoId;
             aPrecioBaseAlquiler = pPrecioBaseAlquiler;
             aCodigo = pCodigo;
+            aCategoria = pCategoria;
             aEstado = pEstado;
             aStock = pStock;
             aActivo = pActivo;
@@ -55,6 +57,7 @@
             aDepositoId = 0;
             aPrecioBaseAlquiler = 0;
             aCodigo = "";
+            aCategoria = "";
             aEstado = "Disponible";
             aStock = 0;
             aActivo = true;

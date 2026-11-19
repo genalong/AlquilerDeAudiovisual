@@ -1,17 +1,19 @@
-using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PagePago
 {
     public class AltaModel : PageModel
     {
         public string Mensaje { get; set; }
+        public int id { get; set; } = 0;
         public List<Contratacion> ListaContrataciones { get; set; }
 
         public void OnGet()
         {
             Controladora unaControladora = new Controladora();
+            id = unaControladora.ProximoIdPago();
             ListaContrataciones = unaControladora.ListarContrataciones();
         }
 
@@ -23,30 +25,25 @@ namespace AlquilerAudiovisual.Pages.PagePago
                 {
                     throw new Exception("Debe ingresar el ID del Pago");
                 }
-
                 if (!int.TryParse(Request.Form["id"], out _))
                 {
-                    throw new Exception("El ID debe ser un numero");
+                    throw new Exception("El ID del Pago debe ser un numero");
                 }
-
                 if (Request.Form["contratacion"] == "")
                 {
-                    throw new Exception("Debe seleccionar una Contratación");
+                    throw new Exception("Debe seleccionar una Contratacion");
                 }
-
                 if (Request.Form["monto"] == "")
                 {
                     throw new Exception("Debe ingresar el Monto");
                 }
-
                 if (!double.TryParse(Request.Form["monto"], out _))
                 {
                     throw new Exception("El Monto debe ser un numero");
                 }
-
                 if (Request.Form["metodo"] == "")
                 {
-                    throw new Exception("Debe seleccionar un Método de Pago");
+                    throw new Exception("Debe seleccionar un Metodo de Pago");
                 }
 
                 int Id = int.Parse(Request.Form["id"]);
@@ -60,18 +57,13 @@ namespace AlquilerAudiovisual.Pages.PagePago
 
                 Controladora unaControladora = new Controladora();
 
-                if (!unaControladora.AltaPago(unPago))
-                {
-                    throw new Exception("Ya existe un pago con ese ID");
-                }
+                unaControladora.AltaPago(unPago);
 
                 return Redirect("/PagePago/Listar");
             }
             catch (Exception Error)
             {
                 Mensaje = Error.Message;
-                Controladora unaControladora = new Controladora();
-                ListaContrataciones = unaControladora.ListarContrataciones();
                 return Page();
             }
         }

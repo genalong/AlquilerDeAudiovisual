@@ -1,5 +1,5 @@
-using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PageContratacion
 {
@@ -14,21 +14,23 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
         public void OnGet(int id)
         {
             Controladora unaControladora = new Controladora();
-
             contratacion = unaControladora.BuscarContratacion(id);
-            lineas = unaControladora.ListarDetallesContratacion(id);
+            lineas = unaControladora.ListarLineasContratacion(id);
             ListaEquipamientos = unaControladora.ListarEquipamientos();
             ListaPagos = unaControladora.ListarPagosPorContratacion(id);
-            SaldoPendiente = unaControladora.SaldoPendiente(id);
+
+            double TotalPagado = 0;
+
+            foreach (Pago unPago in ListaPagos)
+            {
+                TotalPagado = TotalPagado + unPago.Monto;
+            }
+
+            SaldoPendiente = contratacion.ImporteTotal - TotalPagado;
         }
 
         public string NombreEquipamiento(int pEquipamientoId)
         {
-            if (ListaEquipamientos == null)
-            {
-                return "(desconocido)";
-            }
-
             foreach (Equipamiento unEquipamiento in ListaEquipamientos)
             {
                 if (unEquipamiento.Id == pEquipamientoId)
@@ -36,7 +38,6 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
                     return unEquipamiento.Nombre;
                 }
             }
-
             return "(desconocido)";
         }
     }

@@ -1,6 +1,6 @@
-using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PageSolicitud
 {
@@ -11,7 +11,6 @@ namespace AlquilerAudiovisual.Pages.PageSolicitud
         public void OnGet(int id)
         {
             Controladora unaControladora = new Controladora();
-
             solicitud = unaControladora.BuscarSolicitud(id);
         }
 
@@ -25,11 +24,19 @@ namespace AlquilerAudiovisual.Pages.PageSolicitud
 
             if (laSolicitud != null)
             {
-                laSolicitud.Estado = "Cancelada";
-                unaControladora.ModificarSolicitud(laSolicitud);   
+                unaControladora.ModificarSolicitud(
+                    laSolicitud.Id,
+                    laSolicitud.ClienteId,
+                    laSolicitud.TipoEvento,
+                    laSolicitud.NombreEvento,
+                    laSolicitud.FechaInicio,
+                    laSolicitud.FechaFin,
+                    laSolicitud.Ubicacion,
+                    laSolicitud.CantidadAsistentes,
+                    "Cancelada");
             }
 
-            return Redirect("./Listar");
+            return Redirect("/PageSolicitud/Listar");
         }
     }
 }

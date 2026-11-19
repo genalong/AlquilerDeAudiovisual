@@ -6,13 +6,11 @@
 
 <div>
     <h1 class="display-4 text-center">Listado de Equipamientos</h1>
-
     <div class="row">
         <div class="col text-right">
             <a class="btn btn-success" asp-page="./Alta">Agregar</a>
         </div>
     </div>
-
     <table class="table text-center">
         <thead>
             <tr>
@@ -20,11 +18,12 @@
                 <th>Nombre</th>
                 <th>Marca</th>
                 <th>Modelo</th>
-                <th>Código</th>
-                <th>Depósito</th>
-                <th>Precio Base</th>
+                <th>Categoria</th>
+                <th>Deposito</th>
+                <th>Precio</th>
                 <th>Estado</th>
                 <th>Stock</th>
+                <th>Disponible Hoy</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -38,31 +37,22 @@
                         <td>@unEquipamiento.Nombre</td>
                         <td>@unEquipamiento.Marca</td>
                         <td>@unEquipamiento.Modelo</td>
-                        <td>@unEquipamiento.Codigo</td>
+                        <td>@unEquipamiento.Categoria</td>
                         <td>@Model.NombreDeposito(unEquipamiento.DepositoId)</td>
                         <td>@unEquipamiento.PrecioBaseAlquiler</td>
                         <td>@unEquipamiento.Estado</td>
                         <td>@unEquipamiento.Stock</td>
+                        <td>@Model.CalcularDisponible(unEquipamiento.Id)</td>
                         <td>
-                            <div>
-                                <a class="btn btn-primary" asp-page="./Modificar" asp-route-id="@unEquipamiento.Id">
-                                    <i class="fa fa-edit" aria-hidden="true"></i>
-                                </a>
-                                <a class="btn btn-danger" asp-page="./Eliminar" asp-route-id="@unEquipamiento.Id">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
-                            </div>
+                            <a class="btn btn-primary" asp-page="./Modificar" asp-route-id="@unEquipamiento.Id">Editar</a>
+                            <a class="btn btn-danger" asp-page="./Eliminar" asp-route-id="@unEquipamiento.Id">Eliminar</a>
                         </td>
                     </tr>
                 }
             }
             else
             {
-                <tr>
-                    <td colspan="10" class="text-center">
-                        No hay Equipamientos ingresados
-                    </td>
-                </tr>
+                <tr><td colspan="11" class="text-center">No hay Equipamientos ingresados</td></tr>
             }
         </tbody>
     </table>

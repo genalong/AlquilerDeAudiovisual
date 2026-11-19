@@ -1,6 +1,6 @@
-using AlquilerAudiovisual.Dominio;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using AlquilerAudiovisual.Dominio;
 
 namespace AlquilerAudiovisual.Pages.PageContratacion
 {
@@ -14,9 +14,8 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
         public void OnGet(int id)
         {
             Controladora unaControladora = new Controladora();
-
             contratacion = unaControladora.BuscarContratacion(id);
-            lineas = unaControladora.ListarDetallesContratacion(id);
+            lineas = unaControladora.ListarLineasContratacion(id);
             ListaEquipamientos = unaControladora.ListarEquipamientos();
         }
 
@@ -24,39 +23,52 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
         {
             try
             {
-                int ContratacionId = int.Parse(Request.Form["contratacionid"]);
+                if (Request.Form["id"] == "")
+                {
+                    throw new Exception("Debe ingresar el ID de la Contratacion");
+                }
+                if (!int.TryParse(Request.Form["id"], out _))
+                {
+                    throw new Exception("El ID de la Contratacion debe ser un numero");
+                }
+
+                int Id = int.Parse(Request.Form["id"]);
 
                 Controladora unaControladora = new Controladora();
 
-                Contratacion laContratacion = unaControladora.BuscarContratacion(ContratacionId);
+                Contratacion laContratacion = unaControladora.BuscarContratacion(Id);
 
-                if (laContratacion != null)
+                if (laContratacion == null)
                 {
-                    laContratacion.Estado = "Activa";
-                    unaControladora.ModificarContratacion(laContratacion);     
+                    throw new Exception("La contratacion no existe");
                 }
+
+                unaControladora.ModificarContratacion(
+                    laContratacion.Id,
+                    laContratacion.FechaInicio,
+                    laContratacion.FechaFin,
+                    laContratacion.Ubicacion,
+                    laContratacion.ImporteTotal,
+                    "Activa");
 
                 return Redirect("/PageContratacion/Listar");
             }
             catch (Exception Error)
             {
                 Mensaje = Error.Message;
-                int Id = int.Parse(Request.Form["contratacionid"]);
+
+                int Id = int.Parse(Request.Form["id"]);
                 Controladora unaControladora = new Controladora();
                 contratacion = unaControladora.BuscarContratacion(Id);
-                lineas = unaControladora.ListarDetallesContratacion(Id);
+                lineas = unaControladora.ListarLineasContratacion(Id);
                 ListaEquipamientos = unaControladora.ListarEquipamientos();
+
                 return Page();
             }
         }
 
         public string NombreEquipamiento(int pEquipamientoId)
         {
-            if (ListaEquipamientos == null)
-            {
-                return "(desconocido)";
-            }
-
             foreach (Equipamiento unEquipamiento in ListaEquipamientos)
             {
                 if (unEquipamiento.Id == pEquipamientoId)
@@ -64,7 +76,6 @@ namespace AlquilerAudiovisual.Pages.PageContratacion
                     return unEquipamiento.Nombre;
                 }
             }
-
             return "(desconocido)";
         }
     }
