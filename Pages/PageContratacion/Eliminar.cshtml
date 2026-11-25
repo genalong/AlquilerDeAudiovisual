@@ -1,0 +1,30 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageContratacion.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Contratacion";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Eliminar Contratacion</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">ID</dt>
+        <dd class="col-sm-10">@Model.contratacion.Id</dd>
+
+        <dt class="col-sm-2">Fecha Inicio</dt>
+        <dd class="col-sm-10">@Model.contratacion.FechaInicio.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">Estado</dt>
+        <dd class="col-sm-10">@Model.contratacion.Estado</dd>
+    </dl>
+    <hr />
+    <form method="post">
+        <input type="hidden" name="id" value="@Model.contratacion.Id" />
+        <div class="row">
+            <div class="mt-2">
+                <button type="submit" asp-page-handler="Eliminar" class="btn btn-danger">Eliminar</button>
+                <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+            </div>
+        </div>
+    </form>
+</div>

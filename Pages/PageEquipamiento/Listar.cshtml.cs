@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using AlquilerAudiovisual.Dominio;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AlquilerAudiovisual.Pages.PageEquipamiento
 {
@@ -32,21 +32,16 @@ namespace AlquilerAudiovisual.Pages.PageEquipamiento
                 if (e.Id == pEquipamientoId) { elEquipamiento = e; break; }
             if (elEquipamiento == null) return 0;
 
-            Controladora unaControladora = new Controladora();
             int comprometido = 0;
-
             foreach (Contratacion c in ListaContrataciones)
             {
-                if (c.Estado == "Cancelada" || c.Estado == "Finalizada") continue;
-                if (c.FechaFin.Date < DateTime.Now.Date || c.FechaInicio.Date > DateTime.Now.Date) continue;
-
-                List<LineaContratacion> lineas = unaControladora.ListarLineasContratacion(c.Id);
-                foreach (LineaContratacion l in lineas)
-                    if (l.EquipamientoId == pEquipamientoId) comprometido += l.Cantidad;
+                if (c.Estado == "Aprobado" && c.EquipamientoId == pEquipamientoId)
+                {
+                    comprometido += c.Cantidad;
+                }
             }
 
-            int enMantenimiento = elEquipamiento.Estado == "En mantenimiento" ? elEquipamiento.Stock : 0;
-            return elEquipamiento.Stock - enMantenimiento - comprometido;
+            return elEquipamiento.Stock - comprometido;
         }
     }
 }

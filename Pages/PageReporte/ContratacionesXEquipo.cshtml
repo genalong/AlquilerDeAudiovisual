@@ -1,0 +1,74 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageReporte.ContratacionesXEquipoModel
+@{
+    ViewData["Title"] = "Contrataciones por Equipamiento";
+}
+<div>
+    <h1 class="display-4 text-center">Contrataciones por Equipamiento</h1>
+
+    <form method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="equipo">Equipamiento:</label>
+                    <select class="form-control" id="idEquipo" name="idEquipo" asp-for="idEquipo">
+                        <option value="">Seleccione un Equipamiento</option>
+                        @foreach (Dominio.Equipamiento unEquipo in Model.Equipamientos)
+                        {
+                            <option value="@unEquipo.Id">@unEquipo.Nombre</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-success" style="margin-top: 23px;" type="submit" asp-page-handler="Listar">Listar</button>
+            </div>
+        </div>
+    </form>
+    
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Contrataciones != null && Model.Contrataciones.Any())
+            {
+                @foreach (Dominio.Contratacion unaContratacion in Model.Contrataciones)
+                {
+                    <tr>
+                        <td>@unaContratacion.Id</td>
+                        <td>@unaContratacion.FechaInicio.ToShortDateString()</td>
+                        <td>@unaContratacion.FechaFin.ToShortDateString()</td>
+                        <td>@unaContratacion.ImporteTotal</td>
+                        <td>
+                            <div>
+                                <a class="btn btn-primary" asp-page="./Detalle" asp-route-id="@unaContratacion.Id">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="5" class="text-right">
+                        Se alquilaron <strong>@Model.CantEquipos</strong> unidades por un total de <strong>$@Model.TotalEquipo</strong>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">
+                        No hay Contrataciones ingresadas
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

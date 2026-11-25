@@ -21,8 +21,7 @@ namespace AlquilerAudiovisual.Pages.PageCliente
 
             Controladora unaControladora = new Controladora();
 
-            unaControladora.DesactivarCliente(Id);
-
+            unaControladora.BajaCliente(Id);
             return Redirect("./Listar");
         }
     }

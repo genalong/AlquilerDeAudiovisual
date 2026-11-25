@@ -1,0 +1,14 @@
+﻿USE [AlquilerAudiovisual]
+GO
+
+CREATE TABLE [dbo].[Deposito](
+	[id] [int] NOT NULL,
+	[nombre] [varchar](100) NOT NULL,
+	[direccion] [varchar](150) NOT NULL,
+	[responsable] [varchar](100) NOT NULL,
+ CONSTRAINT [PK_Deposito] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO

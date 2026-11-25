@@ -19,11 +19,12 @@ namespace AlquilerAudiovisual.Persistencia
                     int.Parse(fila[0].ToString()),
                     int.Parse(fila[1].ToString()),
                     int.Parse(fila[2].ToString()),
-                    DateTime.Parse(fila[3].ToString()),
+                    int.Parse(fila[3].ToString()),
                     DateTime.Parse(fila[4].ToString()),
-                    fila[5].ToString(),
-                    double.Parse(fila[6].ToString()),
-                    fila[7].ToString()
+                    DateTime.Parse(fila[5].ToString()),
+                    fila[6].ToString(),
+                    double.Parse(fila[7].ToString()),
+                    fila[8].ToString()
                 );
                 lista.Add(unaContratacion);
             }
@@ -33,10 +34,11 @@ namespace AlquilerAudiovisual.Persistencia
         public bool Alta(Contratacion unaContratacion)
         {
             string sql = "INSERT INTO Contratacion "
-                + "(Id, SolicitudId, ClienteId, FechaInicio, FechaFin, Ubicacion, ImporteTotal, Estado) "
+                + "(Id, ClienteId, EquipamientoId, Cantidad, FechaInicio, FechaFin, Ubicacion, ImporteTotal, Estado) "
                 + "VALUES (" + unaContratacion.Id + ","
-                + unaContratacion.SolicitudId + ","
-                + unaContratacion.ClienteId + ",'"
+                + unaContratacion.ClienteId + ","
+                + unaContratacion.EquipamientoId + ","
+                + unaContratacion.Cantidad + ",'"
                 + unaContratacion.FechaInicio.ToString("yyyy-MM-dd") + "','"
                 + unaContratacion.FechaFin.ToString("yyyy-MM-dd") + "','"
                 + unaContratacion.Ubicacion + "',"
@@ -55,6 +57,9 @@ namespace AlquilerAudiovisual.Persistencia
         public bool Modificar(Contratacion unaContratacion)
         {
             string sql = "UPDATE Contratacion SET "
+                + "ClienteId = " + unaContratacion.ClienteId + ","
+                + "EquipamientoId = " + unaContratacion.EquipamientoId + ","
+                + "Cantidad = " + unaContratacion.Cantidad + ","
                 + "FechaInicio = '" + unaContratacion.FechaInicio.ToString("yyyy-MM-dd") + "',"
                 + "FechaFin = '" + unaContratacion.FechaFin.ToString("yyyy-MM-dd") + "',"
                 + "Ubicacion = '" + unaContratacion.Ubicacion + "',"

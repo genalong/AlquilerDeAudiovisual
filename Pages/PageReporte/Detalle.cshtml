@@ -1,0 +1,65 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageReporte.DetalleModel
+@{
+    ViewData["Title"] = "Detalle Contratacion";
+}
+<div class="text-left">
+    <h1 class="display-4 text-center">Detalle Contratacion</h1>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.contratacion.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.FechaInicio)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.contratacion.FechaInicio.ToShortDateString()
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.FechaFin)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.contratacion.FechaFin.ToShortDateString()
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.ClienteId)
+        </dt>
+        <dd class="col-sm-10">
+            Cliente ID: @Model.contratacion.ClienteId
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.EquipamientoId)
+        </dt>
+        <dd class="col-sm-10">
+            Equipo: @Model.NombreEquipamiento(Model.contratacion.EquipamientoId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.Cantidad)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.contratacion.Cantidad
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.ImporteTotal)
+        </dt>
+        <dd class="col-sm-10">
+            $@Model.contratacion.ImporteTotal
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.contratacion.Estado)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.contratacion.Estado
+        </dd>
+    </dl>
+    <hr />
+    <div class="row">
+        <div class="mt-2">
+            <a class="btn btn-warning" asp-page="./ContratacionesXCliente">Volver</a>
+        </div>
+    </div>
+</div>

@@ -6,14 +6,14 @@
 
 <div class="text-center">
     <h1 class="display-4">Sistema de Alquiler de Equipamiento Audiovisual</h1>
-    <p class="lead">Gestión de clientes, equipamiento, solicitudes, contrataciones, devoluciones y pagos.</p>
+    <p class="lead">Gestión de clientes, equipamiento y contrataciones.</p>
 </div>
 
 <hr />
 
 <div class="row">
 
-    <div class="col-md-4 mb-3">
+    <div class="col-md-6 mb-3">
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Clientes</h5>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-3">
+    <div class="col-md-6 mb-3">
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Depósitos</h5>
@@ -39,97 +39,57 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-3">
+</div>
+
+<div class="row">
+
+    <div class="col-md-6 mb-3">
         <div class="card">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-info text-white">
                 <h5 class="mb-0">Equipamiento</h5>
             </div>
             <div class="card-body">
                 <p>Administrar el equipamiento audiovisual y su estado.</p>
-                <a class="btn btn-outline-primary btn-sm" asp-page="/PageEquipamiento/Listar">Ver Equipamiento</a>
+                <a class="btn btn-outline-info btn-sm" asp-page="/PageEquipamiento/Listar">Ver Equipamiento</a>
                 <a class="btn btn-outline-success btn-sm" asp-page="/PageEquipamiento/Alta">Nuevo Equipo</a>
             </div>
         </div>
     </div>
 
-</div>
-
-<div class="row">
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Solicitudes</h5>
-            </div>
-            <div class="card-body">
-                <p>Registrar y gestionar solicitudes de alquiler.</p>
-                <a class="btn btn-outline-info btn-sm" asp-page="/PageSolicitud/Listar">Ver Solicitudes</a>
-                <a class="btn btn-outline-success btn-sm" asp-page="/PageSolicitud/Alta">Nueva Solicitud</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
+    <div class="col-md-6 mb-3">
         <div class="card">
             <div class="card-header bg-info text-white">
                 <h5 class="mb-0">Contrataciones</h5>
             </div>
             <div class="card-body">
-                <p>Consultar contrataciones y preparar equipamiento.</p>
+                <p>Consultar y gestionar las contrataciones de equipos.</p>
                 <a class="btn btn-outline-info btn-sm" asp-page="/PageContratacion/Listar">Ver Contrataciones</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Devoluciones</h5>
-            </div>
-            <div class="card-body">
-                <p>Registrar devoluciones e incidencias.</p>
-                <a class="btn btn-outline-info btn-sm" asp-page="/PageDevolucion/Listar">Ver Devoluciones</a>
-                <a class="btn btn-outline-success btn-sm" asp-page="/PageDevolucion/Alta">Registrar Devolución</a>
+                <a class="btn btn-outline-success btn-sm" asp-page="/PageContratacion/Alta">Nueva Contratación</a>
             </div>
         </div>
     </div>
 
 </div>
 
-<div class="row">
-
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-header bg-secondary text-white">
-                <h5 class="mb-0">Pagos</h5>
-            </div>
-            <div class="card-body">
-                <p>Registrar pagos y consultar saldos pendientes.</p>
-                <a class="btn btn-outline-secondary btn-sm" asp-page="/PagePago/Listar">Ver Pagos</a>
-                <a class="btn btn-outline-success btn-sm" asp-page="/PagePago/Alta">Registrar Pago</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-8 mb-3">
+<div class="row mt-3">
+    <div class="col-md-12 mb-3">
         <div class="card">
             <div class="card-header bg-dark text-white">
                 <h5 class="mb-0">Reportes</h5>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 mb-2">
-                        <a class="btn btn-outline-dark btn-sm w-100" asp-page="/PageReporte/MasAlquilado">Equipamiento Más Alquilado</a>
+                    <div class="col-md-4 mb-2">
+                        <a class="btn btn-outline-dark btn-sm w-100" asp-page="/PageReporte/ContratacionesXCliente">Contrataciones por Cliente</a>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <a class="btn btn-outline-dark btn-sm w-100" asp-page="/PageReporte/Disponibilidad">Disponibilidad</a>
+                    <div class="col-md-4 mb-2">
+                        <a class="btn btn-outline-dark btn-sm w-100" asp-page="/PageReporte/ContratacionesXFecha">Contrataciones por Fecha</a>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <a class="btn btn-outline-dark btn-sm w-100" asp-page="/PageReporte/ContratacionesPorCliente">Contrataciones por Cliente</a>
+                    <div class="col-md-4 mb-2">
+                        <a class="btn btn-outline-dark btn-sm w-100" asp-page="/PageReporte/ContratacionesXEquipo">Contrataciones por Equipamiento</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

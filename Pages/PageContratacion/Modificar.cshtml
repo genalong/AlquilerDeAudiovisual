@@ -1,0 +1,108 @@
+﻿@page
+@model AlquilerAudiovisual.Pages.PageContratacion.ModificarModel
+@{
+    ViewData["Title"] = "Modificar Contratacion";
+}
+
+<div class="text-left">
+    <h1 class="display-4 text-center">Modificar Contratacion</h1>
+    <hr />
+    <form method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="id">ID:</label>
+                    <input class="form-control" type="text" name="id" id="id" value="@Model.contratacion.Id" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="cliente">Cliente:</label>
+                    <select class="form-control" id="cliente" name="cliente">
+                        @foreach (Dominio.Cliente unCliente in Model.ListaClientes)
+                        {
+                            if (unCliente.Id == Model.contratacion.ClienteId)
+                            {
+                                <option value="@unCliente.Id" selected>@unCliente.Nombre</option>
+                            }
+                            else
+                            {
+                                <option value="@unCliente.Id">@unCliente.Nombre</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="equipamiento">Equipamiento:</label>
+                    <select class="form-control" id="equipamiento" name="equipamiento">
+                        @foreach (Dominio.Equipamiento unEquipamiento in Model.ListaEquipamientos)
+                        {
+                            if (unEquipamiento.Id == Model.contratacion.EquipamientoId)
+                            {
+                                <option value="@unEquipamiento.Id" selected>@unEquipamiento.Nombre</option>
+                            }
+                            else
+                            {
+                                <option value="@unEquipamiento.Id">@unEquipamiento.Nombre</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad:</label>
+                    <input class="form-control" type="number" name="cantidad" id="cantidad" value="@Model.contratacion.Cantidad" />
+                </div>
+                <div class="form-group">
+                    <label for="fechainicio">Fecha Inicio:</label>
+                    <input class="form-control" type="date" name="fechainicio" id="fechainicio" value="@Model.contratacion.FechaInicio.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="form-group">
+                    <label for="fechafin">Fecha Fin:</label>
+                    <input class="form-control" type="date" name="fechafin" id="fechafin" value="@Model.contratacion.FechaFin.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="form-group">
+                    <label for="ubicacion">Ubicacion:</label>
+                    <input class="form-control" type="text" name="ubicacion" id="ubicacion" value="@Model.contratacion.Ubicacion" />
+                </div>
+                <div class="form-group">
+                    <label for="importetotal">Importe Total:</label>
+                    <input class="form-control" type="number" name="importetotal" id="importetotal" value="@Model.contratacion.ImporteTotal" />
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select class="form-control" id="estado" name="estado">
+                        @if (Model.contratacion.Estado == "Aprobado")
+                        {
+                            <option value="Aprobado" selected>Aprobado</option>
+                        }
+                        else
+                        {
+                            <option value="Aprobado">Aprobado</option>
+                        }
+                        @if (Model.contratacion.Estado == "Rechazado")
+                        {
+                            <option value="Rechazado" selected>Rechazado</option>
+                        }
+                        else
+                        {
+                            <option value="Rechazado">Rechazado</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="mt-2">
+                <button class="btn btn-success" type="submit" asp-page-handler="Modificar">Modificar</button>
+                <a class="btn btn-warning" asp-page="./Listar">Volver</a>
+            </div>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Mensaje))
+    {
+        <br />
+        <div class="alert alert-danger" role="alert">
+            @Model.Mensaje
+        </div>
+    }
+</div>

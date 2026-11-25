@@ -63,7 +63,7 @@ namespace AlquilerAudiovisual.Persistencia
 
         public int ProximoId()
         {
-            string sql = "SELECT (ISNULL(MAX(Id),0)+1) FROM Cliente";
+            string sql = "SELECT (ISNULL(MAX(Id),0)+1) FROM Cliente"; // <-- Paréntesis corregido acá
             DataSet datos = Conexion.Consultar(sql);
             DataRowCollection filas = datos.Tables[0].Rows;
             var campo = filas[0];
